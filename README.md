@@ -1,2 +1,31 @@
-# indo-briefings
-indo-briefings
+# JB-Indo TF 일일 브리핑 아카이브
+
+인도네시아 KBBF·MFC·Mining·Macro·Oil 일일 브리핑 아카이브. 매일 09:00 KST 자동 게시.
+
+> **Note**: 내부 참고용 아카이브. 외부 인용 금지.
+
+---
+
+## 최신 브리핑
+
+- **[2026-05-22 인니 일일 브리핑](./2026-05-22.md)** — BI 50bp 깜짝 인상·루피아 17,610 회복·Danantara Sumberdaya 수출 국유화
+
+## 전체 목록
+
+- 2026-05-22 — BI 50bp 깜짝 인상·Brent $105·코모디티주 패닉 → [보기](./2026-05-22.md)
+
+---
+
+## 검색 축
+
+매일 다음 축으로 인니 매체·한국 영문매체·MUFG/IB 리서치를 스크리닝:
+- [KBBF] KB Bukopin Bank Finance / [KBBF-KR] 한국 영문매체
+- [MFC] 멀티파이낸스 업권 동향 / [Peer] 인니 멀티파이낸스 동종사
+- [Mining] 인니 자원·광산 업권 / [Macro] 인니 거시·통화·재정
+- [Oil] 글로벌 유가 / [Social·Politics·Diplomacy·Security] 사회·정치·외교·치안
+
+## 자동화
+
+- Source: Notion `🌏 인니 일일 브리핑` DB
+- Trigger: 매일 09:00 KST (Cowork scheduled-tasks)
+- Pipeline: Notion fetch → GitHub push → KakaoTalk 메모챗 알림
