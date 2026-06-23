@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — W1 Flashcards (Industry & POJK Framework)</title>
+<style>
+  :root{--ink:#1a2238;--paper:#f7f5ef;--line:#d8d3c4;--gold:#b8893a;--gold-soft:#e8dcc0;--green:#2f6b4f;--red:#a33a2e;--blue:#2f5170;--purple:#5b4a7a;--muted:#9a9788}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 70px}
+  .wrap{max-width:680px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:20px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:24px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:16px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.topic{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.trap{background:#f6e9e6;border-color:#e3bdb5;color:var(--red)}
+  .card{position:relative;width:100%;min-height:300px;perspective:1600px;cursor:pointer;margin-bottom:6px}
+  .inner{position:relative;width:100%;min-height:300px;transition:transform .5s;transform-style:preserve-3d}
+  .card.flipped .inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--line);border-radius:14px;padding:34px 28px;display:flex;flex-direction:column;justify-content:center;background:#fff;box-shadow:0 2px 10px rgba(26,34,56,.06)}
+  .face .lbl{position:absolute;top:16px;left:24px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+  .front .q{font-size:21px;font-weight:700;letter-spacing:-.01em;text-align:center}
+  .back{transform:rotateY(180deg);background:#fffdf8}
+  .back .lbl{color:var(--green)}
+  .back .a{font-size:16px;line-height:1.7}
+  .back .note{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;color:#7a7d8f}
+  .hint{text-align:center;font-size:12px;color:#9a9788;margin:10px 0 16px}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:8px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.3;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .mark{display:flex;gap:8px;margin-top:14px;justify-content:center}
+  .mark button{flex:1;max-width:160px;padding:10px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;transition:.15s}
+  .mark .known{color:var(--green)}.mark .known:hover{background:#e9f3ed;border-color:var(--green)}
+  .mark .again{color:var(--red)}.mark .again:hover{background:#f7e9e6;border-color:var(--red)}
+  .result{text-align:center;padding:14px 0}
+  .score{font-size:50px;font-weight:800;color:var(--gold)}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:18px}
+  .againlist{text-align:left;margin-top:14px;font-size:13px;color:#5d6075}
+  .againlist .w{padding:7px 0;border-bottom:1px solid var(--line)}
+  footer{text-align:center;font-size:12px;color:var(--muted);margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>W1 암기카드 — Industry & POJK Framework</h1>
+    <div class="sub">산업 개관 · Health Level · 8 Risks · 사업영역 · 핵심 POJK · 33장 · 카드 탭하면 뒤집기</div>
+  </header>
+  <div id="app"></div>
+  <footer>출처: A to Z in Finance Company Business (Day 1)</footer>
+</div>
+<script>
+const CARDS=[
+{tp:"산업사",t:"Concept",f:"2018 Double Pledge Cases가 trigger한 인프라는?",b:"SLIK 강화 · Asset Registry 도입 · Pefindo 활용 확대. 동일 자산 중복 담보 사기 대량 발견 → 차주·자산 정보 공유 인프라 강화.",n:"§1 / 시험 단골 인과"},
+{tp:"산업사",t:"Concept",f:"POJK 46/2024(비대면 financing)의 산업적 배경은?",b:"2020 COVID-19 봉쇄로 대면 financing 불가 → 디지털·비대면 채널 수요 폭증 → 임시 조치 후 POJK 46/2024로 공식화.",n:"§1 / 역방향 인과"},
+{tp:"산업사",t:"List",f:"인니 Finance 산업 핵심 흐름 4단계는?",b:"Leasing(1974 SKB 3 Ministers) → 4대 사업(2000 KMK 448) → Working Capital/Investment(2018 POJK 35) → 비대면 디지털(2024 POJK 46).",n:"§1 timeline"},
+{tp:"법적정의",t:"Definition",f:"Finance Company의 법적 정의는? (POJK 35/2018)",b:"재화·서비스의 financing 활동을 수행하는 사업체. 목적은 productive(사업투자·운전자본) 또는 consumer(소비). 분류 기준 = 사용 목적(한국은 주체 기준).",n:"§2"},
+{tp:"법적정의",t:"Comparison",f:"Productive vs Consumer — 자영업자가 영업용 트럭 financing은?",b:"Productive(Investment). 인니는 사용 목적이 영업·생산이면 Productive. 한국은 사업자등록 여부(주체) 기준 — 분기점이 다름.",n:"§2 함정"},
+{tp:"법적정의",t:"List",f:"Sharia Financing Akad 3계열은?",b:"Buy & Sell(Murabahah·Salam·Istishna') · Investment(Mudharabah·Musyarakah 등 profit-sharing) · Service(Ijarah·Hawalah·Wakalah·Kafalah·Qardh 등). Investment는 반드시 대면.",n:"§2.6 / POJK 10/2019"},
+{tp:"OJK구조",t:"Concept",f:"Finance Company가 속한 OJK Sector는?",b:"Sector 4 = IKNB(Industri Keuangan Non-Bank, 비은행 금융). 본인 F&P도 IKNB 부서 처리. (1 Banking · 2 자본시장 · 3 보험 · 5 핀테크)",n:"§3"},
+{tp:"HealthLevel",t:"List",f:"Health Level 평가 4 Factor는? (POJK 28/2020)",b:"① Capital ② Profitability ③ GCG ④ Risk Profile. 각 1~5 rating → Composite Rating 1~5.",n:"§4.6"},
+{tp:"HealthLevel",t:"Concept",f:"Composite Rating 1~5에서 최고·최악은?",b:"1=Very Healthy(최고), 5=Unhealthy(최악). ⚠️ 한국 신용등급 직관과 반대. KPMR·Inherent Risk Rating도 1이 우수, 5가 미흡.",n:"§4.6 / 함정 12-1"},
+{tp:"HealthLevel",t:"Calculation",f:"Net Risk 산출 공식은?",b:"Net Risk = Inherent Risk × KPMR (매트릭스로 결정). Net Risk·Profile Risk·Residual Risk는 동의어. KPMR 좋을수록(낮을수록) Net Risk 낮아짐.",n:"§4.6 / 함정 12-2"},
+{tp:"HealthLevel",t:"List",f:"KPMR 4 Component는?",b:"① BOC/BOD Active Supervision ② Policies & Procedures ③ Risk Management Process ④ Internal Control System.",n:"§4.6 / POJK 42/2024"},
+{tp:"HealthLevel",t:"Concept",f:"Action Plan 제출 의무 trigger는?",b:"어느 Factor가 Rating 4·5 / Composite 4·5 / Composite 3이지만 significant problems 존재. → BOD·BOC·지배주주가 OJK에 제출.",n:"§4.6"},
+{tp:"HealthLevel",t:"Concept",f:"Health Level 자가평가 제출 기한은?",b:"연말 기준치 = 매년 2월 15일. 자가평가 주기 = 분기별. OJK 공식 검사 = 연간 또는 수시.",n:"§4.6"},
+{tp:"HealthLevel",t:"List",f:"GCG factor Outcomes 11항목의 예시는?",b:"BOD·BOC·Committees·Conflict of Interest·Compliance·Internal Audit·External Audit·Risk Management·Remuneration·Transparency·Business Plan (11개).",n:"§4.6"},
+{tp:"감독상태",t:"Comparison",f:"NBFI Supervision Status 3단계 trigger는? (POJK 49/2024)",b:"Normal: 위협 없음. Intensive: Rank 4 / MSMD 0~50% / net NPF 5~25%. Special: Rank 5 / MSMD<0% / net NPF>25%. 경계값 50%·25% 암기.",n:"§4.7 / §9.5.1"},
+{tp:"감독상태",t:"Concept",f:"MSMD가 몇 % 미만이면 Intensive Supervision인가?",b:"50% 미만 → Intensive(POJK 49/2024 core-capital/paid-in 0~50% 구간). KBBF 현 MSMD 50~60%로 trigger 바로 위 — JB capital injection 시 방어 필요.",n:"§4.7 / KBBF 직결"},
+{tp:"비율",t:"Definition",f:"MSMD의 정의와 기준은?",b:"Modal Sendiri/Modal Disetor = Core Capital/Paid-Up Capital. ≥50%(POJK 35/2018·46/2024 동일). 산업 평균 320%. ⚠️ 보험사 RBC/MMBR(120%)과 다른 개념.",n:"§4.4.1 / 함정"},
+{tp:"비율",t:"Definition",f:"Gearing Ratio(GR)의 산식과 법정 한도는?",b:"GR = Total Debt/Equity. 법정 max 10x. 산업 평균 2.18x. MSMD(이익 누적 충실도)와 다른 축.",n:"§4.4 / §4.4.1"},
+{tp:"비율",t:"List",f:"FAR·BOPO·ROA 산식과 산업 평균은?",b:"FAR = Financing Receivables/Total Assets(86.01%) · BOPO = Operating Expense/Revenue(82.86%, 낮을수록 우수) · ROA = Net Income/Total Assets(4.17%).",n:"§4.4"},
+{tp:"사업영역",t:"List",f:"4대 사업 영역은? (POJK 35/2018)",b:"① Investment Financing(자본재·중장기) ② Working Capital(1 business cycle 이내) ③ Multipurpose(소비) ④ Other(OJK 승인 필요).",n:"§5"},
+{tp:"사업영역",t:"List",f:"Other Financing Business Activity 5조건은?",b:"① Business plan 포함 ② Health Composite ≥2 ③ Gearing 충족 ④ Core Capital ≥Rp 200 billion ⑤ OJK 행정처분 없을 것. 5개 모두 충족.",n:"§5 / 함정 12-11"},
+{tp:"사업영역",t:"Comparison",f:"Business Capital vs Fund Facility vs 일반 Investment 차주당 한도는?",b:"Business Capital Facility Rp 10 billion · Fund Facility Rp 500 million · 일반(대면) Investment Financing 한도 없음. 담보 면제 = Business Capital ≤Rp 100M.",n:"§5 / 함정"},
+{tp:"사업영역",t:"Concept",f:"비대면 Investment Financing 조건은? (POJK 46/2024)",b:"Micro/Ultra Micro 대상 · 최대 Rp 10 billion/debtor · 비대면 receivables 최대 5%. (일반 대면 Investment는 차주당 한도 없음과 구별)",n:"§5"},
+{tp:"Lease",t:"Comparison",f:"Finance Lease vs Operating Lease 차이는?",b:"Finance Lease = substantial benefit+risk 이전, IFRS 16 lessee 자산화. Operating Lease = 이전 안 됨, 운영 비용 처리. Finance Lease는 소유권 Finance Company 귀속·plate 부착.",n:"§6 / 함정 12-4"},
+{tp:"Lease",t:"Concept",f:"Sale and Leaseback(SLB)의 구조는?",b:"Debtor가 본인 소유 자산을 Finance Company에 매도 + 동시에 다시 lease. 효과 = 자산 유동화 + 운전자본 확보.",n:"§6"},
+{tp:"자금조달",t:"Comparison",f:"Public vs Non-Public 증권 발행 요건 차이는?",b:"Public: Risk level low / 3개월 전 보고. Non-Public: Risk mid-low(완화) / 6개월 전 / Equity ≥Rp 200bn 추가. Gearing 10x·business plan·soundness는 공통.",n:"§7 / 함정 12-5"},
+{tp:"자금조달",t:"List",f:"채권 발행 의무 사항은?",b:"KSEI 등록 · OJK 등록 trustee(monitoring agent) · 최소 investment rating · 1년 1회+ 정기 평가 · 분기별 실적 보고.",n:"§7"},
+{tp:"EquityP",t:"Concept",f:"Equity Participation 한도는?",b:"직접 참여 개별 최대 20% of Equity · 1개 그룹 내 entities 직접 참여 총합 최대 10%. ⚠️ Investment Financing(사업영역)과 다른 개념.",n:"§8 / 함정 12-3"},
+{tp:"POJK",t:"Concept",f:"GCG 규정 시간 순서와 현행은?",b:"POJK 30/2014(원본) → 29/2020(개정) → 48/2024(신 통합, 현행). 시험 최신 답 = POJK 48/2024.",n:"§9.6 / 함정 12-6"},
+{tp:"POJK",t:"List",f:"8대 Finance Company Risk는? (POJK 42/2024)",b:"Strategic · Credit · Operational · Market · Liquidity · Compliance · Legal · Reputation. (기억: SCO MLCLR). Fraud risk는 Operational 하위 파라미터.",n:"§9.4 / 함정 12-12"},
+{tp:"POJK",t:"Concept",f:"F&P Test의 'Fit'과 'Proper'는? (POJK 12/2017)",b:"Fit = Integrity(성실성) + Competence(역량). Proper = Financial Reputation(재무 평판). 두 요소 함께 충족해야 통과. 본 SPPI 시험이 이 규정의 일부.",n:"§9.8 / 함정 12-7"},
+{tp:"POJK",t:"Concept",f:"POJK와 SEOJK의 위상 차이는?",b:"POJK = 시행령급(binding regulation, 상위). SEOJK = 회람(operational guidance, 하위). POJK가 우선.",n:"§9.9 / 함정 12-8"},
+{tp:"Roadmap",t:"Concept",f:"KBBF 인수(2026)는 Roadmap 어느 Phase인가?",b:"Phase 2(2026-27) Consolidation & Momentum. Phase 1(2024-25) 강화기, Phase 3(2028) 성장기. 4 Pilar = 회복력·사업개발·규제감독·소비자보호.",n:"§10"}
+];
+const TLABEL={List:"List / Enumeration",Concept:"Concept",Comparison:"Comparison",Definition:"Definition",Calculation:"Calculation"};
+let deck=[],cur=0,results={},flipped=false;
+const app=document.getElementById('app');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function home(){
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">33장 · 카드 탭 → 뒤집기 · 안다/다시로 진도 체크</p>
+      <div class="start-opts">
+        <button onclick="start('all',true)">전체 33장 (셔플)<span class="desc">전 범위 무작위</span></button>
+        <button onclick="start('hl',true)">Health Level + 감독상태<span class="desc">최대 비중 ⭐⭐⭐</span></button>
+        <button onclick="start('pojk',true)">POJK + 비율 + 사업영역<span class="desc">규제·숫자 집중</span></button>
+        <button onclick="start('all',false)">전체 33장 (순서대로)<span class="desc">정렬 학습</span></button>
+      </div>
+    </div>`;
+}
+function start(mode,sh){
+  let set;
+  if(mode==='hl') set=CARDS.filter(c=>c.tp==='HealthLevel'||c.tp==='감독상태');
+  else if(mode==='pojk') set=CARDS.filter(c=>['POJK','비율','사업영역','자금조달','EquityP'].includes(c.tp));
+  else set=CARDS.slice();
+  deck=sh?shuffle(set):set;
+  cur=0;results={};flipped=false;render();
+}
+function render(){
+  const c=deck[cur];flipped=false;
+  const trap=(c.n||'').includes('함정');
+  app.innerHTML=`
+    <div class="meta"><span>${cur+1} / ${deck.length}</span><span>${Object.keys(results).length}장 평가됨</span></div>
+    <div class="bar"><i style="width:${cur/deck.length*100}%"></i></div>
+    <div class="tags"><span class="tag topic">${c.tp}</span><span class="tag">${TLABEL[c.t]||c.t}</span>${trap?'<span class="tag trap">함정</span>':''}</div>
+    <div class="card" id="card" onclick="flip()">
+      <div class="inner">
+        <div class="face front"><span class="lbl">Question</span><div class="q">${c.f}</div></div>
+        <div class="face back"><span class="lbl">Answer</span><div class="a">${c.b}</div>${c.n?`<div class="note">${c.n}</div>`:''}</div>
+      </div>
+    </div>
+    <div class="hint">카드를 탭하면 뒤집힙니다</div>
+    <div class="mark"><button class="again" onclick="mark(false)">다시 볼래요</button><button class="known" onclick="mark(true)">알아요</button></div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" onclick="prev()" ${cur===0?'disabled':''}>← 이전</button>
+      <button class="act" onclick="next()">${cur===deck.length-1?'결과':'다음 →'}</button>
+    </div>`;
+}
+function flip(){flipped=!flipped;document.getElementById('card').classList.toggle('flipped',flipped)}
+function mark(k){results[cur]=k;if(cur<deck.length-1){cur++;render()}else result()}
+function prev(){if(cur>0){cur--;render()}}
+function next(){if(cur<deck.length-1){cur++;render()}else result()}
+function result(){
+  const known=Object.values(results).filter(Boolean).length;
+  const again=Object.entries(results).filter(([k,v])=>!v).map(([k])=>deck[k]);
+  const ev=Object.keys(results).length;
+  const pct=ev?Math.round(known/ev*100):0;
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">평가 ${ev}장 중 ${known}장 "알아요"</div>
+      ${again.length?`<div class="againlist"><b style="color:var(--red)">다시 볼 카드 ${again.length}장</b>${again.map(c=>`<div class="w">${c.f}</div>`).join('')}</div>
+        <div class="nav" style="justify-content:center;margin-top:20px;gap:10px"><button class="act ghost" onclick="home()">처음으로</button><button class="act" onclick="retry()">다시 볼 카드만</button></div>`
+      :`<p style="color:var(--green);font-weight:700;margin:10px 0">전부 "알아요"</p><div class="nav" style="justify-content:center;margin-top:16px"><button class="act" onclick="home()">처음으로</button></div>`}
+    </div>`;
+  window._again=again;
+}
+function retry(){deck=shuffle(window._again);cur=0;results={};render()}
+home();
+</script>
+</body>
+</html>
