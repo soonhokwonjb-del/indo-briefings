@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — W2 Quiz (Unit 1 Business Plan + Unit 2 Compliance)</title>
+<style>
+  :root{
+    --ink:#1a2238; --paper:#f7f5ef; --line:#d8d3c4;
+    --gold:#b8893a; --gold-soft:#e8dcc0;
+    --green:#2f6b4f; --red:#a33a2e; --blue:#2f5170;
+    --shadow:0 1px 0 rgba(26,34,56,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:var(--paper); color:var(--ink);
+    line-height:1.6; padding:24px 16px 80px;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:25px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px;box-shadow:var(--shadow)}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.unit{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.hard{background:#f6e9e6;border-color:#e3bdb5;color:var(--red)}
+  .tag.medium{background:#fbf2dd;border-color:#e6cf9a;color:var(--gold)}
+  .tag.easy{background:#e7f1ea;border-color:#aecdb9;color:var(--green)}
+  .q{font-size:17px;font-weight:600;margin-bottom:18px;letter-spacing:-.005em}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;font-size:15px;text-align:left;width:100%;font-family:inherit;color:var(--ink)}
+  .opt:hover{border-color:var(--gold)}
+  .opt .k{font-weight:800;color:var(--gold);flex-shrink:0;width:18px}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:#e9f3ed;border-color:var(--green)}
+  .opt.correct .k{color:var(--green)}
+  .opt.wrong{background:#f7e9e6;border-color:var(--red)}
+  .opt.wrong .k{color:var(--red)}
+  .exp{margin-top:16px;padding:15px;background:var(--paper);border-left:3px solid var(--gold);border-radius:4px;font-size:14px;display:none}
+  .exp.show{display:block}
+  .exp b{color:var(--green)}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:12px 26px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.35;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .result{text-align:center;padding:10px 0}
+  .score{font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:20px}
+  .breakdown{text-align:left;margin:18px 0;font-size:14px}
+  .breakdown .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .wronglist{text-align:left;margin-top:16px;font-size:13px;color:#5d6075}
+  .wronglist .w{padding:8px 0;border-bottom:1px solid var(--line)}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  footer{text-align:center;font-size:12px;color:#9a9788;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>W2 모의문제 — Business Plan & Compliance</h1>
+    <div class="sub">Unit 1 Developing a Business Plan · Unit 2 Ensuring Compliance · 63문항 풀 · Day 2 교재 기반</div>
+  </header>
+  <div class="panel" id="app"></div>
+  <footer>출처: A to Z in Finance Company Business (Day 1) / Training Module Qualification Level 6·7 (Day 2)</footer>
+</div>
+
+<script>
+const BANK = [
+{id:"001",u:"U1",d:"Hard",q:"According to POJK 24/POJK.05/2019, which of the following BEST describes a Business Plan for a Finance Company?",o:["A written document describing development plans and business activities over a specific period, along with strategies to achieve those plans","A monthly operational report submitted to OJK for compliance purposes","An internal audit report assessing the effectiveness of risk management processes","A regulatory filing that replaces the Health Level assessment for NBFIs"],a:0,e:"SEOJK 23/2019 및 POJK 24/2019 정의. (A) operational report, (C) audit report, (D) 전혀 다른 문서."},
+{id:"002",u:"U1",d:"Hard",q:"Which of the following is CORRECTLY listed as a required component under POJK 24/2019?",o:["Executive Summary, and Annual Audit Report","Vision, Mission, Business Strategy, and Management Policies and Plans","Fraud Investigation Report and Employee Performance Metrics","Liquidity Stress Test and Derivative Instrument Portfolio"],a:1,e:"7대 구성요소 — (a)Executive Summary, (c)Vision/Mission/Strategy, (d)Management Policies and Plans 등."},
+{id:"003",u:"U1",d:"Hard",q:"Under the Management Policies and Plans section of a Business Plan, which of the following is included?",o:["Financial literacy and inclusion activity plans","Results of the previous year's internal audit","Significant fraud incident reports","AML/CFT compliance assessment"],a:0,e:"(d)항 7번째 항목 = financial literacy and inclusion 활동 계획."},
+{id:"004",u:"U1",d:"Medium",q:"A plan for conversion to a Sharia Finance Company should be placed in which Business Plan section?",o:["Under Management Policies and Plans (section d)","Under Financial Statement Projections (section e)","Under Other Information (section g)","Under the Executive Summary (section a)"],a:2,e:"(g) Other Information includes conversion plans to a Sharia Finance Company."},
+{id:"005",u:"U1",d:"Hard",q:"According to POJK 24/2019 Article 15, how frequently must NBFIs submit a Business Plan Supervision Report to OJK?",o:["Monthly","Quarterly","Semi-annually","Annually"],a:2,e:"Article 15 — semi-annual Business Plan Supervision Report."},
+{id:"006",u:"U1",d:"Hard",q:"The Business Plan Supervision Report under POJK 24/2019 is prepared by which body?",o:["The Board of Directors","The Board of Commissioners","The External Auditor","OJK's Supervision Team"],a:1,e:"BOC가 제출. BOD는 Realization Report 작성."},
+{id:"007",u:"U1",d:"Medium",q:"Which of the following best describes a company's VISION according to SEOJK 23/2019?",o:["The short-term approach used to achieve the company's goals","The long-term goal the company aims to achieve","A written plan describing annual business activities","A set of operational procedures for daily business conduct"],a:1,e:"Vision = long-term goal. Mission = short/medium-term approach."},
+{id:"008",u:"U1",d:"Medium",q:"A well-formulated Vision statement for a Finance Company should be:",o:["Detailed, comprehensive, and filled with operational specifics","Focused solely on financial targets and quarterly profitability","Based exclusively on regulatory requirements from OJK","Future-oriented, clear, inspirational, concise, and aligned with company values"],a:3,e:"Vision 4대 요건: Aligned with Values / Future-Oriented / Clear & Inspirational / Concise & Compact."},
+{id:"009",u:"U1",d:"Hard",q:"Which analytical tool focuses on Political, Economic, Social, Technological, Environmental, and Legal factors?",o:["SWOT Analysis","PESTEL Analysis","Porter's Five Forces","Risk Heat Map"],a:1,e:"PESTEL. SWOT는 내외부 종합, Porter's는 산업구조."},
+{id:"010",u:"U1",d:"Hard",q:"In Porter's Five Forces applied to Finance Companies, 'Bargaining Power of Suppliers' primarily refers to:",o:["Funding sources such as banks, investors, and capital markets","Raw material suppliers providing manufacturing inputs","Technology vendors supplying digital banking platforms","Government agencies providing business licenses"],a:0,e:"Finance Company에서 Suppliers = 자금원(은행·투자자·자본시장)."},
+{id:"011",u:"U1",d:"Hard",q:"Which best represents the 'Threat of Substitutes' for a Finance Company?",o:["A new Finance Company entering the market with OJK licensing","Increased bargaining power from institutional investors","OJK issuing new compliance regulations","Bank loans, fintech lending, Pay Later services, and credit cooperatives"],a:3,e:"Substitutes = 대안 금융상품. 은행대출·핀테크·Pay Later·신협."},
+{id:"012",u:"U1",d:"Medium",q:"The correct sequence for developing a company's Work Plan under POJK 24/2019 is:",o:["KPI → Budget → Strategy → Target → Initiative","Strategy → Goals → KPI → Target → Initiative → Budget","Budget → Strategy → Target → KPI → Initiative → Goals","Vision → Mission → Budget → KPI → Strategy"],a:1,e:"6단계: Strategy → Strategic Goals → KPIs → KPI Targets → Initiatives → Budget."},
+{id:"013",u:"U1",d:"Medium",q:"Which Business Plan objective type focuses on 'optimizing digital technology to improve service quality and customer experience'?",o:["Value Proposition","Product Leadership","Customer Intimacy","Operational Excellence"],a:2,e:"Customer Intimacy = 디지털 기술로 서비스 품질·고객 경험 개선·맞춤형."},
+{id:"014",u:"U1",d:"Medium",q:"A digital onboarding strategy targeting 30% cost reduction and 15-minute processing falls under which type?",o:["Short-term Work Plan (Execution)","Value Proposition","Customer Intimacy","Long-term Sustainable Finance Hub"],a:0,e:"Digital Onboarding = 단기 실행 계획(short-term concrete plan)."},
+{id:"015",u:"U1",d:"Hard",q:"The MOST direct reason the Business Plan Supervision Report must contain a Board of Commissioners assessment is:",o:["OJK requires internal audit involvement in all governance reports","POJK 24/2019 Article 6 obligates the BOC to supervise Business Plan implementation","Directors are prohibited from submitting reports to OJK directly","External auditors are not authorized to assess business strategy"],a:1,e:"Article 6 — BOC는 Business Plan 이행을 감독할 의무."},
+{id:"016",u:"U1",d:"Medium",q:"Fintech offering faster, cheaper approvals than Finance Companies MOST directly addresses which Force?",o:["Threat of Substitutes","Bargaining Power of Suppliers","Threat of New Entrants","Bargaining Power of Buyers"],a:0,e:"더 빠르고 저렴한 핀테크 = Substitutes 위협."},
+{id:"017",u:"U1",d:"Hard",q:"Format 18 in SEOJK 23/2019 refers to which document?",o:["Standard template for monthly compliance reports","Health Level self-assessment form","Anti-fraud incident reporting template","Business Plan Monitoring Report (Business Plan Supervision Report)"],a:3,e:"Format 18 = Business Plan Monitoring Report (BOC semi-annual)."},
+{id:"018",u:"U1",d:"Medium",q:"A Mission statement should focus on which according to SEOJK 23/2019?",o:["Long-term aspirations and future-oriented direction","Short or medium-term steps, customer/stakeholder focus, and differentiation","Annual KPI targets and budget allocation","Regulatory compliance procedures and operational controls"],a:1,e:"Mission = 단·중기 접근. 요건: Specific & Relevant + Customer/Stakeholder Focused."},
+{id:"019",u:"U1",d:"Medium",q:"Which is listed under 'Other Information' (g) of the Business Plan?",o:["Funding plans","Organizational and HR development plans","Capital plans","Direct participation (equity) plans"],a:3,e:"(g) = direct participation / sustainable finance / merger·spin-off / Sharia conversion. (A)(B)(D)는 (d)항."},
+{id:"020",u:"U1",d:"Medium",q:"'Sustainability-Linked Loans' with lower rates for ESG targets aligns with which long-term strategy?",o:["Digital Onboarding Strategy","Strengthening Collectability","Expansion into the Underbanked Segment","Green & Sustainable Finance Hub"],a:3,e:"Green & Sustainable Finance Hub = ESG 파이낸싱·Green bonds."},
+{id:"021",u:"U1",d:"Hard",q:"The Business Plan Realization Report must include which of the following?",o:["A forecast for the next 3-year business cycle","A complete audit trail of all employee transactions","An explanation of deviations from the Business Plan and follow-up efforts taken","Proposals for new regulatory changes to OJK"],a:2,e:"핵심: (a)달성 설명 (b)이탈 설명 (c)후속 조치."},
+{id:"022",u:"U1",d:"Medium",q:"Which is NOT one of the four Business Plan principles (Balance, Sustainability, Collaboration, Accountability)?",o:["Balance: Harmonizing business needs with regulatory compliance","Transparency: Full disclosure of all financial transactions to OJK","Sustainability: Creating long-term value for all stakeholders","Accountability: Transparency and responsibility to all relevant parties"],a:1,e:"4대 원칙 = Balance/Sustainability/Collaboration/Accountability. Transparency는 GCG TARIF 소속, BP 4원칙 아님."},
+{id:"023",u:"U1",d:"Medium",q:"Which factor MOST supports the conclusion 'Threat of New Entrants is Moderate to Low'?",o:["High consumer price sensitivity","Increasing availability of substitute financing products","Strong bargaining power of institutional investors","OJK licensing requirements, large capital needs, and digital infrastructure barriers"],a:3,e:"진입 장벽: OJK 라이선스 + 대규모 자본 + 디지털 인프라."},
+{id:"024",u:"U1",d:"Hard",q:"Which BEST describes the relationship between POJK 24/2019 and SEOJK 23/2019?",o:["POJK is operational guidance while SEOJK is the binding regulation","POJK is the binding regulation while SEOJK provides practical implementation guidance","Both are equally binding regulations issued simultaneously","SEOJK replaces POJK for Sharia Finance Companies only"],a:1,e:"POJK = binding, SEOJK = 실무 지침."},
+{id:"025",u:"U1",d:"Medium",q:"Which section should contain plans for improving financial literacy and inclusion?",o:["Executive Summary (section a)","Management Policies and Plans (section d)","Vision, Mission, Business Strategy (section c)","Other Information (section g)"],a:1,e:"(d)항 7번째 항목."},
+{id:"026",u:"U2",d:"Hard",q:"Which BEST describes the primary role of OJK in Finance Company compliance?",o:["Monitoring AML transactions and suspicious activity reports","Enforcing tax compliance and managing VAT reporting","Regulating electronic signatures and PSE","Supervising and regulating all Finance Company activities, granting licenses, issuing POJK/SEOJK, and enforcement"],a:3,e:"OJK = 주 감독기관. (A)=PPATK, (C)=DJP, (D)=Kominfo."},
+{id:"027",u:"U2",d:"Hard",q:"Which regulator receives and analyzes a Suspicious Transaction Report (STR)?",o:["OJK","Bank of Indonesia (BI)","Directorate General of Taxes (DJP)","PPATK"],a:3,e:"PPATK = STR·CTR 수령 + AML/CFT 전담."},
+{id:"028",u:"U2",d:"Hard",q:"POJK 46/2024 PSE registration is supervised by which body?",o:["OJK","PPATK","Ministry of Communication and Digital Affairs (Kominfo)","Bank of Indonesia"],a:2,e:"Kominfo = PSE·전자서명 규제."},
+{id:"029",u:"U2",d:"Medium",q:"Which BEST distinguishes 'Validity' from 'Relevance' of compliance data?",o:["Validity measures usefulness; Relevance measures accuracy","Both terms are interchangeable","Validity measures accuracy; Relevance measures practical usefulness and directness to the objective","Validity applies only to quantitative; Relevance only to qualitative"],a:2,e:"Validity = accuracy, Relevance = practical usefulness. 양쪽 모두 필요."},
+{id:"030",u:"U2",d:"Hard",q:"To whom must regular Compliance Reports be submitted?",o:["Bank of Indonesia","OJK","PPATK","Ministry of Finance"],a:1,e:"정기 Compliance Reports = OJK 제출."},
+{id:"031",u:"U2",d:"Hard",q:"What is the deadline for submitting the annual GCG Report?",o:["April 30","January 31","February 15","March 31"],a:0,e:"GCG Report = April 30. (Health Level = Feb 15)."},
+{id:"032",u:"U2",d:"Hard",q:"The CORRECT four-step process for CE4 (Reporting Compliance) is:",o:["Collection → Analysis → Investigation → Sanction","Planning → Execution → Reporting → Audit","Draft → Approval → Distribution → Monitoring commitment","Identification → Assessment → Mitigation → Documentation"],a:2,e:"CE4: Draft → Approval → Distribution → Monitoring."},
+{id:"033",u:"U2",d:"Medium",q:"Why is compliance described as more than just a legal matter?",o:["It is primarily about maximizing shareholder returns","Non-compliance only results in internal disciplinary actions","It is only relevant for Sharia Finance Companies","Compliance risks include sanctions, loss of trust, and material losses, making it a matter of business integrity and sustainability"],a:3,e:"Compliance Risk = 제재 + 신뢰 하락 + 손실. Integrity·Sustainability 직결."},
+{id:"034",u:"U2",d:"Hard",q:"POJK 43/2024 directly impacts Finance Company compliance by requiring:",o:["Annual Business Plan Supervision Reports","Registration as Electronic System Providers (PSE)","Quarterly AML/CFT reports to PPATK","Regular training and competency certification for key officials"],a:3,e:"POJK 43/2024 = HR 역량 인증 의무화. SPPI Level 7이 이 이행."},
+{id:"035",u:"U2",d:"Medium",q:"Delayed VAT reporting means which regulator's requirements are NOT met?",o:["OJK","PPATK","Directorate General of Taxes (DJP)","Kominfo"],a:2,e:"VAT = DJP 소관."},
+{id:"036",u:"U2",d:"Hard",q:"Which impact area is MOST directly affected by POJK 46/2024?",o:["Business Models: requiring digital integration and PSE registration","Capital adequacy: requiring minimum equity of Rp 200 billion","Tax compliance: changing VAT rates for digital transactions","Audit frequency: reducing cycles from quarterly to annually"],a:0,e:"POJK 46/2024 = Business Models에서 PSE·디지털 채널·비대면 financing."},
+{id:"037",u:"U2",d:"Hard",q:"What is the CORRECT first step when a Finance Company receives a new POJK?",o:["Identify regulatory impacts — type, scope (HR/IT/product/governance), initial mapping","Immediately update all IT systems","Submit a report to OJK confirming receipt","Conduct company-wide training before any analysis"],a:0,e:"Step 1 = Regulatory Impact Identification. 시스템 업데이트(Step 4)로 점프는 오류."},
+{id:"038",u:"U2",d:"Medium",q:"A cross-functional FGD with Legal, Risk, IT, HRD, Internal Audit corresponds to which step?",o:["Regulatory Impact Identification (Step 1)","System and Infrastructure Implementation (Step 4)","Internal Discussion with Relevant Work Units (Step 2)","Monitoring and Evaluation (Step 5)"],a:2,e:"FGD = Step 2 (Internal Discussions with Relevant Work Units)."},
+{id:"039",u:"U2",d:"Medium",q:"Which statement CORRECTLY applies both Validity and Relevance?",o:["Valid data measures ratios; relevant data must come only from external sources","Valid data is collected annually; relevant data monthly","Both refer to the same standard of data quality","Valid data accurately measures what it intends; relevant data is directly useful and connected to the objective"],a:3,e:"Validity = 정확성, Relevance = 실용적 관련성. 독립적 기준."},
+{id:"040",u:"U2",d:"Medium",q:"Which compliance evaluation result is classified as 'Less Comply'?",o:["All OJK quarterly reports submitted on time","STR and CTR submitted to PPATK via the designated app","No periodic evaluation report exists for the internal compliance work program","95% of consumer complaints resolved within SLA"],a:2,e:"정기 평가 보고서 미존재 = Less Comply."},
+{id:"041",u:"U2",d:"Hard",q:"Which body monitors foreign exchange transactions and macro-level financial stability?",o:["OJK","PPATK","Bank of Indonesia (BI)","Kominfo"],a:2,e:"BI = 거시 감독 + 외환·파생상품."},
+{id:"042",u:"U2",d:"Medium",q:"A compliance report submitted to OJK must be signed by:",o:["Chief Risk Officer and External Auditor jointly","The Board of Commissioners only","The Directors, addressed to the Chief Executive Supervisor at OJK","Internal Audit Head and Compliance Director jointly"],a:2,e:"이사회(Directors) 서명, OJK Chief Executive Supervisor 앞."},
+{id:"043",u:"U2",d:"Hard",q:"Which method compares compliance performance against industry standards and OJK regulations?",o:["Benchmarking","Qualitative Descriptive","Quantitative Statistics","Risk-Based Analysis"],a:0,e:"Benchmarking = 산업 표준·OJK 규정 대비 비교."},
+{id:"044",u:"U2",d:"Medium",q:"In monitoring work unit compliance commitments (PC 4.4), an effective method is:",o:["A one-time annual review without interim follow-up","Relying solely on verbal commitments","Outsourcing monitoring entirely to external consultants","Compliance dashboard + periodic progress reports + internal audits"],a:3,e:"PC 4.4: dashboard + 정기 progress reports + internal audits + 조율 forum."},
+{id:"045",u:"U2",d:"Hard",q:"POJK 42/2024 and POJK 48/2024 requiring dedicated work units impacts which area?",o:["Tax reporting systems","Organizational Structure and Human Resources","Funding diversification strategies","Foreign exchange transaction monitoring"],a:1,e:"전담 부서 의무화 → Organizational Structure & HR."},
+{id:"046",u:"U2",d:"Medium",q:"Which compliance area involves monitoring CTR and STR?",o:["Consumer Protection Compliance","AML, CFT, and PPPSPM Compliance","Tax Compliance","Sustainable Finance Compliance"],a:1,e:"CTR·STR = AML/CFT/PPPSPM. PPATK 보고."},
+{id:"047",u:"U2",d:"Hard",q:"Which is NOT typically included in the Compliance Report structure?",o:["Historical financial performance over the past 10 years","Implementation of the Compliance Function","Implementation of GCG","AML, CFT, PPPSPM compliance"],a:0,e:"과거 10년 재무 실적은 미포함."},
+{id:"048",u:"U2",d:"Medium",q:"A key official lacks the POJK 43/2024 certification. Immediate action?",o:["Develop a corrective action plan including enrolling the official in certification and submitting to OJK if required","Report to PPATK as a potential fraud incident","Temporarily suspend all business activities","Request an exemption from OJK based on experience"],a:0,e:"Action Plan 수립 + 인증 등록 + 필요 시 OJK 보고."},
+{id:"049",u:"U2",d:"Hard",q:"Confirming whether compliance data meets both accuracy and usefulness is called:",o:["Verification of Validity and Relevance","Compliance Risk Assessment","Benchmarking and Gap Analysis","Root Cause Analysis"],a:0,e:"PC 1.2 = Validity + Relevance 확인."},
+{id:"050",u:"U2",d:"Hard",q:"A report with self-assessment matrix and corrective action plan, due April 30, is which type?",o:["Semi-annual Business Plan Supervision Report","Quarterly Compliance Report","Annual GCG Report","Anti-fraud Strategy Report"],a:2,e:"GCG Report = 연간, April 30, self-assessment + corrective action plan."},
+{id:"051",u:"U1",d:"Hard",q:"Under Unit Q6 (Evaluating a Business Plan), what is the FIRST step in CE1 (Measuring the Success of a Business Plan)?",o:["Recommend corrective actions to the Board of Directors","Conduct a Root Cause Analysis of all deviations","Prepare and document the evaluation report","Identify Business Plan realization data by requesting the Realization Report and management explanations"],a:3,e:"PC 1.1 = realization data 식별. Realization Report·경영진 설명 요청 → 데이터 확보 → validation. Developing(Q7) vs Evaluating(Q6) 출발점 혼동 주의."},
+{id:"052",u:"U1",d:"Hard",q:"Which of the following are the SIX Business Plan Evaluation Objects?",o:["Liquidity, Solvency, Profitability, Efficiency, Growth, Stability","Planning, Organizing, Leading, Controlling, Reporting, Budgeting","Conformance, Strategy, Leadership, Coherence, Execution, Adequacy","Identification, Measurement, Monitoring, Control, Reporting, Audit"],a:2,e:"BP Evaluation Objects 6종: Conformance·Strategy·Leadership·Coherence·Execution·Adequacy."},
+{id:"053",u:"U1",d:"Medium",q:"In CE2 (Determining Corrective Actions), which technique identifies root problems before adjusting plans?",o:["Benchmarking against industry peers","Root Cause Analysis","Time Series Analysis","SWOT Analysis"],a:1,e:"PC 2.1 = Root Cause Analysis. Benchmarking·Time Series·SWOT는 CE1 성공도 추정 도구."},
+{id:"054",u:"U1",d:"Medium",q:"Which is a SUPPORTING factor (not inhibiting) to Business Plan success?",o:["Accurate market analysis using SWOT, Porter's Five Forces, and PESTLE","Unstable market conditions and intense competition","Regulatory changes and economic crises","Natural disasters, pandemics, and geopolitical conflicts"],a:0,e:"PC 1.4 Supporting = 정확한 시장분석·전략적 의사결정·자원 가용성·변화 적응. (A)(B)(D)는 PC 1.3 Inhibiting."},
+{id:"055",u:"U2",d:"Hard",q:"'Evaluating the Implementation of Compliance Culture' (K.64KPT00.021.1) is based on which Competency Standard?",o:["SKKNI No. 275/2024","POJK 43/2024","SKKNI No. 143/2022","SEOJK 23/2019"],a:2,e:"SKKNI No. 143/2022. Q6는 KPT(공통역량) 코드 — Day1 산업개요 SKKNI 275/2024와 혼동 주의."},
+{id:"056",u:"U2",d:"Hard",q:"Compliance culture parameters (CE1) are classified into which three levels?",o:["National Level, Corporate Level, Departmental Level","Board Level, Management Level, Staff Level","Policy Level, Process Level, Outcome Level","Strategic Level, Operational Level, Individual Level"],a:3,e:"3계층: Strategic(경영진 솔선)·Operational(SOP·KYC/Dual Control/4-Eye)·Individual(개인 윤리)."},
+{id:"057",u:"U2",d:"Medium",q:"At the Operational Level of compliance culture, which control principle in the financing process is cited?",o:["KYC, Dual Control, Checks and Balances, and the 4-Eye Principle","Three Lines of Defense","Risk-Based Internal Audit","COSO Internal Control Framework"],a:0,e:"Operational Level = KYC + Dual Control + Checks and Balances + 4-Eye Principle."},
+{id:"058",u:"U2",d:"Hard",q:"Which philosophy emphasizes that leaders must model rule-abiding behavior themselves?",o:["The Role of Leadership in Leading by Example","Compliance as an Internal Value","Continuous Improvement Through Evaluation","Compliance as a Driver of Organizational Performance"],a:0,e:"Leading by Example (Tone at the Top). 보고서 제출율 100% ≠ Compliance Culture 우수."},
+{id:"059",u:"U1",d:"Medium",q:"Which is NOT one of the five Competency Dimensions?",o:["Task Skill","Task Management Skill","Financial Analysis Skill","Transfer Skill"],a:2,e:"5종 = Task / Task Management / Contingency Management / Job-Role Environment / Transfer Skill. Financial Analysis Skill은 없음."},
+{id:"060",u:"U1",d:"Medium",q:"Which Competency Dimension is 'skills in solving problems in new contexts'?",o:["Contingency Management Skill","Transfer Skill","Task Management Skill","Job/Role Environment Skill"],a:1,e:"Transfer Skill = 신규 맥락 전이. Contingency = 돌발 해결, Task Management = 연관 과업 관리."},
+{id:"061",u:"U1",d:"Medium",q:"Which is one of the eight Employability Skills cited in the Day 2 module?",o:["Initiative and Entrepreneurship","Risk Quantification","Regulatory Drafting","Capital Adequacy Assessment"],a:0,e:"8종 = Communication/Teamwork/Problem Solving/Planning & Organizing/Initiative & Entrepreneurship/Self-Management/Technology/Learning."},
+{id:"062",u:"U2",d:"Hard",q:"In the Three Lines of Defense model, the Compliance Function belongs to which line?",o:["1st Line — Business Units","3rd Line — Internal Audit","It sits outside all three lines as an independent body","2nd Line — Risk Management and Compliance Function"],a:3,e:"Compliance Function = 2nd Line. 1st = Business Units, 3rd = Internal Audit."},
+{id:"063",u:"U2",d:"Hard",q:"Which statement about the Three Lines of Defense is CORRECT?",o:["The Compliance Function (2nd Line) directs and controls Internal Audit (3rd Line)","Internal Audit (3rd Line) independently verifies the Compliance Function (2nd Line)","Business Units (1st Line) supervise the Compliance Function (2nd Line)","Internal Audit reports to the Compliance Director for daily operations"],a:1,e:"3rd Line(Internal Audit)이 2nd Line을 독립 검증. 함정 13-12 — Compliance가 Internal Audit 통제는 오답."}
+];
+
+const KEY="A B C D".split(" ");
+const UNIT_LABEL={U1:"Unit 1 · Business Plan",U2:"Unit 2 · Compliance"};
+let quiz=[], cur=0, answers=[], picked=false;
+
+const app=document.getElementById('app');
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function start(mode){
+  if(mode==='all') quiz=shuffle(BANK);
+  else if(mode==='u1') quiz=shuffle(BANK.filter(q=>q.u==='U1'));
+  else if(mode==='u2') quiz=shuffle(BANK.filter(q=>q.u==='U2'));
+  else if(mode==='supp') quiz=shuffle(BANK.filter(q=>parseInt(q.id)>=51));
+  else quiz=shuffle(BANK).slice(0,30);
+  cur=0; answers=[]; render();
+}
+
+function home(){
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">63문항 풀 · 실전 영어 4지선다</p>
+      <div class="start-opts">
+        <button onclick="start('rand30')">랜덤 30문항 <span class="desc">실전 모사 — 전 범위에서 무작위 30개</span></button>
+        <button onclick="start('all')">전체 63문항 <span class="desc">Unit 1 + Unit 2 완주</span></button>
+        <button onclick="start('u1')">Unit 1만 (Business Plan) <span class="desc">32문항</span></button>
+        <button onclick="start('u2')">Unit 2만 (Compliance) <span class="desc">31문항</span></button>
+        <button onclick="start('supp')">보강 13문항만 <span class="desc">Q6 평가관점·역량군·Three Lines</span></button>
+      </div>
+    </div>`;
+}
+
+function render(){
+  const q=quiz[cur]; picked=false;
+  const dcls=q.d.toLowerCase();
+  app.innerHTML=`
+    <div class="meta">
+      <span>문항 ${cur+1} / ${quiz.length}</span>
+      <span>QID W2-${q.id}</span>
+    </div>
+    <div class="bar"><i style="width:${(cur)/quiz.length*100}%"></i></div>
+    <div class="tags">
+      <span class="tag unit">${UNIT_LABEL[q.u]}</span>
+      <span class="tag ${dcls}">${q.d}</span>
+    </div>
+    <div class="q">${q.q}</div>
+    <div class="opts" id="opts">
+      ${q.o.map((t,i)=>`<button class="opt" onclick="pick(${i})"><span class="k">${KEY[i]}</span><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="exp" id="exp"></div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" id="next" onclick="next()" disabled>다음 →</button>
+    </div>`;
+}
+
+function pick(i){
+  if(picked) return; picked=true;
+  const q=quiz[cur];
+  answers[cur]={id:q.id,correct:i===q.a,picked:i};
+  const opts=document.querySelectorAll('#opts .opt');
+  opts.forEach((b,idx)=>{
+    b.disabled=true;
+    if(idx===q.a) b.classList.add('correct');
+    else if(idx===i) b.classList.add('wrong');
+  });
+  const exp=document.getElementById('exp');
+  exp.innerHTML=`<b>정답: ${KEY[q.a]}</b> &nbsp;—&nbsp; ${q.e}`;
+  exp.classList.add('show');
+  document.getElementById('next').disabled=false;
+  if(cur===quiz.length-1) document.getElementById('next').textContent='결과 보기';
+}
+
+function next(){
+  if(cur<quiz.length-1){cur++;render()}
+  else result();
+}
+
+function result(){
+  const right=answers.filter(a=>a.correct).length;
+  const tot=quiz.length;
+  const pct=Math.round(right/tot*100);
+  const u1=answers.filter((a,i)=>quiz[i].u==='U1');
+  const u2=answers.filter((a,i)=>quiz[i].u==='U2');
+  const u1r=u1.filter(a=>a.correct).length, u2r=u2.filter(a=>a.correct).length;
+  const wrongs=answers.map((a,i)=>({a,q:quiz[i]})).filter(x=>!x.a.correct);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">${tot}문항 중 ${right}개 정답</div>
+      <div class="breakdown">
+        ${u1.length?`<div class="row"><span>Unit 1 · Business Plan</span><b>${u1r} / ${u1.length}</b></div>`:''}
+        ${u2.length?`<div class="row"><span>Unit 2 · Compliance</span><b>${u2r} / ${u2.length}</b></div>`:''}
+      </div>
+      ${wrongs.length?`<div class="wronglist"><b style="color:var(--red)">오답 ${wrongs.length}문항</b>
+        ${wrongs.map(x=>`<div class="w">W2-${x.q.id} · 정답 ${KEY[x.q.a]} — ${x.q.q.slice(0,70)}…</div>`).join('')}
+      </div>`:'<p style="color:var(--green);font-weight:700">전 문항 정답</p>'}
+      <div class="nav" style="justify-content:center;margin-top:24px">
+        <button class="act" onclick="home()">다시 풀기</button>
+      </div>
+    </div>`;
+}
+
+home();
+</script>
+</body>
+</html>
