@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — W2 Flashcards (Business Plan & Compliance)</title>
+<style>
+  :root{
+    --ink:#1a2238; --paper:#f7f5ef; --line:#d8d3c4;
+    --gold:#b8893a; --gold-soft:#e8dcc0;
+    --green:#2f6b4f; --red:#a33a2e; --blue:#2f5170; --purple:#5b4a7a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 70px}
+  .wrap{max-width:680px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:20px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:24px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:16px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.u1{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.u2{background:#f0ecf5;border-color:#cdbfe0;color:var(--purple)}
+  .tag.new{background:#fbf2dd;border-color:#e6cf9a;color:var(--gold)}
+  .card{position:relative;width:100%;min-height:300px;perspective:1600px;cursor:pointer;margin-bottom:6px}
+  .inner{position:relative;width:100%;min-height:300px;transition:transform .5s;transform-style:preserve-3d}
+  .card.flipped .inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border:1px solid var(--line);border-radius:14px;padding:34px 28px;display:flex;flex-direction:column;
+    justify-content:center;background:#fff;box-shadow:0 2px 10px rgba(26,34,56,.06)}
+  .face .lbl{position:absolute;top:16px;left:24px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+  .front .q{font-size:21px;font-weight:700;letter-spacing:-.01em;text-align:center}
+  .back{transform:rotateY(180deg);background:#fffdf8}
+  .back .lbl{color:var(--green)}
+  .back .a{font-size:16px;line-height:1.7}
+  .back .note{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;color:#7a7d8f}
+  .hint{text-align:center;font-size:12px;color:#9a9788;margin:10px 0 16px}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:8px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.3;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .mark{display:flex;gap:8px;margin-top:14px;justify-content:center}
+  .mark button{flex:1;max-width:160px;padding:10px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;transition:.15s}
+  .mark .known{color:var(--green)}.mark .known:hover{background:#e9f3ed;border-color:var(--green)}
+  .mark .again{color:var(--red)}.mark .again:hover{background:#f7e9e6;border-color:var(--red)}
+  .result{text-align:center;padding:14px 0}
+  .score{font-size:50px;font-weight:800;color:var(--gold)}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:18px}
+  .againlist{text-align:left;margin-top:14px;font-size:13px;color:#5d6075}
+  .againlist .w{padding:7px 0;border-bottom:1px solid var(--line)}
+  footer{text-align:center;font-size:12px;color:#9a9788;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>W2 암기카드 — Business Plan & Compliance</h1>
+    <div class="sub">Unit 1 Business Plan · Unit 2 Compliance · 31장 · 카드 탭하면 뒤집기</div>
+  </header>
+  <div id="app"></div>
+  <footer>출처: Training Module Qualification Level 6·7 (Day 2)</footer>
+</div>
+
+<script>
+const CARDS=[
+// ===== 신규 보강 11장 (2026/6/23) =====
+{u:"U1",new:1,t:"List",f:"BP 평가(Q6)의 6대 Evaluation Objects는?",b:"Conformance(규제 준수) · Strategy(환경분석·전략·계획 타당성) · Leadership(리더십 효과성) · Coherence(정렬·cascading) · Execution(이행·목표달성) · Adequacy(자원배분 적정성).",n:"Day2 p.17 · Q6 003 / 수립(Q7) 관점과 구별"},
+{u:"U1",new:1,t:"Concept",f:"BP 평가(Q6) CE1의 첫 단계(PC 1.1)는?",b:"Business Plan realization data 식별. Realization Report·경영진 설명 요청 → 전략·KPI·target·budget 식별 → 신뢰가능 시스템(재무보고·ERP·CRM)에서 확보 → validation. ⚠️ 수립(Developing, Q7) 아닌 평가(Evaluating, Q6)의 출발점.",n:"Day2 pp.21~22 · Developing vs Evaluating 혼동 빈출"},
+{u:"U1",new:1,t:"Comparison",f:"BP 성공의 Supporting vs Inhibiting factors는?",b:"Supporting(지원): 정확한 시장분석(SWOT·Porter·PESTLE) · 전략적 의사결정 · 자원 가용성 · 변화 적응.  Inhibiting(저해): 불안정한 시장·경쟁 · 규제 변화 · 경제위기 · 재난 · 급격한 기술변화 + 의사결정 오류.",n:"Day2 p.18 · PC 1.3 vs PC 1.4"},
+{u:"U1",new:1,t:"Concept",f:"BP 평가 CE2(시정조치)에서 근본문제 식별 기법은?",b:"Root Cause Analysis(RCA). 근본문제 식별 후 work plan·target 조정. 그룹별(Planning Process·Leadership·Resource Allocation·Process & Technology)로 조치 옵션 식별. 주의: Benchmarking·Time Series·SWOT는 CE1 성공도 추정(PC 1.5) 도구.",n:"Day2 pp.23~24 · PC 2.1"},
+{u:"U2",new:1,t:"Citation",f:"Compliance Culture 평가(Q6, K.64KPT00.021.1)의 근거 SKKNI는?",b:"SKKNI No. 143/2022. ⚠️ Unit 2 Q7(Ensuring Compliance, PBY 코드)와 달리 이 Q6는 KPT(공통역량) 코드 — SKKNI 근거도 다름. Day1 산업개요의 SKKNI 275/2024와 혼동 주의.",n:"Day2 p.46"},
+{u:"U2",new:1,t:"List",f:"Compliance Culture의 3계층 scope(parameters)는?",b:"Strategic Level(경영진 솔선·정책) · Operational Level(SOP·금융프로세스 KYC·Dual Control·4-Eye·교육) · Individual Level(개인 윤리·내부 규율). 평가는 세 계층 모두 관통.",n:"Day2 p.50 · CE1"},
+{u:"U2",new:1,t:"List",f:"Compliance Culture Operational Level의 금융프로세스 핵심 통제 원칙은?",b:"KYC + Dual Control + Checks and Balances + 4-Eye Principle. 주의: Three Lines of Defense는 Compliance 조직구조, COSO·RBA는 Internal Audit 영역 — Operational Level 핵심은 4-Eye 계열.",n:"Day2 p.50"},
+{u:"U2",new:1,t:"Concept",f:"Compliance Culture 평가 철학 중 \"리더가 솔선수범해야\"는?",b:"The Role of Leadership in Leading by Example(Tone at the Top). 리더는 정책 이행 보장뿐 아니라 규칙·윤리를 모범. ⚠️ 보고서 제출율 100% ≠ Compliance Culture 우수 — 자발적 준수 내면화까지 평가.",n:"Day2 p.47 · 5대 Philosophy 중 1"},
+{u:"U1",new:1,t:"List",f:"SKKNI Competency Dimensions 5종은?",b:"① Task Skill(절차에 따른 개별 과업) ② Task Management Skill(연관 과업 관리) ③ Contingency Management Skill(돌발 문제 해결) ④ Job/Role Environment Skill(작업환경 규칙 준수) ⑤ Transfer Skill(신규 맥락 전이). ⚠️ Transfer가 최상위, Task가 기본.",n:"Day2 pp.8,10 · \"5개 중 아닌 것\" 형 빈출"},
+{u:"U1",new:1,t:"List",f:"Employability Skills 8종은?",b:"Communication · Teamwork · Problem Solving · Planning and Organizing · Initiative and Entrepreneurship · Self-Management · Technology · Learning. \"8개 구성\" 자체가 출제 포인트.",n:"Day2 p.9"},
+{u:"U2",new:1,t:"Comparison",f:"Three Lines에서 Compliance ↔ Internal Audit 관계 방향은? (함정)",b:"3rd Line(Internal Audit)이 2nd Line(Compliance·Risk)을 독립 검증. ⚠️ 역방향 오답: \"Compliance Function이 Internal Audit을 통제/지휘\" = 틀림. 지휘관계 아닌 독립 검증관계. (Compliance Function = 2nd Line)",n:"Day2 pp.32~33 · 함정 13-12"},
+// ===== 기존 W2 핵심 20장 =====
+{u:"U1",t:"Comparison",f:"PESTEL vs SWOT vs Porter's 5 Forces 사용 시점은?",b:"PESTEL → 거시환경(Political·Economic·Social·Tech·Environmental·Legal) / Porter's 5 Forces → 산업 경쟁 구조 / SWOT → 내부(S·W)+외부(O·T) 종합. 외(PESTEL)→산업(Porter)→회사(SWOT) 순.",n:"§3 / PC 2.2"},
+{u:"U1",t:"Concept",f:"Porter's 5 Forces — Finance Company의 'Suppliers'는?",b:"자금조달원(Funding Sources) = 은행·투자자·자본시장. ⚠️ 제조업의 원자재 공급자 아님. 금리·자금조달 비용이 Supplier 협상력의 핵심 변수.",n:"§3 / 함정 13-3"},
+{u:"U1",t:"Concept",f:"Porter's 5 Forces — Finance Company의 'Substitutes'는?",b:"대안 금융상품: 은행 대출 · Fintech lending · Pay Later · 신용협동조합. 더 빠르고 저렴하면 대체 위협 증가. New Entrants(신규 진입자)와 구별.",n:"§3"},
+{u:"U1",t:"Comparison",f:"Vision vs Mission 시간 지평은? (SEOJK 23/2019)",b:"Vision = long-term goal(장기 지향점·방향). Mission = short/medium-term approach(단·중기 접근, Vision 달성 방법). 인터뷰에서 둘 구별 답변 필수.",n:"§2 / 함정 13-2"},
+{u:"U1",t:"List",f:"Vision 4대 요건은? (SEOJK 23/2019)",b:"Aligned with Values · Future-Oriented · Clear and Inspirational · Concise and Compact. (Mission 2대 요건 = Specific & Relevant + Customer/Stakeholder Focused)",n:"§2"},
+{u:"U1",t:"List",f:"Work Plan 수립 6단계 순서는? (POJK 24/2019)",b:"① Strategy/Objectives → ② Strategic Goals → ③ KPIs → ④ KPI Targets → ⑤ Initiatives/Work Plans → ⑥ Budget. ⚠️ 순서 바꾼 보기 함정 빈출.",n:"§4"},
+{u:"U1",t:"List",f:"Business Plan 3대 필요성은?",b:"Limited Resources(제한 자원 최적 배분) · VUCA(불확실 환경 방향성) · Regulatory Mandate(POJK 24/2019 의무화). \"If you FAIL to PLAN, you PLAN to FAIL.\"",n:"§1"},
+{u:"U1",t:"List",f:"Business Plan 4대 원칙(B·S·C·A)은?",b:"Balance(균형) · Sustainability(지속가능성) · Collaboration(협업) · Accountability(책임). ⚠️ Transparency는 GCG TARIF 소속, BP 4원칙 아님.",n:"§1 / 함정"},
+{u:"U1",t:"List",f:"Business Plan 7대 구성요소는? (POJK 24/2019)",b:"(a)Executive Summary (b)Evaluation of Previous BP (c)Vision·Mission·Strategy (d)Management Policies and Plans (e)Financial Statement Projections (f)Projections of Certain Ratios (g)Other Information.",n:"§5"},
+{u:"U1",t:"Comparison",f:"Business Plan (d)항 vs (g)항 구분은?",b:"(d) Management Policies: capital·funding·HR·IT 등 7개 일반 운영 계획. (g) Other Information: Sharia conversion·M&A·equity participation·사업 종료 등 특수 상황. ⚠️ Sharia conversion은 (g)항.",n:"§5 / 함정 13-8"},
+{u:"U1",t:"List",f:"Business Plan Realization Report 5대 항목은?",b:"(a)달성 설명(계획 vs 실적) (b)이탈 설명(원인·장애) (c)follow-up 조치 (d)Financial ratios·specific items (e)Other information. 작성=BOD.",n:"§6"},
+{u:"U1",t:"Concept",f:"Business Plan Supervision Report — 누가, 얼마나 자주?",b:"작성=Board of Commissioners(BOC). 제출=OJK에 semi-annually(반기). 근거=POJK 24/2019 Article 15. 공식 양식=SEOJK 23/2019 Format 18. ⚠️ BOD의 Realization Report와 구별.",n:"§6 / 함정 13-1"},
+{u:"U1",t:"Definition",f:"Business Plan의 법적 정의는? (SEOJK 23/2019)",b:"특정 기간 NBFI의 development plans·business activities를 기술하고 목표 기간 내 달성 전략을 담은 written document. 내부 경영도구 + OJK 감독수단의 이중 성격.",n:"§5"},
+{u:"U2",t:"Comparison",f:"Validity vs Relevance (Compliance 데이터 품질)는?",b:"Validity = accuracy(측정 의도한 것을 정확히 측정). Relevance = practical usefulness(목적·문제에 직접 유용·관련). ⚠️ 양쪽 모두 충족해야 신뢰 가능.",n:"§8 / 함정 13-5"},
+{u:"U2",t:"Concept",f:"Compliance는 법률 문제만인가?",b:"아니다. 규제 준수 + Business Integrity + Sustainability 문제. Compliance Risk = 규제 제재 + 이해관계자 신뢰 하락 + 중대한 재무·비재무 손실. \"법무팀 일\"로 보는 보기는 오답.",n:"§7 / 함정 13-10"},
+{u:"U2",t:"List",f:"Finance Company 6대 감독기관은?",b:"OJK(주 감독) · DJP(세무) · Ministry of Law & Human Rights(법인 설립·정관) · BI(거시·외환) · PPATK(AML/CFT·STR·CTR) · Kominfo(전자서명·PSE). 역할 매핑 빈출.",n:"§8 / 함정 13-6"},
+{u:"U2",t:"Comparison",f:"CTR vs STR 보고 기준은?",b:"CTR(Cash Transaction Report) = 금액 기준(건당 Rp 500M 이상), 14영업일 이내. STR(Suspicious) = 금액 무관·의심 발생 시, 3영업일 이내. 둘 다 PPATK 제출.",n:"§8 / 검증필요(UU 8/2010·PPATK)"},
+{u:"U2",t:"Concept",f:"POJK 43/2024가 Compliance에 미치는 영향은?",b:"핵심 임직원 정기 교육 + 역량 인증(certification) 의무화 → HR 예산·채용 프로세스 직접 영향. ⚠️ SPPI Level 7 시험이 이 POJK 이행의 일환. POJK 48/2024(GCG)와 별개.",n:"§9 / 함정 13-4"},
+{u:"U2",t:"List",f:"신규 POJK 수신 시 Follow-up 5단계는?",b:"① Regulatory Impact Identification → ② Internal Discussion with Work Units(Legal·Risk·IT·HRD·Audit FGD) → ③ Policy & SOP Adjustment → ④ System & Infrastructure Implementation → ⑤ Monitoring & Evaluation. ⚠️ 첫 단계 = Impact Identification.",n:"§9"},
+{u:"U2",t:"List",f:"Compliance 연간 보고 핵심 3숫자는?",b:"Business Plan = 10/31 · Health Level Self-Assessment = 2/15 · GCG·Annual Report = 4/30. BP Supervision Report = semi-annual(BOC). Quarterly Compliance = 분기.",n:"§11 / 함정 13-7·13-11"}
+];
+
+const TLABEL={List:"List / Enumeration",Concept:"Concept",Comparison:"Comparison",Definition:"Definition",Citation:"POJK / Standard"};
+const ULABEL={U1:"Unit 1 · Business Plan",U2:"Unit 2 · Compliance"};
+let deck=[],cur=0,results={},flipped=false;
+const app=document.getElementById('app');
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function home(){
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">31장 · 카드 탭 → 뒤집기 · 안다/다시 표시로 진도 체크</p>
+      <div class="start-opts">
+        <button onclick="start('all',true)">전체 31장 (셔플) <span class="desc">신규 11 + 기존 20, 무작위 순서</span></button>
+        <button onclick="start('new',false)">보강 11장만 <span class="desc">Q6 평가·Compliance Culture·역량군·Three Lines 함정</span></button>
+        <button onclick="start('u1',true)">Unit 1만 (Business Plan) <span class="desc">19장 셔플</span></button>
+        <button onclick="start('u2',true)">Unit 2만 (Compliance) <span class="desc">12장 셔플</span></button>
+        <button onclick="start('all',false)">전체 31장 (순서대로) <span class="desc">신규 먼저, 정렬 학습</span></button>
+      </div>
+    </div>`;
+}
+
+function start(mode,sh){
+  let set;
+  if(mode==='new') set=CARDS.filter(c=>c.new);
+  else if(mode==='u1') set=CARDS.filter(c=>c.u==='U1');
+  else if(mode==='u2') set=CARDS.filter(c=>c.u==='U2');
+  else set=CARDS.slice();
+  deck=sh?shuffle(set):set;
+  cur=0;results={};flipped=false;render();
+}
+
+function render(){
+  const c=deck[cur];flipped=false;
+  const utag=c.u==='U1'?'u1':'u2';
+  app.innerHTML=`
+    <div class="meta">
+      <span>${cur+1} / ${deck.length}</span>
+      <span>${Object.keys(results).length}장 평가됨</span>
+    </div>
+    <div class="bar"><i style="width:${cur/deck.length*100}%"></i></div>
+    <div class="tags">
+      <span class="tag ${utag}">${ULABEL[c.u]}</span>
+      <span class="tag">${TLABEL[c.t]||c.t}</span>
+      ${c.new?'<span class="tag new">보강</span>':''}
+    </div>
+    <div class="card" id="card" onclick="flip()">
+      <div class="inner">
+        <div class="face front"><span class="lbl">Question</span><div class="q">${c.f}</div></div>
+        <div class="face back"><span class="lbl">Answer</span><div class="a">${c.b}</div>${c.n?`<div class="note">${c.n}</div>`:''}</div>
+      </div>
+    </div>
+    <div class="hint">카드를 탭하면 뒤집힙니다</div>
+    <div class="mark">
+      <button class="again" onclick="mark(false)">다시 볼래요</button>
+      <button class="known" onclick="mark(true)">알아요</button>
+    </div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" id="prev" onclick="prev()" ${cur===0?'disabled':''}>← 이전</button>
+      <button class="act" id="next" onclick="next()">${cur===deck.length-1?'결과':'다음 →'}</button>
+    </div>`;
+}
+
+function flip(){flipped=!flipped;document.getElementById('card').classList.toggle('flipped',flipped)}
+function mark(known){results[cur]=known;if(cur<deck.length-1){cur++;render()}else result()}
+function prev(){if(cur>0){cur--;render()}}
+function next(){if(cur<deck.length-1){cur++;render()}else result()}
+
+function result(){
+  const known=Object.values(results).filter(Boolean).length;
+  const again=Object.entries(results).filter(([k,v])=>!v).map(([k])=>deck[k]);
+  const evaluated=Object.keys(results).length;
+  const pct=evaluated?Math.round(known/evaluated*100):0;
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">평가 ${evaluated}장 중 ${known}장 \"알아요\"</div>
+      ${again.length?`<div class="againlist"><b style="color:var(--red)">다시 볼 카드 ${again.length}장</b>
+        ${again.map(c=>`<div class="w">${c.f}</div>`).join('')}</div>
+        <div class="nav" style="justify-content:center;margin-top:20px;gap:10px">
+          <button class="act ghost" onclick="home()">처음으로</button>
+          <button class="act" onclick="retryAgain()">다시 볼 카드만 복습</button>
+        </div>`
+      :`<p style="color:var(--green);font-weight:700;margin:10px 0">전부 \"알아요\" — 완벽합니다</p>
+        <div class="nav" style="justify-content:center;margin-top:16px"><button class="act" onclick="home()">처음으로</button></div>`}
+    </div>`;
+  window._again=again;
+}
+function retryAgain(){deck=shuffle(window._again);cur=0;results={};render()}
+
+home();
+</script>
+</body>
+</html>
