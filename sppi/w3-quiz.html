@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — W3 Quiz (Governance / Strategy / Risk)</title>
+<style>
+  :root{--ink:#1a2238;--paper:#f7f5ef;--line:#d8d3c4;--gold:#b8893a;--gold-soft:#e8dcc0;--green:#2f6b4f;--red:#a33a2e;--blue:#2f5170;--shadow:0 1px 0 rgba(26,34,56,.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 80px}
+  .wrap{max-width:760px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:25px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px;box-shadow:var(--shadow)}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.topic{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.hard{background:#f6e9e6;border-color:#e3bdb5;color:var(--red)}
+  .tag.medium{background:#fbf2dd;border-color:#e6cf9a;color:var(--gold)}
+  .tag.easy{background:#e7f1ea;border-color:#aecdb9;color:var(--green)}
+  .q{font-size:17px;font-weight:600;margin-bottom:18px;letter-spacing:-.005em}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;font-size:15px;text-align:left;width:100%;font-family:inherit;color:var(--ink)}
+  .opt:hover{border-color:var(--gold)}
+  .opt .k{font-weight:800;color:var(--gold);flex-shrink:0;width:18px}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:#e9f3ed;border-color:var(--green)}
+  .opt.correct .k{color:var(--green)}
+  .opt.wrong{background:#f7e9e6;border-color:var(--red)}
+  .opt.wrong .k{color:var(--red)}
+  .exp{margin-top:16px;padding:15px;background:var(--paper);border-left:3px solid var(--gold);border-radius:4px;font-size:14px;display:none}
+  .exp.show{display:block}
+  .exp b{color:var(--green)}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:12px 26px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.35;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .result{text-align:center;padding:10px 0}
+  .score{font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:20px}
+  .breakdown{text-align:left;margin:18px 0;font-size:14px}
+  .breakdown .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .wronglist{text-align:left;margin-top:16px;font-size:13px;color:#5d6075}
+  .wronglist .w{padding:8px 0;border-bottom:1px solid var(--line)}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  footer{text-align:center;font-size:12px;color:#9a9788;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>W3 모의문제 — Governance / Strategy / Risk &#9733;</h1>
+    <div class="sub">Unit 3 · TARIF · ISO 31000 · 5&#215;5 Matrix · Risk Treatment · Risk Limit 3계층 · POJK 48/42 · 3 Lines · Risk Culture · 65문항 풀 · Day 2 교재 기반</div>
+  </header>
+  <div class="panel" id="app"></div>
+  <footer>출처: Training Module Qualification Level 6&#183;7 (Day 2 pp.60~85)</footer>
+</div>
+
+<script>
+const BANK = [
+{id:"001",tp:"개요",d:"Medium",q:"Under Unit 3 (K.64PBY91.019.1), risk management governance, strategies, and policies are based on which set of principles?",o:["The COSO internal control framework exclusively","The three lines of defense reporting hierarchy only","The five GCG principles: transparency, accountability, responsibility, independence, and fairness","The four Basel Accord pillars of capital adequacy"],a:2,e:"교재 Philosophy: risk governance·strategy·policy는 GCG 5원칙(TARIF)에 기반."},
+{id:"002",tp:"TARIF",d:"Easy",q:"The acronym TARIF for governance principles stands for:",o:["Transparency, Accountability, Risk-control, Independence, Finance","Trust, Accountability, Reliability, Integrity, Fairness","Transparency, Authority, Risk, Integrity, Fairness","Transparency, Accountability, Responsibility, Independence, Fairness"],a:3,e:"TARIF = Transparency·Accountability·Responsibility·Independence·Fairness. POJK 48/2024 GCG 5원칙."},
+{id:"003",tp:"TARIF",d:"Hard",q:"Which statement BEST distinguishes 'Accountability' from 'Responsibility' under the governance principles?",o:["Accountability means management responsibilities consistent with each party's duties and functions; Responsibility means compliance with applicable laws and regulations","Accountability applies only to the BOC; Responsibility applies only to the BOD","They are identical concepts used interchangeably in POJK 48/2024","Accountability means compliance with laws; Responsibility means disclosing information"],a:0,e:"Accountability = 역할·기능에 맞는 관리 책임(내부 역할 명확). Responsibility = 법규 준수(외부 규범)."},
+{id:"004",tp:"ISO31000",d:"Medium",q:"The risk management principles referenced in Unit 3 are derived from which standard?",o:["Basel III","POJK 28/2020","COSO ERM 2017","SNI ISO 31000:2018"],a:3,e:"교재 명시: Risk Management Principles는 SNI ISO 31000:2018 기반 (10개 원칙)."},
+{id:"005",tp:"ISO31000",d:"Medium",q:"According to ISO 31000:2018, what is the ultimate purpose of risk management?",o:["Eliminating all risks the company faces","Ensuring zero regulatory violations","Maximizing short-term profit","Creation and protection of value"],a:3,e:"ISO 31000:2018 핵심 목적 = Creation and Protection of Value."},
+{id:"006",tp:"ISO31000",d:"Hard",q:"Which of the following is NOT one of the ISO 31000:2018 risk management principles?",o:["Integrated","Profit-maximizing","Customized","Dynamic"],a:1,e:"ISO 31000 10원칙에 Profit-maximizing은 포함 안 됨."},
+{id:"007",tp:"4층구조",d:"Easy",q:"In the Governance–Risk Management–Internal Control–Internal Audit structure, which layer provides independent assurance?",o:["Risk Management & Compliance","Internal Audit","Governance","Internal Control"],a:1,e:"Internal Audit = 독립 검증(assurance) 층위."},
+{id:"008",tp:"4층구조",d:"Medium",q:"Corporate Governance is BEST defined in Unit 3 as:",o:["The internal audit charter approved by the BOC","A set of risk scoring models used to measure inherent risk","The structure and processes used by company organs to improve business results and optimize company value for stakeholders in an accountable manner, based on laws and ethical values","A quarterly compliance report submitted to OJK"],a:2,e:"회사 기관(organs)이 사업 결과 개선·기업가치 최적화에 사용하는 구조·프로세스. 법규·윤리 기반."},
+{id:"009",tp:"개요",d:"Hard",q:"Which is the CORRECT logical sequence of the three Competency Elements in Unit 3?",o:["Governance/Infrastructure → Policies → Strategy","Policies → Strategy → Governance/Infrastructure","Strategy → Governance/Infrastructure → Policies","Strategy → Policies → Governance/Infrastructure"],a:3,e:"CE1 Strategy → CE2 Policies → CE3 Governance & Infrastructure."},
+{id:"010",tp:"전략",d:"Medium",q:"A corporate strategy must satisfy three alignment requirements. Which of the following is one of them?",o:["It must guarantee a fixed dividend payout ratio","It must exclude any digital transformation initiatives","It must be approved by PPATK before implementation","It must comply with OJK regulations, relevant laws, and internal company policies"],a:3,e:"PC 1.1: OJK 규정·관련 법률·내부 정책 준수 + governance/risk management 정합 + Vision/Mission 달성 지원."},
+{id:"011",tp:"전략",d:"Medium",q:"In developing a corporate strategy, 'Company Diagnosis' includes which of the following?",o:["The execution roadmap and resource allocation","SWOT Analysis and critical performance metrics such as ROE, Loss Ratio, Minimum Capital Ratio, and Gearing Ratio","The vision and mission statement only","PESTEL analysis of the macro environment"],a:1,e:"Company Diagnosis = SWOT + Critical Performance(ROE·Loss Ratio·Minimum Capital Ratio·Gearing Ratio)."},
+{id:"012",tp:"전략",d:"Hard",q:"The four stages of developing a corporate strategy in Unit 3 are, in order:",o:["Strategic Context → Company Diagnosis → Strategic Options → Execution Roadmap","Company Diagnosis → Strategic Context → Execution Roadmap → Strategic Options","Strategic Options → Strategic Context → Company Diagnosis → Execution Roadmap","Execution Roadmap → Strategic Options → Company Diagnosis → Strategic Context"],a:0,e:"Strategic Context → Company Diagnosis → Strategic Options → Execution Roadmap."},
+{id:"013",tp:"전략",d:"Medium",q:"What is the FIRST component of the risk management process when analyzing risk coverage based on company strategy?",o:["Measuring risk profiles","Establishing/identifying the risk scope","Purchasing risk insurance","Submitting the risk report to OJK"],a:1,e:"PC 1.2: 첫 구성요소 = establishing the scope(범위 설정)."},
+{id:"014",tp:"전략",d:"Medium",q:"For a 'Digital Onboarding' strategy, which pair of risks is identified as the key risk scope in the training module example?",o:["Reputation Risk and Legal Risk only","Liquidity Risk and Market Risk","Technology Risk (failed API integration, data breach) and Regulatory Risk (changes to OJK e-KYC rules)","Credit Risk and Concentration Risk"],a:2,e:"Digital Onboarding → Technology Risk + Regulatory Risk(OJK e-KYC 변경)."},
+{id:"015",tp:"Matrix",d:"Hard",q:"In the 5x5 risk measurement matrix, an event with a financial loss of more than IDR 1 billion is rated:",o:["Score 4 - Significant","Score 5 - Major to Catastrophic","Score 3 - Moderate","Score 2 - Minor"],a:1,e:"Impact Score 5 = Major to Catastrophic = > IDR 1 billion."},
+{id:"016",tp:"Matrix",d:"Hard",q:"In the risk measurement framework, a likelihood rating of Score 1 ('Very Rare') corresponds to a probability of:",o:["≤ 2% of total operations","> 20% of total operations","> 2% and ≤ 5%","> 10% and ≤ 20%"],a:0,e:"Likelihood Score 1 Very Rare = ≤ 2%, >1년. Score 5 = >20%, ≤1개월."},
+{id:"017",tp:"Matrix",d:"Medium",q:"A risk profile in the training module is measured as a function of:",o:["Inherent risk minus residual risk","ROE and ROA","Impact and Likelihood of occurrence","Capital and liquidity only"],a:2,e:"Risk Profile = f(Impact, Likelihood)."},
+{id:"018",tp:"Matrix",d:"Medium",q:"An Impact Score of 2 ('Minor') in the risk matrix corresponds to a financial loss of:",o:["> IDR 1 billion","> IDR 100 million – ≤ IDR 500 million","≤ IDR 25 million","> IDR 25 million – ≤ IDR 100 million"],a:3,e:"Score 1=≤25M, 2(Minor)=>25M–≤100M, 3=>100M–≤500M, 4=>500M–≤1bn, 5=>1bn."},
+{id:"019",tp:"Treatment",d:"Easy",q:"Which risk treatment type corresponds to 'cancelling expansion to high-risk countries'?",o:["Transfer","Avoid","Reduce","Accept"],a:1,e:"활동 종료(terminate activity) = Avoid(회피)."},
+{id:"020",tp:"Treatment",d:"Medium",q:"Purchasing cyber insurance and outsourcing services is an example of which risk treatment?",o:["Avoid","Reduce","Transfer","Accept"],a:2,e:"보험 가입·아웃소싱 = Transfer(제3자 이전)."},
+{id:"021",tp:"Treatment",d:"Medium",q:"Implementing end-to-end encryption as a proactive control is which risk treatment type?",o:["Reduce","Avoid","Transfer","Accept"],a:0,e:"선제적 통제(proactive control)인 end-to-end 암호화 = Reduce(감소). 함정: Avoid 아님."},
+{id:"022",tp:"Treatment",d:"Easy",q:"Accepting a minor operational risk below IDR 100 million with no action taken is which treatment?",o:["Avoid","Accept","Transfer","Reduce"],a:1,e:"경미한 운영리스크(<IDR 100M) 수용, no action = Accept."},
+{id:"023",tp:"Treatment",d:"Hard",q:"In the People-Policy-Process-Performance (4P) framework for risk management, 'establishing risk owners and clarity of duties' falls under:",o:["Process","Policy","Performance","People"],a:3,e:"4P: People = HR 적정성·Risk Owner 지정·직무 명확. Policy=Appetite/Tolerance/Limit, Process=RCSA·escalation, Performance=통제 효과성·KRI."},
+{id:"024",tp:"Treatment",d:"Hard",q:"Under the dual-KPI integration approach, if the strategic KPI is 'ROE 3%', the corresponding risk management KPI example is:",o:["Complaint ratio increase > 2%","CSI = 8","Time To Approve < 8 hours","VaR = Rp 5 Bio"],a:3,e:"Dual KPI 표: Financial 관점 Strategic KPI(ROE 3%) ↔ Risk Mgmt KPI(VaR = Rp 5 Bio)."},
+{id:"025",tp:"Treatment",d:"Medium",q:"Which of the following is an example of a 'Key Risk Indicator (KRI)' function in the risk management strategy?",o:["A marketing metric for new product launches","A dividend distribution schedule","An early warning system for control/mitigation effectiveness","An external audit opinion"],a:2,e:"4P-Performance: KRI = Early Warning System. 통제·완화 효과성 조기 경보."},
+{id:"026",tp:"RiskLimit",d:"Hard",q:"In the risk limit hierarchy, which concept is the PRIMARY constraint in determining risk appetite and risk tolerance?",o:["Risk Capacity (Risk Bearing Capacity)","Risk Tolerance","Risk Appetite","Risk Limit"],a:0,e:"PC 2.1: Risk Capacity가 1차 제약(primary constraint). Appetite·Tolerance는 Capacity 안에서 결정."},
+{id:"027",tp:"RiskLimit",d:"Medium",q:"Risk appetite is BEST defined as:",o:["The level of risk a company is willing to accept to achieve its strategic objectives","The company's total capital available to absorb losses","The maximum risk a company can accept in its operations","The numerical limit set for each of the eight risk types"],a:0,e:"Risk Appetite = 전략 목표 달성 위해 '기꺼이 수용'하는 리스크. (C)=Tolerance, (B)=Capacity, (D)=Limit."},
+{id:"028",tp:"RiskLimit",d:"Medium",q:"A company stipulating that the NPF rate must not exceed 5% is an example of:",o:["Risk Capacity","Risk Tolerance","Risk Appetite","Risk Limit per risk type"],a:1,e:"NPF 5% 초과 금지 = Risk Tolerance(최대 수용 가능). 단일채무자 총자본 10% 한도도 Tolerance."},
+{id:"029",tp:"RiskLimit",d:"Hard",q:"The relationship producing risk limits for the 8 risk types is expressed as:",o:["Risk Capacity − Risk Tolerance","Risk Appetite ÷ Risk Tolerance","Risk Appetite × Risk Capacity × Risk Tolerance","Risk Appetite + Risk Capacity + Risk Tolerance"],a:2,e:"도식: Risk Appetite × Risk Bearing Capacity × Risk Tolerance → 8개 리스크 유형별 Risk Limit 도출."},
+{id:"030",tp:"RiskLimit",d:"Medium",q:"Which method of determining risk limits relies on mathematical models based on empirical data?",o:["Quantitative","Benchmarking only","Qualitative","Mixed"],a:0,e:"Quantitative = 실증 데이터 기반 수학 모델. Qualitative = 인터뷰·벤치마킹·규정. Mixed = 2차 데이터·규정."},
+{id:"031",tp:"RiskLimit",d:"Hard",q:"In the Appetite vs Tolerance example for Credit Risk (F5PD overdue > 30 days), the appetite and tolerance are:",o:["Appetite Max 10 Billion, Tolerance Max 12.5 Billion","Appetite Max 5%, Tolerance < 4%","Appetite < 4%, Tolerance Max 5%","Appetite 100%-125%, Tolerance 85%-150%"],a:2,e:"Credit Risk F5PD overdue >30일 → Appetite < 4%, Tolerance Max 5%. Appetite가 Tolerance보다 보수적(작음)."},
+{id:"032",tp:"RiskLimit",d:"Medium",q:"According to PC 2.3, the scope of a Risk Management Policy includes all of the following EXCEPT:",o:["Risk Management Principles and Governance Structure","Types of Risk and Their Management Strategies","The company's quarterly dividend distribution plan","Risk Appetite and Risk Tolerance"],a:2,e:"PC 2.3 범위 9개: Introduction·Objectives·Scope·Principles·Governance Structure·Process·Appetite/Tolerance·Types of Risk & Strategies·Training & Culture. 배당계획 없음."},
+{id:"033",tp:"GCG",d:"Easy",q:"POJK No. 48 of 2024 concerns:",o:["Good Governance for Financing Institutions, Venture Capital Companies, Microfinance Institutions, and Other FSIs (PVML)","HR competency certification","Risk Management for Financing Institutions","Non-face-to-face financing"],a:0,e:"POJK 48/2024 = Good Governance for PVML. 42/2024=Risk Management, 43/2024=HR 인증, 46/2024=비대면 financing."},
+{id:"034",tp:"GCG",d:"Medium",q:"In POJK 48/2024, the term 'PVML' refers to:",o:["Prudential Valuation of Mortgage Loans","Financing Institutions, Venture Capital Companies, Microfinance Institutions, and Other Financial Services Institutions","Public Venture Markets Ltd","Personal Verification and Money Laundering control"],a:1,e:"PVML = Perusahaan Pembiayaan, Modal Ventura, Lembaga Keuangan Mikro 등 금융서비스기관 통칭."},
+{id:"035",tp:"GCG",d:"Hard",q:"Which of the following is included in the GCG implementation scope under POJK 48/2024?",o:["Setting the central bank base interest rate","Determining foreign exchange reserves","Approval of consumer loan applications","Implementation of risk management, anti-fraud strategies, compliance function, and internal/external audit functions"],a:3,e:"GCG 적용범위 16개 중: Risk management·Anti-fraud strategy·Compliance function·Internal/External audit. 중앙은행 금리·외환보유고는 BI 소관."},
+{id:"036",tp:"GCG",d:"Medium",q:"Which of the following is NOT among the stated purposes of implementing GCG under POJK 48/2024?",o:["Improve PVML management in a professional, effective, efficient manner","Optimize PVML's value for stakeholders","Create a healthier, more reliable PVML adhering to consumer protection principles","Guarantee a minimum 15% annual return to shareholders"],a:3,e:"GCG 목적: 가치 최적화·경쟁력·전문경영·컴플라이언스·투자환경·건전성·국가경제 기여. 특정 수익률 보장은 없음."},
+{id:"037",tp:"GCG",d:"Hard",q:"POJK 48/2024 is BEST described in relation to earlier GCG regulations as:",o:["A temporary COVID-19 relaxation measure","The new consolidated governance regulation absorbing/replacing POJK 30/2014 and 29/2020","A sharia-only governance code","A subordinate circular under POJK 30/2014"],a:1,e:"POJK 48/2024 = 신규 통합 GCG. POJK 30/2014(원본)·29/2020(개정) 흡수·대체."},
+{id:"038",tp:"3Lines",d:"Medium",q:"The Three Lines model in Unit 3 is sourced from which institution?",o:["OJK","IIA (Institute of Internal Auditors)","Basel Committee","PPATK"],a:1,e:"교재 출처 명시: Source: IIA (Institute of Internal Auditors)."},
+{id:"039",tp:"3Lines",d:"Easy",q:"In the Three Lines model, which line provides products/services to clients and manages risk directly?",o:["External assurance providers","Second line","Third line","First line"],a:3,e:"1st line = 고객 제품·서비스 제공 + 리스크 직접 관리(risk-taking)."},
+{id:"040",tp:"3Lines",d:"Medium",q:"In the Three Lines model, the Risk Management and Compliance functions belong to:",o:["Third line roles","First line roles","Second line roles","The governing body"],a:2,e:"2nd line = Risk Management + Compliance(법규준수·내부통제·IT보안·ERM). Internal Audit = 3rd line."},
+{id:"041",tp:"3Lines",d:"Hard",q:"According to the Three Lines model, which is a requirement for third-line (Internal Audit) independence?",o:["Combining its functions with the second-line risk function","Reporting directly to the first-line business units","Accountability to the Governing Body, access to people/resources/data, and freedom from bias or interference","Obtaining prior approval from management for every audit"],a:2,e:"3rd Line Independence: ① Governing Body에 책임(보고) ② people·resources·data 접근 ③ 편향·간섭 배제."},
+{id:"042",tp:"3Lines",d:"Hard",q:"Which statement about combining lines in the Three Lines model is CORRECT?",o:["First and second line roles may be combined or separated, but the third line must remain independent","All three lines must always be merged into one unit","The second and third lines are required to be combined","The third line and first line are always combined"],a:0,e:"1st·2nd line은 결합/분리 가능. 3rd line(Internal Audit)은 반드시 독립 유지."},
+{id:"043",tp:"위원회",d:"Medium",q:"NBFIs are required to establish which two risk management bodies/functions under the training module?",o:["A Sharia Board and a Remuneration Committee","An Audit Committee and an External Auditor","A Compliance Department and a Marketing Unit","A Risk Management Committee and a Risk Management Function"],a:3,e:"NBFI는 Risk Management Committee + Risk Management Function 설치 의무."},
+{id:"044",tp:"위원회",d:"Hard",q:"What is the KEY difference between the Risk Management Committee and the Risk Monitoring Committee?",o:["The Risk Management Committee serves the BOC; the Risk Monitoring Committee serves the BOD","They are the same committee with different names","The Risk Monitoring Committee implements risk while the Risk Management Committee only audits","The Risk Management Committee is a tool for the Directors in implementing risk management; the Risk Monitoring Committee is a tool for the BOC in monitoring risk management implementation"],a:3,e:"Risk Management Committee = Directors(BOD)의 리스크 관리 실행 도구. Risk Monitoring Committee = BOC의 감독 도구. 최빈출 함정."},
+{id:"045",tp:"위원회",d:"Hard",q:"The minimum composition of the Risk Management Committee includes:",o:["The entire workforce of the business units","At least half of the Directors, one of whom is the director responsible for compliance/Risk Management functions, plus relevant executive officers","All members of the Board of Commissioners","Only the external auditor and one independent commissioner"],a:1,e:"Risk Management Committee 최소 구성 = Directors 절반 이상(그 중 1인은 compliance/Risk Management 담당) + 관련 executive officer."},
+{id:"046",tp:"위원회",d:"Medium",q:"The Risk Management Function must be independent of which functions?",o:["The external audit and tax functions","The marketing and HR functions only","The business/operational (risk-taking) functions and the internal control functions","It need not be independent of any function"],a:2,e:"Risk Management Function은 risk-taking(영업·운영) 및 내부통제 기능과 독립. President Director/RM 담당 Director에 직보."},
+{id:"047",tp:"위원회",d:"Medium",q:"The Risk Management Function reports directly to:",o:["The President Director or the Director in charge of the Risk Management function","The external auditor","The marketing department head","OJK's Chief Executive Supervisor"],a:0,e:"Risk Management Function은 President Director 또는 RM 담당 Director에 직접 보고. 영업라인 산하 배치는 오답."},
+{id:"048",tp:"위원회",d:"Hard",q:"The Corporate/Risk Governance Policy must include at least all of the following EXCEPT:",o:["Completeness of internal control committees (Risk Management, Audit, Risk Monitoring, Remuneration & Nomination)","The personal investment portfolio of each director","Procedures for BOC and Directors' duties and responsibilities","Anti-Fraud Strategy and AML/CFT/CPF programs"],a:1,e:"Risk Governance Policy 포함: BOC/BOD 의무 절차·내부통제위원회·compliance/audit 정책·RM 정책·Anti-Fraud·AML/CFT/CPF·장기/연간 계획. 이사 개인 포트폴리오는 없음."},
+{id:"049",tp:"Culture",d:"Medium",q:"Risk culture is BEST defined as:",o:["The mathematical model used to calculate VaR","The values, beliefs, and attitudes held by individuals and the organization in identifying, understanding, and managing risk","The external audit's assessment of internal controls","The numerical risk limits set for each risk type"],a:1,e:"PC 3.2: Risk culture = 개인·조직이 리스크를 식별·이해·관리하는 가치·신념·태도."},
+{id:"050",tp:"Culture",d:"Medium",q:"Which is the FIRST step in implementing a risk culture according to the training module?",o:["Monitoring and Evaluation","Rewards and Sanctions","Risk Awareness Campaign","Commitment from Leadership"],a:3,e:"Risk Culture 6단계 1번 = Commitment from Leadership(tone at the top)."},
+{id:"051",tp:"Culture",d:"Hard",q:"A Director who directly chairs Risk Management Committee meetings to demonstrate commitment is an example of which risk culture step?",o:["Rewards and Sanctions","Risk Awareness Campaign","Commitment from Leadership (tone at the top)","Risk Training and Education"],a:2,e:"Directors가 RM Committee 직접 주재 = Commitment from Leadership(tone at the top)."},
+{id:"052",tp:"Culture",d:"Medium",q:"Establishing a 'no-blame risk culture' and integrating risk awareness into HR performance assessment falls under which risk culture implementation step?",o:["Establishing Policies and Procedures that Support a Risk Culture","Risk Awareness Campaign","Monitoring and Evaluation","Commitment from Leadership"],a:0,e:"3단계: Policies & Procedures = no-blame 문화, 간편 보고 절차, HR 평가지표에 risk awareness 포함."},
+{id:"053",tp:"Culture",d:"Medium",q:"Conducting an annual risk culture survey to measure employee awareness corresponds to which step?",o:["Monitoring and Evaluation of Risk Culture","Risk Awareness Campaign","Rewards and Sanctions","Risk Training and Education"],a:0,e:"6단계: Monitoring and Evaluation = 연간 risk culture survey + 정기 효과성 보고."},
+{id:"054",tp:"Culture",d:"Easy",q:"Which of the following is a characteristic of a constructive risk culture?",o:["Avoiding all risk-based decision-making","Active involvement of the Directors and BOC in managing risk, and open communication","Concealing risk information from leadership","Fault-finding and blaming individuals for every loss"],a:1,e:"Constructive Risk Culture: Risk-Based Leadership, BOD·BOC 적극 참여, 학습·혁신 의지, 책임 지향(no fault-finding), 개방적 소통."},
+{id:"055",tp:"Infra",d:"Hard",q:"Which of the following is one of the six components of risk management infrastructure (PC 3.3)?",o:["The external auditor's engagement letter","A fixed dividend policy","A marketing campaign budget","Risk Management Policy and Framework; organizational structure with clear duties; supporting technology; processes/guidelines; training/education; measurement/evaluation systems"],a:3,e:"PC 3.3 Infrastructure 6요소: Policy/Framework·명확한 R&R 조직구조·지원 기술/시스템·프로세스/가이드라인·Risk Awareness 교육·측정/평가 시스템."},
+{id:"056",tp:"Infra",d:"Hard",q:"Compared with the PC 2.3 nine-element Risk Management Policy, the Risk Management Policy under infrastructure (PC 3.3) ADDITIONALLY includes:",o:["Fraud Control & Anti-fraud Strategy, and Risk Management Reporting","The marketing department's KPIs","The company's tax filing schedule","Foreign exchange hedging contracts"],a:0,e:"Infrastructure 관점 11개 구성에는 Fraud Control & Anti-fraud Strategy, Risk Management Reporting이 추가됨(PC 2.3의 9개 대비)."},
+{id:"057",tp:"위원회",d:"Medium",q:"In the risk governance structure example, the 'Risk Management & Credit Policy Committee' covers which risks?",o:["Only intragroup transaction policy","Liquidity, Interest Rate, and Forex risks","Only insurance risk","Credit, Market, Operational, Legal, Reputation, Strategic, and Compliance risks plus Capital management"],a:3,e:"Risk Management & Credit Policy Committee = Credit·Market·Operational·Legal·Reputation·Strategic·Compliance Risk + Capital. ALCO는 Liquidity·Interest Rate·Forex 담당."},
+{id:"058",tp:"위원회",d:"Hard",q:"Which committee in the risk governance structure example is responsible for Liquidity Risk, Interest Rate Risk, and Forex Risk?",o:["Asset & Liability Committee (ALCO)","Risk Management & Credit Policy Committee","Capital & Subsidiaries Committee","Audit Committee"],a:0,e:"ALCO = Liquidity·Interest Rate·Forex Risk + Pricing Management + Recovery Plan."},
+{id:"059",tp:"GCG",d:"Hard",q:"Which set of POJK regulations forms the policy basis for evaluating governance and risk management implementation (per the related Q6 unit references)?",o:["POJK 42/2024, 46/2024, 29/2020, SEOJK 11/2020, and 48/2024","POJK 22/2023 and POJK 28/2020 only","POJK 24/2019 and SEOJK 23/2019 only","POJK 12/2017 and POJK 43/2024 only"],a:0,e:"교재 Policy Basis: POJK 42/2024(Risk Mgmt)·46/2024(Development)·29/2020(GCG 개정)·SEOJK 11/2020(Health Level)·48/2024(Good Governance)."},
+{id:"060",tp:"RiskLimit",d:"Medium",q:"A finance company sets that 'all operational risks must be at a low to moderate level (Level 2 Risk)'. This statement is an example of:",o:["An ISO 31000 principle","A risk treatment of type 'Transfer'","Risk Appetite","Risk Capacity"],a:2,e:"Risk Appetite 예시: '모든 운영리스크는 Level 2(low-moderate) 이내' = Risk Appetite(기꺼이 수용하는 리스크 수준)."},
+{id:"061",tp:"Matrix",d:"Hard",q:"In the 5x5 risk impact matrix, an event involving license revocation, a data confidentiality breach, or an AML violation is rated at which impact score, even if the direct financial loss is small?",o:["Score 2 - Minor","Score 3 - Moderate","Score 4 - Significant","Score 5 - Major to Catastrophic"],a:3,e:"Impact는 재무손실뿐 아니라 비재무 축(Reputation·Policy Compliance·Customer Service)으로도 평가. license revocation·data breach·AML 위반 = Score 5(Major to Catastrophic), 재무손실 규모와 무관."},
+{id:"062",tp:"Matrix",d:"Medium",q:"Under the non-financial impact criteria, 'substantial non-compliance with internal policies and external regulations causing serious negative impact, with repeated major media coverage exceeding one day' corresponds to which impact score?",o:["Score 1 - Insignificant","Score 4 - Significant","Score 2 - Minor","Score 3 - Moderate"],a:1,e:"Score 4(Significant) = 내부정책+외부규정 중대 위반, 주요 미디어 반복보도 >1일, Working Group/Board 논의, 목표달성 10~20%↓."},
+{id:"063",tp:"Treatment",d:"Medium",q:"In the training module's risk-type examples, an 'asset–liability gap caused by a high cost of funds (Liquidity Ratio < 1)' is the root cause for which risk type?",o:["Credit Risk","Operational Risk","Liquidity Risk","Strategic Risk"],a:2,e:"Liquidity Risk: Liquidity Ratio<1의 root cause = 고금리 자금조달로 인한 asset–liability gap. High Cash Ratio는 판매목표 미달의 idle cash."},
+{id:"064",tp:"위원회",d:"Hard",q:"In the example risk governance structure, which committee is responsible for Credit, Market, Operational, Legal, Reputation, Strategic, and Compliance risks plus Capital?",o:["Asset & Liability Committee (ALCO)","Risk Management & Credit Policy Committee","Capital & Subsidiaries Committee","Integrated Risk Committee"],a:1,e:"Risk Management & Credit Policy Committee = Credit·Market·Operational·Legal·Reputation·Strategic·Compliance Risk + Capital. ALCO = Liquidity·Interest Rate·Forex."},
+{id:"065",tp:"RiskLimit",d:"Medium",q:"In the Appetite vs Tolerance examples, 'Day Alternate Funding' for Liquidity Risk has an appetite of Min 30 days and a tolerance of Min 20 days. What does this ordering illustrate?",o:["Appetite is always numerically smaller than tolerance","For funding-days metrics, appetite (more conservative) is a longer minimum than tolerance, the reverse of ratio-based limits like NPF","Tolerance and appetite are identical for liquidity risk","Day Alternate Funding is a credit risk metric"],a:1,e:"Day Alternate Funding은 일수가 길수록 보수적 → Appetite(Min 30일) > Tolerance(Min 20일). NPF·Current Ratio처럼 'Appetite가 항상 작다'는 통념과 방향 반대."}
+];
+
+const KEY="A B C D".split(" ");
+let quiz=[], cur=0, answers=[], picked=false;
+const app=document.getElementById('app');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function start(mode){
+  if(mode==='all') quiz=shuffle(BANK);
+  else quiz=shuffle(BANK).slice(0,30);
+  cur=0; answers=[]; render();
+}
+function home(){
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">65문항 풀 · 실전 영어 4지선다</p>
+      <div class="start-opts">
+        <button onclick="start('rand30')">랜덤 30문항 <span class="desc">실전 모사 — 전 범위에서 무작위 30개</span></button>
+        <button onclick="start('all')">전체 65문항 <span class="desc">Unit 3 거버넌스·전략·리스크관리 전 범위 완주</span></button>
+      </div>
+    </div>`;
+}
+function render(){
+  const q=quiz[cur]; picked=false;
+  const dcls=q.d.toLowerCase();
+  app.innerHTML=`
+    <div class="meta"><span>문항 ${cur+1} / ${quiz.length}</span><span>QID W3-${q.id}</span></div>
+    <div class="bar"><i style="width:${(cur)/quiz.length*100}%"></i></div>
+    <div class="tags"><span class="tag topic">${q.tp}</span><span class="tag ${dcls}">${q.d}</span></div>
+    <div class="q">${q.q}</div>
+    <div class="opts" id="opts">
+      ${q.o.map((t,i)=>`<button class="opt" onclick="pick(${i})"><span class="k">${KEY[i]}</span><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="exp" id="exp"></div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" id="next" onclick="next()" disabled>다음 →</button>
+    </div>`;
+}
+function pick(i){
+  if(picked) return; picked=true;
+  const q=quiz[cur];
+  answers[cur]={id:q.id,correct:i===q.a,picked:i};
+  document.querySelectorAll('#opts .opt').forEach((b,idx)=>{
+    b.disabled=true;
+    if(idx===q.a) b.classList.add('correct');
+    else if(idx===i) b.classList.add('wrong');
+  });
+  const exp=document.getElementById('exp');
+  exp.innerHTML=`<b>정답: ${KEY[q.a]}</b> &nbsp;—&nbsp; ${q.e}`;
+  exp.classList.add('show');
+  document.getElementById('next').disabled=false;
+  if(cur===quiz.length-1) document.getElementById('next').textContent='결과 보기';
+}
+function next(){if(cur<quiz.length-1){cur++;render()}else result()}
+function result(){
+  const right=answers.filter(a=>a.correct).length;
+  const tot=quiz.length;
+  const pct=Math.round(right/tot*100);
+  const byTopic={};
+  answers.forEach((a,i)=>{const t=quiz[i].tp;byTopic[t]=byTopic[t]||{r:0,n:0};byTopic[t].n++;if(a.correct)byTopic[t].r++});
+  const wrongs=answers.map((a,i)=>({a,q:quiz[i]})).filter(x=>!x.a.correct);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">${tot}문항 중 ${right}개 정답</div>
+      <div class="breakdown">
+        ${Object.entries(byTopic).map(([t,v])=>`<div class="row"><span>${t}</span><b>${v.r} / ${v.n}</b></div>`).join('')}
+      </div>
+      ${wrongs.length?`<div class="wronglist"><b style="color:var(--red)">오답 ${wrongs.length}문항</b>
+        ${wrongs.map(x=>`<div class="w">W3-${x.q.id} · 정답 ${KEY[x.q.a]} — ${x.q.q.slice(0,70)}…</div>`).join('')}
+      </div>`:'<p style="color:var(--green);font-weight:700">전 문항 정답</p>'}
+      <div class="nav" style="justify-content:center;margin-top:24px"><button class="act" onclick="home()">다시 풀기</button></div>
+    </div>`;
+}
+home();
+</script>
+</body>
+</html>

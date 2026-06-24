@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — W3 Flashcards (Governance / Strategy / Risk)</title>
+<style>
+  :root{--ink:#1a2238;--paper:#f7f5ef;--line:#d8d3c4;--gold:#b8893a;--gold-soft:#e8dcc0;--green:#2f6b4f;--red:#a33a2e;--blue:#2f5170;--purple:#5b4a7a;--muted:#9a9788}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 70px}
+  .wrap{max-width:680px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:20px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:24px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:16px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.topic{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.trap{background:#f6e9e6;border-color:#e3bdb5;color:var(--red)}
+  .card{position:relative;width:100%;min-height:300px;perspective:1600px;cursor:pointer;margin-bottom:6px}
+  .inner{position:relative;width:100%;min-height:300px;transition:transform .5s;transform-style:preserve-3d}
+  .card.flipped .inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--line);border-radius:14px;padding:34px 28px;display:flex;flex-direction:column;justify-content:center;background:#fff;box-shadow:0 2px 10px rgba(26,34,56,.06)}
+  .face .lbl{position:absolute;top:16px;left:24px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+  .front .q{font-size:21px;font-weight:700;letter-spacing:-.01em;text-align:center}
+  .back{transform:rotateY(180deg);background:#fffdf8}
+  .back .lbl{color:var(--green)}
+  .back .a{font-size:16px;line-height:1.7}
+  .back .note{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;color:#7a7d8f}
+  .hint{text-align:center;font-size:12px;color:#9a9788;margin:10px 0 16px}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:8px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.3;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .mark{display:flex;gap:8px;margin-top:14px;justify-content:center}
+  .mark button{flex:1;max-width:160px;padding:10px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;transition:.15s}
+  .mark .known{color:var(--green)}.mark .known:hover{background:#e9f3ed;border-color:var(--green)}
+  .mark .again{color:var(--red)}.mark .again:hover{background:#f7e9e6;border-color:var(--red)}
+  .result{text-align:center;padding:14px 0}
+  .score{font-size:50px;font-weight:800;color:var(--gold)}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:18px}
+  .againlist{text-align:left;margin-top:14px;font-size:13px;color:#5d6075}
+  .againlist .w{padding:7px 0;border-bottom:1px solid var(--line)}
+  footer{text-align:center;font-size:12px;color:var(--muted);margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>W3 암기카드 — Governance / Strategy / Risk &#9733;</h1>
+    <div class="sub">TARIF · ISO 31000 · 5&#215;5 Matrix · Risk Treatment · Risk Limit 3계층 · POJK 48/42 · 3 Lines · Risk Culture · 39장 · 카드 탭하면 뒤집기</div>
+  </header>
+  <div id="app"></div>
+  <footer>출처: Training Module Qualification Level 6&#183;7 (Day 2 pp.60~85)</footer>
+</div>
+<script>
+const CARDS=[
+{tp:"개요",t:"Concept",f:"Unit 3의 3 CE 논리 순서는?",b:"CE1 Strategy(전략→리스크 식별) → CE2 Policies(정책·한도) → CE3 Governance & Infrastructure(거버넌스·조직·문화). '전략이 먼저, 거버넌스 구조는 나중'이 골격.",n:"§1 / 시험 단골"},
+{tp:"개요",t:"List",f:"Unit 3 Quality Evidence 5종은?",b:"Risk Governance·Strategy·Policy 문서 / Risk Management Committee 회의록 / 법규 이행(위반 포함) 보고서 / Risk Governance 평가 문서 / Anti-Fraud Strategy 감독 보고서.",n:"§1"},
+{tp:"TARIF",t:"List",f:"Governance 5원칙 TARIF는?",b:"Transparency(투명·정보공개) · Accountability(책임·역할별) · Responsibility(책무·법규준수) · Independence(독립·이해상충 회피) · Fairness(공정·이해관계자). POJK 48/2024.",n:"§2 / TARIF"},
+{tp:"TARIF",t:"Comparison",f:"Accountability vs Responsibility 차이는?",b:"Accountability = 역할·기능에 맞는 관리 책임(내부 역할 명확). Responsibility = 법규·규정 준수(외부 규범). ⚠️ 둘을 바꿔놓은 정의가 단골 오답.",n:"§2 / 함정 13-1"},
+{tp:"TARIF",t:"Comparison",f:"TARIF(GCG 5원칙) vs BSCA(Business Plan 4원칙) 구분은?",b:"TARIF = Transparency·Accountability·Responsibility·Independence·Fairness. BSCA = Balance·Sustainability·Collaboration·Accountability. 겹치는 건 Accountability뿐.",n:"§2 / 함정 13-9"},
+{tp:"ISO31000",t:"Concept",f:"ISO 31000:2018의 위상과 궁극 목적은?",b:"인니 채택 = SNI ISO 31000:2018. POJK=법적 의무(규제), ISO=따라야 할 원칙(best practice). 10원칙의 종착점 = Creation and Protection of Value(가치 창출·보호).",n:"§3 / 함정 13-8"},
+{tp:"ISO31000",t:"Concept",f:"'리스크관리의 목적은 모든 리스크 제거'는 맞는가?",b:"오답. 리스크관리는 위험을 0으로 만드는 게 아니라(불가능) 회사 가치를 지키고 키우기 위한 것 = Creation and Protection of Value.",n:"§3"},
+{tp:"4층구조",t:"List",f:"G–RM–IC–IA 4층 구조와 각 역할은?",b:"Governance(최상위 우산·방향) → Risk Management & Compliance + Internal Control(실행 체계) → Internal Audit(독립 검증·3rd Line). 모두 Business Sustainability 지향.",n:"§4 / 시험 단골 위계"},
+{tp:"전략",t:"List",f:"Corporate Strategy 개발 4단계는?",b:"① Strategic Context(Vision·Mission·경쟁환경) → ② Company Diagnosis(SWOT·Critical Performance: ROE·Loss Ratio·Min Capital·Gearing) → ③ Strategic Options → ④ Execution Roadmap.",n:"§5"},
+{tp:"전략",t:"Concept",f:"Risk Management Process의 첫 단계는?",b:"Establishing the scope(범위 설정). 전략이 정해지면 그에 따라 리스크 범위를 설정 — 범위 설정 전 측정·통제로 점프하면 순서 오류.",n:"§5 / 함정 13-11"},
+{tp:"전략",t:"List",f:"Risk Scope 설정 4단계는?",b:"① Identify Key Risks(전략별 핵심 리스크) → ② Measuring Risk Profiles(Impact·Likelihood) → ③ Developing Risk Types & Management Plans → ④ Integrating with Strategic Roadmap.",n:"§5"},
+{tp:"Matrix",t:"Calculation",f:"Risk Profile 산출 공식과 점수 범위는?",b:"Risk Profile = f(Impact × Likelihood). 1~5 × 1~5 = 1~25점. ⚠️ Impact만 / Likelihood만 보는 단일 축 판정은 오답.",n:"§6 / 함정 13-6"},
+{tp:"Matrix",t:"List",f:"Impact 5단계 재무 경계값은?",b:"1 Insignificant ≤25M · 2 Minor >25M~≤100M · 3 Moderate >100M~≤500M · 4 Significant >500M~≤1bn · 5 Major to Catastrophic >1bn (IDR).",n:"§6 / 경계값 암기"},
+{tp:"Matrix",t:"List",f:"Likelihood 5단계 확률 경계값은?",b:"1 Very Rare ≤2% · 2 Rare >2~5% · 3 Sometimes >5~10% · 4 Often >10~20% · 5 Very Often >20%.",n:"§6 / 경계값 암기"},
+{tp:"Matrix",t:"Concept",f:"재무손실이 작아도 Impact Score 5가 되는 비재무 사건은?",b:"license revocation(인가 취소)·data confidentiality breach(데이터 유출)·AML 위반·capital adequacy issue. Impact는 재무 IDR뿐 아니라 Reputation·Policy Compliance·Customer Service 4축으로 평가.",n:"§6 / 함정 (비재무 축)"},
+{tp:"Treatment",t:"List",f:"Risk Treatment 4유형 매핑은?",b:"Avoid=활동 종료(terminate) · Reduce=선제 통제(암호화 등) · Transfer=보험·아웃소싱 · Accept=조치 없음. ⚠️ 보험=Transfer(Reduce 아님), 암호화=Reduce(Avoid 아님).",n:"§7 / 함정 13-5"},
+{tp:"Treatment",t:"Concept",f:"Treatment 선택은 무엇으로 결정되나?",b:"Impact × Likelihood 점수. 고점수 → Avoid/Reduce, 저점수 → Accept. §6 측정과 §7 처리는 한 쌍.",n:"§7"},
+{tp:"Treatment",t:"List",f:"4P 관리 프레임은?",b:"People(HR·Risk Owner·직무 명확) · Policy(Appetite/Tolerance/Limit) · Process(RCSA·escalation) · Performance(통제 효과성·KRI 조기경보).",n:"§7"},
+{tp:"RiskLimit",t:"List",f:"Risk Limit 3계층 위계는?",b:"Capacity(물리적 흡수 한계, 총자본까지) > Tolerance(최대 견딜 수 있는, maximum acceptable) > Appetite(기꺼이 수용, willing). Capacity가 1차 제약. ⚠️ Appetite를 Capacity보다 크게 = 오답.",n:"§8 / 함정 13-4"},
+{tp:"RiskLimit",t:"Comparison",f:"Risk Appetite vs Tolerance 예시는?",b:"NPF: Appetite <4%, Tolerance Max 5%. 단일채무자 한도 총자본 10% = Tolerance. ⚠️ '기꺼이 수용'(Appetite)과 '최대 허용'(Tolerance) 바꿔놓는 문제 빈출.",n:"§8 / 시험 단골"},
+{tp:"RiskLimit",t:"Concept",f:"Day Alternate Funding의 Appetite>Tolerance 역전 이유는?",b:"유동성 일수는 길수록 보수적 → Appetite(Min 30일) > Tolerance(Min 20일). NPF·Current Ratio처럼 'Appetite가 항상 작다'는 통념과 방향 반대.",n:"§8 / 함정 (방향성)"},
+{tp:"RiskLimit",t:"Calculation",f:"8대 Risk별 Risk Limit 도출 공식은?",b:"Risk Appetite × Risk Bearing Capacity × Risk Tolerance → 8개 리스크 유형별 Risk Limit. 측정법: Qualitative(인터뷰·벤치마킹) / Quantitative(수학모델·실증) / Mixed.",n:"§8"},
+{tp:"RiskLimit",t:"List",f:"Risk Management Policy PC 2.3 9개 구성은?",b:"Introduction · Policy Objectives · Policy Scope · Principles · Governance Structure · Process · Appetite & Tolerance · Types of Risk & Strategies · Training & Culture. ⚠️ 배당계획·세무일정·외환헤지 절대 미포함.",n:"§8 / 9개 vs 11개"},
+{tp:"GCG",t:"Concept",f:"POJK 48/2024의 정체와 위상은?",b:"Good Governance for PVML(금융서비스기관 통칭). POJK 30/2014(원본)·29/2020(개정)을 흡수·대체한 신규 통합 GCG. 'PVML'=Perusahaan Pembiayaan·Modal Ventura·LKM 등.",n:"§9 / 시험 단골"},
+{tp:"GCG",t:"List",f:"2024년 POJK 4종 번호 매핑은?",b:"48=Good Governance(GCG) · 42=Risk Management · 43=HR 역량 인증(SPPI 근거) · 46=Development·비대면 financing. 번호 바꿔 출제 빈출.",n:"§9 / 함정 13-7"},
+{tp:"GCG",t:"List",f:"GCG 적용범위 16개 중 Unit 3~5 직결 4개는?",b:"⑥ Risk management · ⑦ Anti-fraud strategy · ⑧ Compliance function · ⑨ Internal·External audit function. (총 16개 영역 중 6~9번).",n:"§9"},
+{tp:"GCG",t:"List",f:"GCG 목적 7개의 동심원 구조는?",b:"회사 안→시장→국가: ①가치 최적화 →②경쟁력 →③전문경영 →④윤리 컴플라이언스 →⑤국가 투자환경 →⑥건전·소비자보호 →⑦국가경제 기여. ⚠️ '주주 최소 수익률 보장'은 GCG 목적 아님.",n:"§9 / 함정"},
+{tp:"3Lines",t:"List",f:"3 Lines of Defense(IIA)는?",b:"1st = Business Units(risk-taking·영업) · 2nd = Risk Management + Compliance · 3rd = Internal Audit(독립 검증). 1st·2nd 결합/분리 가능, 3rd는 반드시 독립.",n:"§10 / 함정 13-3"},
+{tp:"3Lines",t:"List",f:"3rd Line(Internal Audit) 독립성 3대 요건은?",b:"① Accountability to the Governing Body(직접 보고) ② Access to people·resources·data ③ Freedom from bias or interference(편향·간섭 배제).",n:"§10"},
+{tp:"3Lines",t:"Concept",f:"'Compliance가 Internal Audit을 감독한다'는 맞는가?",b:"오답. Internal Audit(3rd)이 Compliance(2nd)를 독립 검증 — 반대 방향. 또 'Risk Management = 1st Line'도 오답(2nd Line).",n:"§10 / 함정"},
+{tp:"위원회",t:"Comparison",f:"Risk Management Committee vs Risk Monitoring Committee는?",b:"Management Committee = Directors(BOD) 도구, 리스크 관리 '실행'. Monitoring Committee = BOC 도구, '감독'. ⚠️ 최빈출 함정. Management=실행(BOD), Monitoring=감독(BOC).",n:"§11 / 함정 13-2"},
+{tp:"위원회",t:"Concept",f:"Risk Management Committee 최소 정족수는?",b:"Directors 절반 이상(at least half), 그 중 1인은 compliance/Risk Management 담당 director + 관련 executive officer. 'BOC 위원으로 구성'은 오답.",n:"§11 / 함정 13-12"},
+{tp:"위원회",t:"Concept",f:"Risk Management Function 독립성·보고선은?",b:"risk-taking(영업·운영) 및 내부통제 기능과 독립. President Director 또는 RM 담당 Director에 직접 보고. 영업부서 산하 배치는 오답.",n:"§11 / 함정 13-10"},
+{tp:"위원회",t:"Concept",f:"Risk Governance Structure 5종 위원회는 모두 의무 설치인가?",b:"아니다. 교재 'Example'(예시)일 뿐. 의무 = Risk Management Committee + Function + (BOC 산하) Risk Monitoring·Audit Committee + Remuneration & Nomination. ALCO·Capital&Subsidiaries·Integrated Risk는 선택적(특히 Integrated는 금융그룹 전용).",n:"§11 / 예시≠의무"},
+{tp:"위원회",t:"Comparison",f:"ALCO vs Risk Mgmt & Credit Policy Committee 담당 Risk는?",b:"ALCO = Liquidity·Interest Rate·Forex(시장·유동성 3종). RM & Credit Policy Committee = Credit·Market·Operational·Legal·Reputation·Strategic·Compliance + Capital. ⚠️ 둘 바꿔놓은 보기 빈출.",n:"§11 / 함정"},
+{tp:"Culture",t:"List",f:"Risk Culture 이행 6단계는?",b:"① Commitment from Leadership(tone at the top) ② Risk Training & Education ③ Policies & Procedures(no-blame) ④ Risk Awareness Campaign ⑤ Rewards & Sanctions ⑥ Monitoring & Evaluation.",n:"§12 / 1단계=tone at the top"},
+{tp:"Culture",t:"Concept",f:"모든 Risk Culture의 출발점은?",b:"1단계 Commitment from Leadership(tone at the top). 리더가 먼저 행동으로 보여주지 않으면 교육·캠페인·포상이 공허. 이사가 Risk Management Committee 직접 주재가 대표 예.",n:"§12 / 시험 단골"},
+{tp:"Infra",t:"List",f:"Risk Management Infrastructure 6요소(PC 3.3)는?",b:"Policy·Framework / 명확한 R&R 조직구조 / 지원 기술·시스템 / Process·Guidelines / Risk Awareness 교육 / 측정·평가 시스템.",n:"§12"},
+{tp:"Infra",t:"Comparison",f:"Risk Mgmt Policy 9개(PC 2.3) vs 11개(Infrastructure) 차이는?",b:"11개 버전에 추가되는 2개 = Fraud Control & Anti-fraud Strategy + Risk Management Reporting. 또 11개는 1번이 'Philosophy & Objectives'로 ①②가 통합. ⚠️ 구성 개수 묻는 문제 주의.",n:"§12 / 함정"}
+];
+const TLABEL={List:"List / Enumeration",Concept:"Concept",Comparison:"Comparison",Definition:"Definition",Calculation:"Calculation"};
+let deck=[],cur=0,results={},flipped=false;
+const app=document.getElementById('app');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function home(){
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">39장 · 카드 탭 → 뒤집기 · 안다/다시로 진도 체크</p>
+      <div class="start-opts">
+        <button onclick="start('all',true)">전체 39장 (셔플)<span class="desc">전 범위 무작위</span></button>
+        <button onclick="start('core',true)">핵심 — Matrix·RiskLimit·위원회<span class="desc">최대 비중 ⭐⭐⭐ + 최빈출 함정</span></button>
+        <button onclick="start('gov',true)">거버넌스 — TARIF·GCG·3Lines·Culture<span class="desc">POJK 48/2024 · 조직·문화</span></button>
+        <button onclick="start('all',false)">전체 39장 (순서대로)<span class="desc">정렬 학습</span></button>
+      </div>
+    </div>`;
+}
+function start(mode,sh){
+  let set;
+  if(mode==='core') set=CARDS.filter(c=>['Matrix','RiskLimit','위원회','Treatment'].includes(c.tp));
+  else if(mode==='gov') set=CARDS.filter(c=>['TARIF','GCG','3Lines','Culture','4층구조','Infra','개요','ISO31000','전략'].includes(c.tp));
+  else set=CARDS.slice();
+  deck=sh?shuffle(set):set;
+  cur=0;results={};flipped=false;render();
+}
+function render(){
+  const c=deck[cur];flipped=false;
+  const trap=(c.n||'').includes('함정')||(c.n||'').includes('≠')||(c.n||'').includes('방향성');
+  app.innerHTML=`
+    <div class="meta"><span>${cur+1} / ${deck.length}</span><span>${Object.keys(results).length}장 평가됨</span></div>
+    <div class="bar"><i style="width:${cur/deck.length*100}%"></i></div>
+    <div class="tags"><span class="tag topic">${c.tp}</span><span class="tag">${TLABEL[c.t]||c.t}</span>${trap?'<span class="tag trap">함정</span>':''}</div>
+    <div class="card" id="card" onclick="flip()">
+      <div class="inner">
+        <div class="face front"><span class="lbl">Question</span><div class="q">${c.f}</div></div>
+        <div class="face back"><span class="lbl">Answer</span><div class="a">${c.b}</div>${c.n?`<div class="note">${c.n}</div>`:''}</div>
+      </div>
+    </div>
+    <div class="hint">카드를 탭하면 뒤집힙니다</div>
+    <div class="mark"><button class="again" onclick="mark(false)">다시 볼래요</button><button class="known" onclick="mark(true)">알아요</button></div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" onclick="prev()" ${cur===0?'disabled':''}>← 이전</button>
+      <button class="act" onclick="next()">${cur===deck.length-1?'결과':'다음 →'}</button>
+    </div>`;
+}
+function flip(){flipped=!flipped;document.getElementById('card').classList.toggle('flipped',flipped)}
+function mark(k){results[cur]=k;if(cur<deck.length-1){cur++;render()}else result()}
+function prev(){if(cur>0){cur--;render()}}
+function next(){if(cur<deck.length-1){cur++;render()}else result()}
+function result(){
+  const known=Object.values(results).filter(Boolean).length;
+  const again=Object.entries(results).filter(([k,v])=>!v).map(([k])=>deck[k]);
+  const ev=Object.keys(results).length;
+  const pct=ev?Math.round(known/ev*100):0;
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">평가 ${ev}장 중 ${known}장 "알아요"</div>
+      ${again.length?`<div class="againlist"><b style="color:var(--red)">다시 볼 카드 ${again.length}장</b>${again.map(c=>`<div class="w">${c.f}</div>`).join('')}</div>
+        <div class="nav" style="justify-content:center;margin-top:20px;gap:10px"><button class="act ghost" onclick="home()">처음으로</button><button class="act" onclick="retry()">다시 볼 카드만</button></div>`
+      :`<p style="color:var(--green);font-weight:700;margin:10px 0">전부 "알아요"</p><div class="nav" style="justify-content:center;margin-top:16px"><button class="act" onclick="home()">처음으로</button></div>`}
+    </div>`;
+  window._again=again;
+}
+function retry(){deck=shuffle(window._again);cur=0;results={};render()}
+home();
+</script>
+</body>
+</html>
