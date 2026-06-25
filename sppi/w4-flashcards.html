@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — W4 Flashcards (Anti-Fraud / Internal Audit)</title>
+<style>
+  :root{--ink:#1a2238;--paper:#f7f5ef;--line:#d8d3c4;--gold:#b8893a;--gold-soft:#e8dcc0;--green:#2f6b4f;--red:#a33a2e;--blue:#2f5170;--purple:#5b4a7a;--muted:#9a9788}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 70px}
+  .wrap{max-width:680px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:20px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:24px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:16px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.topic{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.trap{background:#f6e9e6;border-color:#e3bdb5;color:var(--red)}
+  .card{position:relative;width:100%;min-height:300px;perspective:1600px;cursor:pointer;margin-bottom:6px}
+  .inner{position:relative;width:100%;min-height:300px;transition:transform .5s;transform-style:preserve-3d}
+  .card.flipped .inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--line);border-radius:14px;padding:34px 28px;display:flex;flex-direction:column;justify-content:center;background:#fff;box-shadow:0 2px 10px rgba(26,34,56,.06)}
+  .face .lbl{position:absolute;top:16px;left:24px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+  .front .q{font-size:21px;font-weight:700;letter-spacing:-.01em;text-align:center}
+  .back{transform:rotateY(180deg);background:#fffdf8}
+  .back .lbl{color:var(--green)}
+  .back .a{font-size:16px;line-height:1.7}
+  .back .note{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;color:#7a7d8f}
+  .hint{text-align:center;font-size:12px;color:#9a9788;margin:10px 0 16px}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:8px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.3;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .mark{display:flex;gap:8px;margin-top:14px;justify-content:center}
+  .mark button{flex:1;max-width:160px;padding:10px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;transition:.15s}
+  .mark .known{color:var(--green)}.mark .known:hover{background:#e9f3ed;border-color:var(--green)}
+  .mark .again{color:var(--red)}.mark .again:hover{background:#f7e9e6;border-color:var(--red)}
+  .result{text-align:center;padding:14px 0}
+  .score{font-size:50px;font-weight:800;color:var(--gold)}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:18px}
+  .againlist{text-align:left;margin-top:14px;font-size:13px;color:#5d6075}
+  .againlist .w{padding:7px 0;border-bottom:1px solid var(--line)}
+  footer{text-align:center;font-size:12px;color:var(--muted);margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>W4 암기카드 — Anti-Fraud / Internal Audit</h1>
+    <div class="sub">Fraud Triangle · 4 Pillars · POJK 12/28 2024 · SIPELAKU · RBA · RCA · Kirkpatrick · QAIP · 38장 · 카드 탭하면 뒤집기</div>
+  </header>
+  <div id="app"></div>
+  <footer>출처: Training Module Qualification Level 6&#183;7 (Day 2 pp.112~176)</footer>
+</div>
+<script>
+const CARDS=[
+{tp:"개요",t:"Concept",f:"W4 2개 Unit과 Level 7 단위코드는?",b:"Unit 4 Implementing Anti-Fraud Strategies(K.64PBY91.020.1) + Unit 5 Monitoring Follow-up Results of Internal Audit Findings(K.64PBY91.026.1). 둘 다 Level 7(수립·평가 주체).",n:"§1 / 시험 단골"},
+{tp:"개요",t:"Comparison",f:"Anti-Fraud 020(Q7) vs 022(Q6) 구분은?",b:"020 = BOD가 Anti-Fraud 전략 수립·이행(Implementing). 022 = BOC가 이행을 감독·모니터링(Monitoring/Supervising). 둘 다 Level 7이나 주체·동사가 다름.",n:"§1 / §8.1 / 함정"},
+{tp:"Fraud기초",t:"Definition",f:"POJK 12/2024상 Fraud 정의의 핵심 요건은?",b:"회사·소비자·제3자를 기만하기 위해 '고의로(intentional)' 저지른 일탈·부작위. 손실 초래 또는 부당이익. ⚠️ 과실(negligence)은 fraud 아님 — '고의' 빠지면 정의 미충족.",n:"§2 / 시험 단골"},
+{tp:"Fraud기초",t:"List",f:"Fraud 5가지 유형은?",b:"① Corruption(뇌물·이해상충·갈취) ② Asset Misappropriation(현금·재고 유용) ③ Financial Reporting Fraud(과대·과소계상) ④ Leakage of Confidential Information ⑤ Other Acts Equated with Fraud.",n:"§2 / ACFE 기반"},
+{tp:"Fraud기초",t:"Comparison",f:"Corruption vs Asset Misappropriation 매핑은?",b:"Bribery·Extortion·이해상충 = Corruption. 현금·재고 빼돌리기 = Asset Misappropriation. ⚠️ 둘 혼동 빈출. 재무제표 조작은 Financial Reporting Fraud(별개).",n:"§2 / 함정 12-3"},
+{tp:"Fraud기초",t:"Concept",f:"Financial Reporting Fraud는 과대계상만 해당하나?",b:"아니다. Overstatement(과대) '또는' Understatement(과소) 둘 다 해당. 과대계상만 fraud로 보는 보기는 오답.",n:"§2 / MQ-W4-006"},
+{tp:"Triangle",t:"List",f:"Fraud Triangle 3요소는?",b:"Pressure(압박·재정난) · Rationalization(자기합리화) · Opportunity(약한 내부통제). 세 요소 동시 충족 시 위험 극대화. Cressey 고전 이론.",n:"§3 / ⭐⭐⭐"},
+{tp:"Triangle",t:"Concept",f:"Fraud Triangle 중 조직이 직접 통제 가능한 요소는?",b:"Opportunity 하나뿐 — 약한 내부통제에서 발생하므로 통제 강화·4-eyes로 직접 차단. Pressure·Rationalization은 개인 심리 영역이라 통제 불가. 그래서 4 Pillars 무게중심이 Opportunity 차단에 쏠림.",n:"§3 / 시험 단골"},
+{tp:"Triangle",t:"Comparison",f:"Fraud Triangle vs Fraud Diamond 차이는?",b:"Triangle = 3요소(Pressure·Rationalization·Opportunity, 교재 기준). Diamond = +Capability(능력) 4요소. ⚠️ 4요소 보기 나오면 Diamond 함정 — 교재는 Triangle.",n:"§3 / 함정 12-1"},
+{tp:"Pillars",t:"List",f:"Anti-Fraud Strategy 4 Pillars와 순서는?",b:"① Prevention(예방) → ② Detection(적발) → ③ Investigation, Reporting & Sanctions(조사·보고·제재) → ④ Monitoring, Evaluation & Follow-up. fraud 생애주기 순.",n:"§4 / ⭐⭐⭐"},
+{tp:"Pillars",t:"Comparison",f:"Whistleblowing·Surprise Audit·Know Your Employee는 각각 어느 Pillar?",b:"Whistleblowing·Surprise Audit = Detection(적발, 예방 아님!). Know Your Employee = Prevention(예방). ⚠️ Pillar 혼동 최빈출 — '이미 벌어진 걸 찾아냄'=Detection.",n:"§4 / 함정 12-2"},
+{tp:"Pillars",t:"Concept",f:"Anti-Fraud 철학 한 문장은?",b:"'Prevention is better than cure'(예방이 사후처리보다 낫다). Integrity·Transparency·Accountability 문화 구축이 핵심.",n:"§4 / MQ-W4-001"},
+{tp:"Pillars",t:"List",f:"제재(Sanctions) 정책 최소 3요소는?",b:"① 위반별 제재 종류 ② 부과 메커니즘 ③ 권한자(authorized party). 공정·투명·일관·억제효과 원칙 준수. (Investigation/Reporting/Sanctions Pillar).",n:"§4 / MQ-W4-013"},
+{tp:"Aspects",t:"List",f:"Fraud Control 4 Aspects는?",b:"① Active Supervision of Directors & BOC ② Policies and Procedures ③ Organizational Structure & Accountability ④ Control and Monitoring. Basel 내부통제 체계 응용.",n:"§5 / ⭐⭐"},
+{tp:"Aspects",t:"Comparison",f:"4 Pillars vs 4 Aspects 차이는?",b:"Pillars = '무엇을 하나'(활동·activity). Aspects = '누가 어떤 구조로 받치나'(거버넌스 기반). POJK 12/2024 양대축. ⚠️ 시험이 둘을 섞어 출제.",n:"§5 / 함정"},
+{tp:"Aspects",t:"Concept",f:"Four-Eyes Principle은 어느 Aspect 예시인가?",b:"Control and Monitoring(4번 Aspect)의 기능분리(segregation of functions) 예시. 한 사람이 거래를 단독 완결 못하게 하는 통제. integrity pact 서명은 Active Supervision(1번).",n:"§5 / MQ-W4-008"},
+{tp:"POJK",t:"Definition",f:"POJK 12/2024의 정식 명칭·위상은?",b:"Implementation of Anti-Fraud Strategies for Financial Services Institutions(LJK). Anti-Fraud Strategy 1차 법적 근거. 은행권 개별 규정을 통합·전 LJK 확대.",n:"§6 / ⭐⭐⭐"},
+{tp:"POJK",t:"List",f:"POJK 12/2024 OJK 보고 3종과 기한은?",b:"① Anti-Fraud Strategy = 시행일로부터 6개월(변경 시 7영업일) ② Implementation Report(연간) = 익년 1월 31일 ③ Significant Fraud Report = 식별 후 6영업일.",n:"§6 / ⭐⭐⭐"},
+{tp:"POJK",t:"Concept",f:"보고 기한 4개를 '처음·변경·정기·긴급'으로 외우면?",b:"처음(전략 최초)=6개월(제일 김) · 변경=7영업일 · 정기(연간)=익년 1/31 · 긴급(중대fraud)=6영업일(제일 짧음). ⚠️ 숫자 섞기 함정 빈출.",n:"§6 / 함정 12-5"},
+{tp:"POJK",t:"List",f:"Significant Impact Fraud 3기준은?",b:"① 법규 중대 위반 ② 사업 연속성 위협 ③ 대중 주목·평판 훼손 가능성. 3기준 미충족이면 6영업일 보고 대상 아님(단 내부 처리 필요).",n:"§6 / MQ-W4-019·051"},
+{tp:"POJK",t:"Concept",f:"Anti-Fraud 교육 최소 주기와 종류는?",b:"최소 연 1회(at least once a year). 내부 교육(역량·Competency) + 외부 교육(인식·Awareness). 월 1회·분기 1회는 오답.",n:"§6 / MQ-W4-018"},
+{tp:"POJK",t:"Comparison",f:"POJK 12/2024 vs 12/POJK.01/2017 구분은?",b:"12/2024 = Anti-Fraud Strategy. 12/POJK.01/2017 = Fit & Proper Test. 번호 12 겹치나 완전 별개 규정. ⚠️ 최빈출 함정.",n:"§6 / 함정 12-4"},
+{tp:"SIPELAKU",t:"Definition",f:"POJK 28/2024 SIPELAKU란?",b:"Management of Perpetrator Trace Information(가해자 추적 정보 시스템). fraud 가해자 trace record 저장 DB — 은행권 SLIK와 같은 발상. 채용·파트너 profiling·risk mgmt 활용.",n:"§7 / ⭐⭐"},
+{tp:"SIPELAKU",t:"Concept",f:"SIPELAKU 행정제재 벌금 상한과 IA 주기는?",b:"행정제재 벌금 최대 IDR 6 billion(+서면경고). SIPELAKU 사용 Internal Audit = 최소 연 1회. ⚠️ 번호: 가해자정보=28/2024, 전략본체=12/2024.",n:"§7 / 함정 12-4"},
+{tp:"평가CE2",t:"List",f:"Anti-Fraud Monitoring 4방법(CE2)은?",b:"Observation(운영 직접 관찰) · Interview(직원 인식 탐색) · Document Review(정책·fraud log·교육증거) · System Verification(조기탐지·escalation 시스템 테스트).",n:"§8 / PC 2.1"},
+{tp:"평가CE2",t:"List",f:"Anti-Fraud Evaluation 모델(CE2)은?",b:"Root Cause Analysis(RCA) for fraud cases + COSO/ERM 모델(통제 효과성) + 직원 survey(culture) + SWOT/GAP. ⚠️ Porter·PESTEL·TARIF는 오답.",n:"§8 / MQ-W4-023"},
+{tp:"평가CE2",t:"List",f:"Follow-up Action Plan 6요소(PC 2.3)는?",b:"Findings · Risk(impact·likelihood) · Action Plan · PIC · Deadline · Indicator. ⚠️ PIC와 Deadline 필수 — 없으면 '누군가 언젠가'로 실행 안 됨.",n:"§8 / ⭐⭐⭐"},
+{tp:"평가CE2",t:"Concept",f:"미이행 fraud follow-up findings는 어디로 보고하나?",b:"Risk Monitoring Committee 또는 Directors에 escalation. Follow-Up Actions 보고 주기 = 분기별(Quarterly).",n:"§8 / MQ-W4-025"},
+{tp:"RBA",t:"Definition",f:"Risk-Based Audit(RBA) 정의는?",b:"조직 내 가장 중대한 리스크를 식별·분석·완화하는 데 초점을 둔 감사 접근. 모든 영역 균등 검사가 아니라 고위험 집중. IPPF-IIA 표준.",n:"§9 / ⭐⭐⭐"},
+{tp:"RBA",t:"List",f:"RBA 기본원칙 4가지는?",b:"① Focus on Significant Risks(중대리스크 집중) ② Data-Driven Approach ③ Collaboration with Risk Management ④ Oriented to Continuous Improvement. ⚠️ '감사 건수 최대화'는 원칙 아님.",n:"§9 / 함정 MQ-W4-029"},
+{tp:"RBA",t:"List",f:"RBA KPI 목표치(Target)는?",b:"risk-based audit 비율 ≥90%(업계 85%) · high-risk findings ≥60%(50%) · 완료시간 ≤30일(35일) · 권고 이행률 ≥90%(88%).",n:"§9 / 경계값 암기"},
+{tp:"RBA",t:"List",f:"RBA 평가 3측면은?",b:"Risk-Based Audit Planning · Audit Execution · Reporting and Follow-up. (RBA 4원칙과 별개 — 3측면은 평가 단계).",n:"§9 / MQ-W4-044"},
+{tp:"RCA",t:"List",f:"Follow-up 적정성 분석 5기법은?",b:"Checklist · Interview · Field Observation · Benchmarking · Focus Group Discussion(FGD). ⚠️ 5 Whys·Fishbone은 RCA 기법으로 별개.",n:"§10 / 함정 12-10"},
+{tp:"RCA",t:"List",f:"Follow-up 장벽(Barrier) 4유형은?",b:"Technical(기술·시스템 부적절) · Resource(인력·예산·시간 부족) · Managerial(commitment·조율 부족) · Compliance(규제 복잡성). ⚠️ 유형-설명 바꿔치기 빈출.",n:"§10 / 함정 MQ-W4-040"},
+{tp:"RCA",t:"List",f:"RCA 2대 기법은?",b:"5 Whys('왜?' 5번 반복) + Ishikawa(Fishbone) Diagram. Fishbone 4M 범주 = people·methods·materials·environment. ⚠️ SWOT·PESTEL과 혼동 금지.",n:"§10 / 함정 12-7"},
+{tp:"RCA",t:"List",f:"SMART 5요소는?",b:"Specific · Measurable · Achievable · Relevant · Time-Bound. ⚠️ A=Achievable(Aggressive·Ambitious 아님), T=Time-Bound(Tactical 아님). 철자 함정.",n:"§10 / 함정 12-6"},
+{tp:"Kirkpatrick",t:"List",f:"Kirkpatrick 4 Levels 순서는?",b:"① Reaction(만족도·survey) → ② Learning(지식·pre/post-test) → ③ Behavior(행동변화·performance observation) → ④ Results(성과·performance indicators). ⚠️ Behavior↔Results 순서 주의.",n:"§11 / ⭐⭐⭐"},
+{tp:"Kirkpatrick",t:"Comparison",f:"Kirkpatrick 4 Levels vs Phillips 5 Levels 차이는?",b:"Kirkpatrick = 4단계(교재 기준). Phillips = +ROI 5단계. ⚠️ ROI를 5번째로 추가한 보기는 Phillips 함정 — 교재는 Kirkpatrick 4단계.",n:"§11 / 함정 12-8"},
+{tp:"Kirkpatrick",t:"Comparison",f:"QAIP vs IPPF 구분은?",b:"QAIP = Quality Assurance and Improvement Program(내부감사 품질 self-assessment 프로그램). IPPF = IIA의 전체 전문실무 프레임워크. QAIP ⊂ IPPF. 둘 다 IIA 출처, 범위 다름.",n:"§11 / MQ-W4-038"},
+{tp:"Q6관점",t:"List",f:"[Q6 027] Audit Findings Risk-Based Grouping 5단계는?",b:"① Grouping Criteria(Type·Impact·Likelihood·Urgency) → ② Risk Scoring(Impact×Likelihood) → ③ Risk Matrix(3×3/5×5) → ④ Grouping(High/Medium/Low Priority) → ⑤ Documentation & Communication.",n:"§11.1 / W3 5×5와 구조 동일·대상 다름"},
+{tp:"Q6관점",t:"Comparison",f:"Unit 5 026(Q7) vs 027(Q6) 구분은?",b:"026 = Monitoring Follow-up 'Results'(결과 평가·RBA·Kirkpatrick·QAIP). 027 = Monitoring 'Compliance' of Follow-up Actions(이행 준수 감시·findings risk grouping). 026이 범위 더 넓음.",n:"§11.5 / 함정"}
+];
+const TLABEL={List:"List / Enumeration",Concept:"Concept",Comparison:"Comparison",Definition:"Definition",Calculation:"Calculation"};
+let deck=[],cur=0,results={},flipped=false;
+const app=document.getElementById('app');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function home(){
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">38장 · 카드 탭 → 뒤집기 · 안다/다시로 진도 체크</p>
+      <div class="start-opts">
+        <button onclick="start('all',true)">전체 38장 (셔플)<span class="desc">전 범위 무작위</span></button>
+        <button onclick="start('core',true)">핵심 — Triangle·Pillars·POJK·RBA·RCA·Kirkpatrick<span class="desc">최빈출 ⭐⭐⭐ + 함정</span></button>
+        <button onclick="start('fraud',true)">Unit 4 — Anti-Fraud(Fraud·Pillars·POJK·SIPELAKU)<span class="desc">예방·적발·제재·보고</span></button>
+        <button onclick="start('audit',true)">Unit 5 — Internal Audit(RBA·RCA·Kirkpatrick·QAIP)<span class="desc">감사 사후관리·품질개선</span></button>
+        <button onclick="start('all',false)">전체 38장 (순서대로)<span class="desc">정렬 학습</span></button>
+      </div>
+    </div>`;
+}
+function start(mode,sh){
+  let set;
+  if(mode==='core') set=CARDS.filter(c=>['Triangle','Pillars','POJK','RBA','RCA','Kirkpatrick'].includes(c.tp));
+  else if(mode==='fraud') set=CARDS.filter(c=>['개요','Fraud기초','Triangle','Pillars','Aspects','POJK','SIPELAKU','평가CE2'].includes(c.tp));
+  else if(mode==='audit') set=CARDS.filter(c=>['RBA','RCA','Kirkpatrick','Q6관점'].includes(c.tp));
+  else set=CARDS.slice();
+  deck=sh?shuffle(set):set;
+  cur=0;results={};flipped=false;render();
+}
+function render(){
+  const c=deck[cur];flipped=false;
+  const trap=(c.n||'').includes('함정')||(c.n||'').includes('≠')||(c.b||'').includes('⚠️');
+  app.innerHTML=`
+    <div class="meta"><span>${cur+1} / ${deck.length}</span><span>${Object.keys(results).length}장 평가됨</span></div>
+    <div class="bar"><i style="width:${cur/deck.length*100}%"></i></div>
+    <div class="tags"><span class="tag topic">${c.tp}</span><span class="tag">${TLABEL[c.t]||c.t}</span>${trap?'<span class="tag trap">함정</span>':''}</div>
+    <div class="card" id="card" onclick="flip()">
+      <div class="inner">
+        <div class="face front"><span class="lbl">Question</span><div class="q">${c.f}</div></div>
+        <div class="face back"><span class="lbl">Answer</span><div class="a">${c.b}</div>${c.n?`<div class="note">${c.n}</div>`:''}</div>
+      </div>
+    </div>
+    <div class="hint">카드를 탭하면 뒤집힙니다</div>
+    <div class="mark"><button class="again" onclick="mark(false)">다시 볼래요</button><button class="known" onclick="mark(true)">알아요</button></div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" onclick="prev()" ${cur===0?'disabled':''}>← 이전</button>
+      <button class="act" onclick="next()">${cur===deck.length-1?'결과':'다음 →'}</button>
+    </div>`;
+}
+function flip(){flipped=!flipped;document.getElementById('card').classList.toggle('flipped',flipped)}
+function mark(k){results[cur]=k;if(cur<deck.length-1){cur++;render()}else result()}
+function prev(){if(cur>0){cur--;render()}}
+function next(){if(cur<deck.length-1){cur++;render()}else result()}
+function result(){
+  const known=Object.values(results).filter(Boolean).length;
+  const again=Object.entries(results).filter(([k,v])=>!v).map(([k])=>deck[k]);
+  const ev=Object.keys(results).length;
+  const pct=ev?Math.round(known/ev*100):0;
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">평가 ${ev}장 중 ${known}장 "알아요"</div>
+      ${again.length?`<div class="againlist"><b style="color:var(--red)">다시 볼 카드 ${again.length}장</b>${again.map(c=>`<div class="w">${c.f}</div>`).join('')}</div>
+        <div class="nav" style="justify-content:center;margin-top:20px;gap:10px"><button class="act ghost" onclick="home()">처음으로</button><button class="act" onclick="retry()">다시 볼 카드만</button></div>`
+      :`<p style="color:var(--green);font-weight:700;margin:10px 0">전부 "알아요"</p><div class="nav" style="justify-content:center;margin-top:16px"><button class="act" onclick="home()">처음으로</button></div>`}
+    </div>`;
+  window._again=again;
+}
+function retry(){deck=shuffle(window._again);cur=0;results={};render()}
+home();
+</script>
+</body>
+</html>
