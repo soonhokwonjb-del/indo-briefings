@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — W1 Quiz (Industry & POJK Framework)</title>
+<style>
+  :root{--ink:#1a2238;--paper:#f7f5ef;--line:#d8d3c4;--gold:#b8893a;--gold-soft:#e8dcc0;--green:#2f6b4f;--red:#a33a2e;--blue:#2f5170;--shadow:0 1px 0 rgba(26,34,56,.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 80px}
+  .wrap{max-width:760px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:25px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px;box-shadow:var(--shadow)}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.topic{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.hard{background:#f6e9e6;border-color:#e3bdb5;color:var(--red)}
+  .tag.medium{background:#fbf2dd;border-color:#e6cf9a;color:var(--gold)}
+  .tag.easy{background:#e7f1ea;border-color:#aecdb9;color:var(--green)}
+  .q{font-size:17px;font-weight:600;margin-bottom:18px;letter-spacing:-.005em}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;font-size:15px;text-align:left;width:100%;font-family:inherit;color:var(--ink)}
+  .opt:hover{border-color:var(--gold)}
+  .opt .k{font-weight:800;color:var(--gold);flex-shrink:0;width:18px}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:#e9f3ed;border-color:var(--green)}
+  .opt.correct .k{color:var(--green)}
+  .opt.wrong{background:#f7e9e6;border-color:var(--red)}
+  .opt.wrong .k{color:var(--red)}
+  .exp{margin-top:16px;padding:15px;background:var(--paper);border-left:3px solid var(--gold);border-radius:4px;font-size:14px;display:none}
+  .exp.show{display:block}
+  .exp b{color:var(--green)}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:12px 26px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.35;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .result{text-align:center;padding:10px 0}
+  .score{font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:20px}
+  .breakdown{text-align:left;margin:18px 0;font-size:14px}
+  .breakdown .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .wronglist{text-align:left;margin-top:16px;font-size:13px;color:#5d6075}
+  .wronglist .w{padding:8px 0;border-bottom:1px solid var(--line)}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  footer{text-align:center;font-size:12px;color:#9a9788;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>W1 모의문제 — Industry & POJK Framework</h1>
+    <div class="sub">산업 개관 · Health Level · 8 Risks · 사업영역 한도 · 핵심 POJK · 100문항 풀 · Day 1 교재 기반</div>
+  </header>
+  <div class="panel" id="app"></div>
+  <footer>출처: A to Z in Finance Company Business (Day 1)</footer>
+</div>
+
+<script>
+const BANK = [
+{id:"001",tp:"산업사",d:"Hard",q:"Which event directly triggered the strengthening of the SLIK system and the introduction of the Asset Registry in Indonesia?",o:["The 1997-98 Asian Financial Crisis","The 2018 Double Pledge Cases","The 2008-09 Global Financial Crisis","The 2020 COVID-19 Pandemic"],a:1,e:"Double Pledge Cases(동일 자산 중복 담보 사기 대량 발견) → 차주·자산 정보 인프라(SLIK·Asset Registry·Pefindo) 강화 trigger."},
+{id:"002",tp:"산업사",d:"Hard",q:"POJK 46/2024 formalized face-to-face-less financing for Micro/Ultra Micro enterprises. Which event most directly accelerated this need?",o:["The 2020 COVID-19 Pandemic","The 2014 Fuel Price Increase","The 2018 Double Pledge Cases","The 2022 Fuel Subsidy adjustment"],a:0,e:"COVID-19 봉쇄로 대면 financing 불가 → 비대면 채널 수요 폭증 → POJK 46/2024로 공식화."},
+{id:"003",tp:"산업사",d:"Medium",q:"A sharp NPF spike to approximately 4% occurred in which year/event?",o:["Global Financial Crisis 2008","COVID-19 Pandemic 2020","Fuel Price Increase 2014","Double Pledge Cases 2018"],a:1,e:"NPF 4% spike = COVID-19(2020). OJK POJK 14/2020 등 loan restructuring 완화 발동. 2008 GFC는 인니 영향 상대적 적음."},
+{id:"004",tp:"산업사",d:"Medium",q:"Which legislative milestone first established the four core business areas (leasing, factoring, credit card, consumer financing)?",o:["SKB of 3 Ministers (1974)","KMK 448/2000","KMK 1169 (1991)","POJK 35/2018"],a:1,e:"KMK 448/2000 = 4대 사업영역. SKB 1974는 최초 leasing 도입, POJK 35/2018은 Working Capital·Investment 추가."},
+{id:"005",tp:"산업사",d:"Easy",q:"Which regulation added Working Capital and Investment financing to the industry's scope?",o:["KMK 448/2000","POJK 46/2024","POJK 48/2024","POJK 35/2018"],a:3,e:"POJK 35/2018 = Working Capital + Investment Financing 추가. 46/2024는 비대면, 48/2024는 GCG."},
+{id:"006",tp:"법적정의",d:"Medium",q:"Under POJK 35/2018, a Finance Company carries out financing for goods/services for which purposes?",o:["Only consumer purposes","Only productive (business) purposes","Both productive and consumer purposes","Only government-subsidized purposes"],a:2,e:"Finance Company 정의 = productive(사업투자·운전자본) + consumer(소비) 양쪽."},
+{id:"007",tp:"법적정의",d:"Medium",q:"A self-employed person finances a truck used for delivery business. Under Indonesia's classification, this is:",o:["Consumer financing, because the borrower is an individual","Multipurpose financing, regardless of use","Cannot be financed by a Finance Company","Productive financing, because the use purpose is business/income generation"],a:3,e:"인니는 사용 목적 기준 — 영업용이면 Productive(Investment). 한국의 주체(사업자등록) 기준과 다름."},
+{id:"008",tp:"법적정의",d:"Hard",q:"In Sharia financing, which Akad line must be conducted face-to-face (physically) under POJK 46/2025?",o:["Investment Financing","Buy & Sell Financing","Service Financing","All Akad lines can be online"],a:0,e:"Sharia Investment financing은 반드시 대면. Buy&Sell·Service는 대면/온라인 가능. Conventional(POJK 46/2024) 비대면 허용과 구별."},
+{id:"009",tp:"OJK구조",d:"Easy",q:"Finance Companies belong to which OJK sector?",o:["Sector 4 — IKNB (Non-Bank Financial Institutions)","Sector 1 — Banking","Sector 3 — Insurance/Guarantee/Pension","Sector 5 — Fintech/Digital Assets"],a:0,e:"Finance Company = Sector 4 (IKNB = Industri Keuangan Non-Bank)."},
+{id:"010",tp:"HealthLevel",d:"Hard",q:"Which is the CORRECT set of four Health Level assessment factors (POJK 28/2020)?",o:["Capital, Profitability, GCG, Risk Profile","Capital, Liquidity, Earnings, Sensitivity","Solvency, Profitability, Governance, Compliance","Capital, Asset Quality, Management, Earnings"],a:0,e:"4 Factor = Capital · Profitability · GCG · Risk Profile."},
+{id:"011",tp:"HealthLevel",d:"Hard",q:"Under the Composite Rating scale (POJK 28/2020), which rating represents the BEST condition?",o:["Rating 5 — Unhealthy","Rating 3 — Fairly Healthy","Rating 1 — Very Healthy","Rating 4 — Less Healthy"],a:2,e:"1=Very Healthy(최고), 5=Unhealthy(최악). 한국 신용등급 직관과 반대 — 함정."},
+{id:"012",tp:"HealthLevel",d:"Hard",q:"In the Risk Profile factor, Net Risk is determined by:",o:["Inherent Risk + KPMR","Inherent Risk × KPMR","KPMR ÷ Inherent Risk","Inherent Risk − Loan Loss Provisions"],a:1,e:"Net Risk = Inherent Risk × KPMR (매트릭스로 결정). Net Risk·Profile Risk·Residual Risk는 동의어."},
+{id:"013",tp:"HealthLevel",d:"Medium",q:"For KPMR Rating, which represents the most effective risk management?",o:["Rating 3 — Adequate","Rating 1 — Strong","Rating 5 — Weak","Rating 4 — Fairly Weak"],a:1,e:"KPMR 1=Strong(최우수). Inherent Risk·KPMR·Composite 모두 1이 우수, 5가 미흡."},
+{id:"014",tp:"HealthLevel",d:"Hard",q:"Which condition triggers a mandatory Action Plan submission to OJK?",o:["Composite Rating 2 with no problems","Any Factor rated 4 or 5, or Composite Rating 4/5, or Rating 3 with significant problems","Composite Rating 1 only","Only when OJK conducts a special examination"],a:1,e:"Action Plan trigger = Factor 4·5, Composite 4·5, 또는 Composite 3+significant problems."},
+{id:"015",tp:"HealthLevel",d:"Medium",q:"The KPMR has four components. Which is one of them?",o:["External Audit Independence","Shareholder Voting Rights","Dividend Policy","BOC/BOD Active Supervision"],a:3,e:"KPMR 4 Component: BOC/BOD Active Supervision · Policies & Procedures · Risk Management Process · Internal Control System."},
+{id:"016",tp:"HealthLevel",d:"Medium",q:"How many items are assessed under the GCG factor's 'Outcomes' sub-factor?",o:["8 items","11 items","5 items","4 items"],a:1,e:"GCG Outcomes = 11항목 (BOD·BOC·Committees·Conflict of Interest·Compliance·Internal Audit·External Audit·Risk Mgmt·Remuneration·Transparency·Business Plan)."},
+{id:"017",tp:"HealthLevel",d:"Medium",q:"By when must the year-end Health Level self-assessment be submitted to OJK?",o:["February 15","January 31","April 30","March 31"],a:0,e:"Health Level 자가평가(연말 기준) 제출 = 2월 15일. (GCG·Annual = 4/30)."},
+{id:"018",tp:"감독상태",d:"Hard",q:"Under POJK 49/2024, the Intensive Supervision status is triggered when (among others):",o:["Composite Rank 5, or core-capital/paid-in below 0%","Composite Rank 1, regardless of capital","Only when net NPF exceeds 25%","Composite Rank 4, or core-capital/paid-in ratio 0–50%, or net NPF 5–25%"],a:3,e:"Intensive = Rank 4 / MSMD 0~50% / net NPF 5~25%. Special = Rank 5 / MSMD<0% / net NPF>25%."},
+{id:"019",tp:"감독상태",d:"Hard",q:"KBBF's core-capital-to-paid-in-capital ratio (MSMD) falling below which threshold would trigger Intensive Supervision?",o:["100%","25%","50%","120%"],a:2,e:"MSMD < 50% → Intensive Supervision 진입(POJK 49/2024). 50%는 §4.4.1 MSMD 최저 기준과 동일선."},
+{id:"020",tp:"비율",d:"Hard",q:"What does MSMD measure for a Finance Company?",o:["Modal Sendiri / Modal Disetor = Core Capital / Paid-Up Capital ratio","Minimum Solvency Margin like insurance RBC","Total Debt / Equity leverage","Non-performing financing ratio"],a:0,e:"MSMD = Core Capital/Paid-Up Capital. 보험사 RBC/MMBR(120%)과 다른 개념 — 함정. 최저 ≥50%."},
+{id:"021",tp:"비율",d:"Medium",q:"The legal maximum Gearing Ratio (GR) for a Finance Company is:",o:["5x","15x","No limit","10x"],a:3,e:"GR = Total Debt/Equity, 법정 max 10x. 산업 평균 2.18x."},
+{id:"022",tp:"비율",d:"Medium",q:"Which ratio is calculated as Financing Receivables / Total Assets?",o:["BOPO","FAR","GR","MSMD"],a:1,e:"FAR = Financing Receivables/Total Assets (자산 중 핵심사업 비중). 산업 평균 86.01%."},
+{id:"023",tp:"비율",d:"Medium",q:"BOPO measures which of the following, where lower is better?",o:["Operating Expense / Operating Revenue","Return on Assets","Gearing leverage","Core capital adequacy"],a:0,e:"BOPO = Operating Expense/Operating Revenue (영업비용률, 낮을수록 우수). 산업 평균 82.86%."},
+{id:"024",tp:"비율",d:"Hard",q:"An MSMD of 320% (industry average) means:",o:["The company is in capital deficit","Debt is 3.2x equity","Core capital is 3.2x the paid-up capital — retained earnings accumulated thickly","The company breached the 120% insurance RBC floor"],a:2,e:"MSMD 320% = 자기자본이 납입자본의 3.2배 = 이익잉여금 두텁게 누적. ROA와 직결."},
+{id:"025",tp:"사업영역",d:"Hard",q:"To start an 'Other Financing Business Activity', all five conditions must be met. Which is one of them?",o:["Minimum Core Capital of Rp 100 billion","Foreign ownership below 20%","Health Level Composite Rating of at least 2 (Healthy)","Listing on the Indonesia Stock Exchange"],a:2,e:"5조건: Business plan 포함 · Health Composite ≥2 · Gearing 충족 · Core Capital ≥Rp 200bn · 행정처분 없을 것."},
+{id:"026",tp:"사업영역",d:"Hard",q:"The minimum Core Capital required to undertake Other Financing Business Activities is:",o:["Rp 100 billion","Rp 500 billion","Rp 200 billion","Rp 10 billion"],a:2,e:"Core Capital ≥ Rp 200 billion (5조건 중 하나). Rp 100bn은 Roadmap Pilar 1 최저 자기자본 목표."},
+{id:"027",tp:"사업영역",d:"Medium",q:"Working Capital Financing covers short-term needs within:",o:["3 years","5 years","No time limit","One business cycle"],a:3,e:"Working Capital = 1 business cycle 이내 단기 지출. Investment = 자본재·중장기."},
+{id:"028",tp:"사업영역",d:"Hard",q:"Under POJK 46/2024, non-physical (face-to-face-less) Investment Financing is limited to:",o:["Any debtor, up to Rp 500 million","Micro/Ultra Micro enterprises, max Rp 10 billion/debtor, ≤5% of receivables","Large corporates only, no limit","Consumer borrowers, max Rp 100 million"],a:1,e:"비대면 Investment: Micro/Ultra Micro 대상, Rp 10bn/debtor, 비대면 receivables 최대 5%."},
+{id:"029",tp:"사업영역",d:"Hard",q:"Which statement about per-debtor limits is CORRECT?",o:["Business Capital Facility = Rp 500 million; Fund Facility = Rp 10 billion","Business Capital Facility = Rp 10 billion; Fund Facility = Rp 500 million","Both facilities are capped at Rp 100 million","General (face-to-face) Investment Financing is capped at Rp 10 billion"],a:1,e:"Business Capital Facility Rp 10bn/debtor, Fund Facility Rp 500M/debtor. 일반 대면 Investment Financing은 차주당 한도 없음."},
+{id:"030",tp:"사업영역",d:"Medium",q:"Collateral is exempt for a Business Capital Facility when the amount per debtor is:",o:["≤ Rp 10 billion","≤ Rp 100 million","≤ Rp 500 million","Never exempt"],a:1,e:"Business Capital Facility ≤ Rp 100 million/debtor → 담보 면제."},
+{id:"031",tp:"Lease",d:"Medium",q:"Which is a core rule of a Finance Lease?",o:["The debtor owns the goods during the lease term","No collateral or registration is required","It is always treated as an operating expense","Ownership remains with the Finance Company; debtor cannot re-lease to third parties; plate/label attached"],a:3,e:"Finance Lease: 소유권은 Finance Company 귀속, 제3자 re-lease 금지, plate/label 부착 의무."},
+{id:"032",tp:"Lease",d:"Medium",q:"In a Sale and Leaseback (SLB), the debtor:",o:["Buys an asset from the Finance Company and leases it out","Sells its own asset to the Finance Company and simultaneously leases it back","Transfers ownership permanently with no lease","Pledges the asset to a third party"],a:1,e:"SLB = 본인 자산을 Finance Company에 매도 + 동시에 다시 lease. 효과: 자산 유동화·운전자본 확보."},
+{id:"033",tp:"Lease",d:"Hard",q:"The key distinction between Finance Lease and Operating Lease is:",o:["Finance Lease transfers substantial benefit + risk (lessee capitalizes under IFRS 16); Operating Lease does not","Finance Lease has no interest; Operating Lease does","Operating Lease always lasts longer","Only Operating Lease requires OJK approval"],a:0,e:"Finance Lease = benefit+risk 이전, IFRS 16 lessee 자산화. Operating Lease = 이전 안 됨, 비용 처리."},
+{id:"034",tp:"자금조달",d:"Medium",q:"Which funding source showed strong YoY growth (+9.92%) in 2025, aligning with Roadmap Pilar 2?",o:["Bonds Issuance","Domestic Loans","Foreign Loans","Subordinated Loans"],a:0,e:"Bonds Issuance +9.92% (국내·해외 차입은 감소). Funding 다각화(Pilar 2)와 일치."},
+{id:"035",tp:"자금조달",d:"Hard",q:"For a Non-Public (Private Placement) securities offering, which requirement differs from a Public Offering?",o:["Risk level mid-low (relaxed) + Equity ≥ Rp 200bn + report 6 months prior","Gearing ratio max 10x","Must be included in the business plan","Financial soundness healthy or above"],a:0,e:"Non-Public: Risk level mid-low(완화) + Equity ≥Rp 200bn + 6개월 전 보고. Public: Risk low + 3개월 전. Gearing 10x·business plan·soundness는 공통."},
+{id:"036",tp:"자금조달",d:"Medium",q:"Which is a mandatory requirement for a Finance Company bond issuance?",o:["Listing on a foreign exchange","KSEI registration + OJK-registered trustee + at least investment rating + quarterly reporting","Minimum 50% foreign ownership","Sharia compliance certification"],a:1,e:"채권 발행: KSEI 등록 · OJK 등록 trustee · 최소 investment rating · 1년 1회+ 평가 · 분기별 실적 보고."},
+{id:"037",tp:"EquityP",d:"Hard",q:"The Equity Participation limit for a single direct participation is:",o:["Max 10% of Equity","Max 50% of Equity","No limit","Max 20% of the Finance Company's Equity"],a:3,e:"직접 참여 개별 최대 20% of Equity. 1개 그룹 내 entities 직접 참여 총합 최대 10%."},
+{id:"038",tp:"EquityP",d:"Medium",q:"Equity Participation differs from Investment Financing in that:",o:["Investment Financing = financing to a debtor (business area); Equity Participation = own-capital investment in another company's shares","They are identical concepts","Equity Participation is a type of consumer loan","Investment Financing requires DSN-MUI approval"],a:0,e:"Investment Financing = debtor에게 financing(사업영역). Equity Participation = 자기자본으로 타사 지분 보유. 혼동 금지."},
+{id:"039",tp:"POJK",d:"Hard",q:"Which POJK is the current, consolidated Good Corporate Governance regulation?",o:["POJK 30/2014","POJK 29/2020","POJK 42/2024","POJK 48/2024"],a:3,e:"GCG 변천: 30/2014(원본)→29/2020(개정)→48/2024(신 통합, 현행). 42/2024는 Risk Management."},
+{id:"040",tp:"POJK",d:"Hard",q:"Which POJK governs Risk Management and defines the 8 risk types?",o:["POJK 35/2018","POJK 48/2024","POJK 28/2020","POJK 42/2024"],a:3,e:"POJK 42/2024 = Risk Management (8대 리스크 + KPMR 4 Component)."},
+{id:"041",tp:"POJK",d:"Hard",q:"Which is the CORRECT list of the 8 Finance Company risk types?",o:["Credit, Market, Operational, Interest, Currency, Country, Settlement, Model","Strategic, Financial, Hazard, Compliance, Cyber, ESG, Legal, Conduct","Strategic, Credit, Operational, Market, Liquidity, Compliance, Legal, Reputation","Capital, Liquidity, Earnings, Sensitivity, Market, Credit, Legal, Strategic"],a:2,e:"8대: Strategic·Credit·Operational·Market·Liquidity·Compliance·Legal·Reputation."},
+{id:"042",tp:"POJK",d:"Hard",q:"\"Risk arising from the failure of other parties to fulfill their obligations\" describes which risk?",o:["Market Risk","Operational Risk","Liquidity Risk","Credit Risk"],a:3,e:"Credit Risk = 거래상대방 의무 이행 실패. Market = 시장변동, Operational = 내부프로세스·인적오류·IT."},
+{id:"043",tp:"POJK",d:"Hard",q:"Fraud risk is treated as a parameter under which of the 8 risk types?",o:["Operational Risk","Compliance Risk","Reputation Risk","Legal Risk"],a:0,e:"Fraud risk = Operational Risk 하위 파라미터. (Anti-Fraud 전략은 W4 Unit 4로 별도)."},
+{id:"044",tp:"POJK",d:"Hard",q:"Which statement about POJK 12/POJK.01/2017 is CORRECT?",o:["It governs the Fit & Proper Test for directors and commissioners","It governs AML/CFT (APU-PPT); fit-and-proper reassessment is instead POJK 34/2018","It sets the minimum paid-in capital for new Finance Companies","It defines the 8 risk types and KPMR components"],a:1,e:"POJK 12/2017 = APU-PPT(AML/CFT), F&P가 아님. 12/2017은 23/2019 개정 후 8/2023으로 대체. F&P 재평가 = POJK 34/2018, NBFI 최초 F&P = NBFI 전용 규정. (12/2017을 F&P로 고르면 오답 함정)"},
+{id:"045",tp:"POJK",d:"Medium",q:"Regarding regulatory hierarchy, which statement is CORRECT?",o:["SEOJK is higher than POJK","Both have identical legal force","POJK is a binding regulation; SEOJK is operational guidance (circular)","SEOJK overrides POJK for Sharia entities"],a:2,e:"POJK = 시행령급(binding, 상위). SEOJK = 회람(operational guidance, 하위)."},
+{id:"046",tp:"거버넌스",d:"Medium",q:"In Indonesia's Dual Board system, the Board of Commissioners (BOC):",o:["Runs day-to-day operations and represents the company externally","Replaces the BOD in financing decisions","Supervises and advises the BOD but does not directly intervene in operations","Reports to the Compliance Director"],a:2,e:"BOC(Dewan Komisaris) = BOD 감독·자문, 운영 직접 개입 X. BOD(Direksi) = 일상 운영·전략 실행."},
+{id:"047",tp:"거버넌스",d:"Medium",q:"Risk Appetite differs from Risk Tolerance in that:",o:["They are identical","Risk Tolerance is always higher than Risk Appetite","Risk Appetite applies only to credit risk","Risk Appetite = the level of risk the company accepts (strategic); Risk Tolerance = the allowed variation band around it (operational)"],a:3,e:"Risk Appetite = 수용 리스크 수준(전략적). Risk Tolerance = appetite 주변 허용 변동폭(실무·일일)."},
+{id:"048",tp:"Roadmap",d:"Medium",q:"The KBBF acquisition (2026) coincides with which Roadmap phase?",o:["Phase 1 (2024-25) Strengthening Foundation","Phase 3 (2028) Adjustment & Growth","Phase 2 (2026-27) Consolidation & Momentum","Outside the Roadmap horizon"],a:2,e:"2026 = Phase 2 (Consolidation & Momentum). Phase 1 강화기, Phase 3 성장기."},
+{id:"049",tp:"Roadmap",d:"Medium",q:"The Roadmap 2024-2028 has four Pillars. Which is Pilar 1?",o:["Business Development","Regulation, Supervision, and Licensing","Strengthening Resilience and Competitiveness (Capital, GCG, Risk, HR)","Consumer Protection"],a:2,e:"Pilar 1 = 회복력·경쟁력 강화(Capital·GCG·Risk·HR). 본인 SPPI 시험이 Pilar 1 HR 강화에 해당."},
+{id:"050",tp:"산업현황",d:"Medium",q:"Which financing type categories grew double-digit YoY in 2025?",o:["Investment Financing and Multipurpose","Multipurpose and Foreign Loans","Working Capital (+10.06%) and Sharia (+12.43%)","Domestic Loans and Investment"],a:2,e:"Working Capital +10.06%, Sharia +12.43% 두 자릿수 성장. Net Profit은 -18.07% 감소."},
+{id:"051",tp:"사업영역",d:"Hard",q:"Under BMPP (Maximum Financing Limit, POJK 46/2024), what is the limit for a single obligor with no controlling relationship?",o:["10% of capital","20% of capital","50% of capital","25% of capital"],a:1,e:"BMPP: 단일차주 20% / 단일그룹 50% / 지배관계 당사자 50% of equity. '단일차주 50%'는 오답(그룹·지배관계가 50%)."},
+{id:"052",tp:"사업영역",d:"Medium",q:"If a Finance Company breaches the BMPP ceiling due to a capital decrease or M&A, within what period must it adjust and submit an action plan?",o:["3 months","6 months","1 month","15 business days"],a:2,e:"BMPP 초과(자본감소·환율·공정가치변동·M&A·법규변경) 시 1개월 이내 조정+action plan. Health Level Action Plan과 혼동 금지."},
+{id:"053",tp:"사업영역",d:"Hard",q:"Financing acquisition cost (third-party incentives) is capped at what percentage of each contract's total income (POJK 46/2024)?",o:["15%","17.5%","20%","10%"],a:1,e:"한도 17.5%. income = Cost of Fund 차감 전 이자수익 + 보험할인 + 행정수익 + provision수익. 이 incentive fee는 Motor Vehicle DP 계산에 산입 불가."},
+{id:"054",tp:"POJK",d:"Medium",q:"Which of the following is PROHIBITED under POJK 46/2024 financing risk mitigation (Chapter VII)?",o:["Registering fiduciary collateral","Insuring already-problematic (impaired) financing receivables","Using credit guarantee mechanisms","Insuring the financed collateral"],a:1,e:"금지 2조항: ① 이미 부실화된(problematic) 채권 보험·보증 금지 ② 보험금 청구액을 보험료의 일정%로 제한하는 메커니즘 금지. 나머지 3개는 허용된 4종 risk mitigation."},
+{id:"055",tp:"사업영역",d:"Hard",q:"In Channeling versus Joint Financing, which statement is CORRECT?",o:["In Channeling, the Finance Company bears all the risk","In Joint Financing, the fund owner bears all the risk","In Channeling the fund owner bears the risk; in Joint Financing each party shares risk proportionally","Both always require with-recourse structures"],a:2,e:"Channeling = 리스크 fund owner 부담(FC는 fund manager). Joint = 출자액 비례 분담. with recourse(구상권포함) 구조는 둘 다 금지."},
+{id:"056",tp:"POJK",d:"Medium",q:"Under POJK 43/2025, which certification is required for a Director overseeing risk and the layer directly below the Board?",o:["Financing-sector certification only","Collection-sector certification","Risk-management certification","No certification is required"],a:2,e:"POJK 43/2025 인증의무: BOD·BOC=financing 자격, risk 담당 Director+1계층 하단=risk management 자격, collection 담당=collection 자격. (본인 SPPI L7 = #1 Director financing)."},
+{id:"057",tp:"POJK",d:"Medium",q:"Per POJK 43/2025, the minimum annual budget for HR education and training is:",o:["1.0% of employee expenses","2.5% of employee expenses","5.0% of employee expenses","10% of net income"],a:1,e:"POJK 43/2025: 교육·훈련 예산 최소 연 employee expenses의 2.5%. (POJK 47/2000은 net income 2.5% 기준 — 기준 모수 차이 주의)."},
+{id:"058",tp:"POJK",d:"Hard",q:"Under POJK 47/2000 (re-regulated by POJK 46/2024), the foreign ownership cap of a Finance Company is:",o:["49% of paid-in capital","85% of paid-in capital","100% of paid-in capital","25% of paid-in capital"],a:1,e:"외국인 직·간접 합산 최대 85% of paid-in capital. 외국인 고용은 지분 25% 이상 시 가능, 외국인 Director·Commissioner 각 최대 50%."},
+{id:"059",tp:"POJK",d:"Medium",q:"What is the maximum proportion of foreign Directors on a Finance Company's board?",o:["25%","50%","85%","100%"],a:1,e:"외국인 Director 최대 50% / 외국인 Commissioner 최대 50%. 외국인은 Directors·BOC·experts·consultants 외 고용 금지, 고용 3+1년."},
+{id:"060",tp:"POJK",d:"Hard",q:"Which pair of capital figures is CORRECT?",o:["Establishment paid-in capital Rp 100bn; operating core capital Rp 250bn","Establishment paid-in capital Rp 250bn; operating core capital Rp 100bn","Both are Rp 200bn","Establishment Rp 200bn; Other-activity core capital Rp 100bn"],a:1,e:"설립시 Paid-in Capital 최소 Rp 250bn(POJK 47/2000) vs 운영 중 최저 자기자본 Rp 100bn(Roadmap Pilar 1). Other 사업 진입 Core Capital Rp 200bn은 또 다른 수치 — 셋 혼동 금지."},
+{id:"061",tp:"POJK",d:"Medium",q:"The APU-PPT Risk-Based Approach (RBA) assesses risk across which four factors?",o:["Strategic, Credit, Operational, Market","Customer, Products/services, Country/geographic area, Distribution channels","Capital, Profitability, GCG, Risk Profile","Integrity, Competence, Reputation, Feasibility"],a:1,e:"RBA 4 factor = Customer / Products·services·transactions / Country·geographic / Distribution channels. (8대 Risk·Health Level 4 Factor·F&P 4요소와 혼동 금지)."},
+{id:"062",tp:"POJK",d:"Medium",q:"To which body must a Finance Company report suspicious financial transactions under APU-PPT?",o:["OJK directly","PPATK","KSEI","DSN-MUI"],a:1,e:"의심거래(Suspicious Financial Transaction)·Cash Transaction Report는 PPATK(인니 FIU)에 보고. AML 정책·절차는 BOC 승인. CDD=기본확인, EDD=고위험 강화확인."},
+{id:"063",tp:"POJK",d:"Hard",q:"When OJK files a lawsuit for consumer protection (POJK 38/2025), the action is best described as:",o:["A class action on behalf of consumers","OJK acting in its institutional legal standing (not a class action)","A criminal prosecution replacing the public prosecutor","Mandatory arbitration at SIAC"],a:1,e:"OJK Lawsuit = institutional legal standing(기관 명의)이지 class action 아님(함정). 금융사 liquidation 중에도 소송권한 소멸 안 함. 소비자는 판결 이행 시점까지 비용 부담 없음."}
+,
+{id:"064",tp:"사업영역",d:"Hard",q:"KBBF wants to launch a new 'Other Financing Business Activity' (e.g., a non-core advisory/financing line). Its Core Capital is Rp 90 billion. Which is the immediate obstacle?",o:["The activity requires a separate banking license","Core Capital is below the Rp 100 billion minimum for Other Activities","Foreign-owned companies cannot conduct Other Activities","No obstacle; Other Activities have no capital floor"],a:1,e:"Other Financing Business Activities 최소 Core Capital = Rp 100 billion. Rp 90bn은 미달. 5대 요건 중 자본 floor 함정."},
+{id:"065",tp:"비율",d:"Hard",q:"A Finance Company has equity of Rp 1,000 billion and total funding (debt) of Rp 9,500 billion. Does it comply with the Gearing Ratio limit?",o:["No, GR = 9.5x, exceeding the cap","Yes, but only if MSMD is above 50%","Cannot be determined without NPF data","Yes, GR = 9.5x, within the 10x cap"],a:3,e:"GR = 차입/자기자본 = 9,500/1,000 = 9.5x. 법정 상한 10x 이내이므로 적합. 계산형 함정: 10x를 막 넘는지 여부 판단."},
+{id:"066",tp:"비율",d:"Medium",q:"Company A reports BOPO of 95%; Company B reports BOPO of 78%. What does this indicate?",o:["BOPO cannot compare two companies","Both are identical in profitability","Company B is more operationally efficient","Company A is more operationally efficient"],a:2,e:"BOPO = 영업비용/영업수익, 낮을수록 효율적. B(78%)가 A(95%)보다 효율적. lower-is-better 함정."},
+{id:"067",tp:"HealthLevel",d:"Hard",q:"A Finance Company's Composite Rating moves from 2 to 4 over one year. What is the correct interpretation and consequence?",o:["Condition deteriorated to 'Less Healthy'; likely Action Plan / closer supervision","Rating is neutral; ratings do not affect supervision","Condition improved; no action needed","Rating 4 is the best possible score"],a:0,e:"1=최상, 5=최악. 2→4는 악화(Less Healthy). Action Plan·감독강화 유발. 한국 직관(높을수록 좋음)과 반대 함정."},
+{id:"068",tp:"감독상태",d:"Hard",q:"KBBF post-acquisition shows MSMD of 45% and net NPF of 6%. Under POJK 49/2024, what supervision status is most likely?",o:["Revocation of license","Intensive Supervision","Normal Supervision","Special Supervision"],a:1,e:"Intensive trigger = MSMD 0~50% 또는 net NPF 5~25%. 둘 다 Intensive 구간. Special은 MSMD<0% 또는 NPF>25%. KBBF 컨텍스트 직결."},
+{id:"069",tp:"감독상태",d:"Medium",q:"Which sequence correctly orders OJK supervision intensity from least to most severe?",o:["Normal → Intensive → Special","Special → Intensive → Normal","Intensive → Normal → Special","Normal → Special → Intensive"],a:0,e:"Normal(정상) → Intensive(집중) → Special(특별). 악화될수록 강도 상승."},
+{id:"070",tp:"사업영역",d:"Hard",q:"A debtor receives a Business Capital Facility of Rp 40 million with no collateral pledged. Is this permissible?",o:["No, all financing requires collateral","Only if the debtor is a corporation","Yes, collateral is exempt below the per-debtor threshold","Only with OJK pre-approval"],a:2,e:"Business Capital Facility는 소액 한도 이하 시 담보 면제. 교재 기준 한도 이하 무담보 허용. 수치 임계 함정."},
+{id:"071",tp:"BMPP",d:"Hard",q:"A Finance Company with equity of Rp 2,000 billion extends Rp 450 billion to a single obligor having no controlling relationship. Is the BMPP respected?",o:["Yes, the cap only applies to related parties","Yes, 22.5% is within the single-obligor cap","No, the cap is 10% for all obligors","No, 22.5% exceeds the 20% single-obligor cap"],a:3,e:"BMPP 단일 obligor(비지배관계) 한도 = equity의 20%. 450/2,000 = 22.5% > 20% → 위반. 계산형."},
+{id:"072",tp:"BMPP",d:"Medium",q:"A Finance Company breaches BMPP because an M&A reduced its equity base. What is required?",o:["Submit an action plan and cure within one month","No action, M&A breaches are exempt","Immediate license surrender","Pay a fixed penalty of Rp 6 billion"],a:0,e:"자본감소·M&A로 인한 BMPP 초과 시 1개월 내 시정 action plan 제출. KBBF 인수 시나리오 직결."},
+{id:"073",tp:"사업영역",d:"Hard",q:"A salesperson is paid an incentive equal to 20% of a financing contract's total income. Under POJK 46/2024, is this allowed?",o:["No, third-party acquisition cost is capped at 17.5%","Yes, if the customer consents","No, incentives are entirely prohibited","Yes, incentives are uncapped"],a:0,e:"Financing acquisition cost(3자 인센티브) 상한 = 계약 총수익의 17.5%. 20%는 초과. DP 산입 불가 별도 함정."},
+{id:"074",tp:"POJK",d:"Hard",q:"A Finance Company buys credit insurance and, upon a default, collects both the insurance payout AND the full collateral value. Under POJK 46/2024 risk mitigation, this is:",o:["Required by OJK","Prohibited — collecting insurance on already-written-off bad debt / double recovery is restricted","Permitted, double recovery maximizes protection","Permitted only for Sharia financing"],a:1,e:"POJK 46/2024 Ch.VII 위험완화: 부실채권 보험금 중복수취 등 prohibited. 이중회수 금지."},
+{id:"075",tp:"사업영역",d:"Hard",q:"In a Joint Financing arrangement 'with recourse', the Finance Company bears the risk if the channeling partner's borrower defaults. Is this structure allowed?",o:["Channeling = with recourse prohibited; Joint Financing = company shares risk per its portion","Both channeling and joint financing must be without recourse","Recourse rules do not exist in Indonesia","Yes, with-recourse is the default for joint financing"],a:0,e:"Channeling(단순 자금전달)은 with recourse 금지, Joint Financing은 지분비율만큼 위험 분담. 두 구조 변별 함정."},
+{id:"076",tp:"POJK",d:"Medium",q:"Under POJK 43/2025, who must hold risk-management certification?",o:["Only the President Director","Only the Board of Commissioners","All employees regardless of role","The Director overseeing risk AND the layer directly below"],a:3,e:"POJK 43/2025: 리스크 담당 Director + 바로 아래 계층 인증 의무. SPPI 시험 법적 근거. BOD 후보 직결."},
+{id:"077",tp:"POJK",d:"Medium",q:"Per POJK 43/2025, the minimum annual HR education/training budget is set as a percentage of:",o:["Net profit","Paid-in capital","Total operating cost / HR cost (regulated minimum)","Total assets"],a:2,e:"POJK 43/2025 HR 교육·훈련 최소 예산 의무. 인력개발 5항 중 하나. 비율 기준 암기."},
+{id:"078",tp:"POJK",d:"Hard",q:"Under POJK 47/2000 (re-regulated via POJK 46/2024), a foreign investor wishes to own 90% of a Finance Company. Is this allowed?",o:["No, foreign ownership is capped at 85%","No, foreign ownership is prohibited","Yes, only for ASEAN investors","Yes, up to 100% foreign ownership"],a:0,e:"외국인 지분 상한 85%. 90%는 초과. 설립 Paid-in Rp 250bn·외국인 임원 각 50% 한도 등 동반 암기."},
+{id:"079",tp:"POJK",d:"Medium",q:"A Finance Company's board has 4 Directors, of whom 2 are foreign nationals. Does this comply with POJK 47/2000?",o:["Yes, there is no limit on foreign Directors","Yes, but only with OJK waiver","No, foreign Directors cannot exceed 50% of the board","No, foreign Directors are prohibited entirely"],a:2,e:"외국인 Director는 이사회의 50% 초과 불가. 2/4 = 50%는 한도 경계(허용). 시나리오로 경계값 변별."},
+{id:"080",tp:"POJK",d:"Hard",q:"During onboarding a new corporate client, KBBF's compliance team flags a politically exposed person (PEP) as ultimate beneficial owner. Under APU-PPT RBA, what is the appropriate step?",o:["Standard CDD is sufficient","Reject all PEP clients automatically","Report to OJK before opening any account","Apply Enhanced Due Diligence (EDD)"],a:3,e:"PEP·고위험 = EDD(강화실사) 적용. RBA 4 factor(고객·국가·상품·거래채널) 기반. CDD/EDD 구별."},
+{id:"081",tp:"POJK",d:"Medium",q:"To which body must a Finance Company report a suspicious financial transaction?",o:["Bank Indonesia","OJK directly","PPATK (Indonesian FIU)","The police"],a:2,e:"의심거래보고(STR) → PPATK(인니 금융정보분석원). OJK 아님 — 함정."},
+{id:"082",tp:"POJK",d:"Hard",q:"Which statement correctly distinguishes POJK 12/POJK.01/2017 from POJK 34/2018?",o:["Both govern F&P","12/2017 = AML (APU-PPT); 34/2018 = F&P reassessment","12/2017 = F&P test; 34/2018 = AML","Both govern AML"],a:1,e:"✅정정 핵심: 12/POJK.01/2017 = AML(APU-PPT, 23/2019 개정→8/2023 대체). F&P 재평가 = 34/2018. 번호 혼동 최다 함정."},
+{id:"083",tp:"POJK",d:"Medium",q:"When OJK files a lawsuit for consumer protection under POJK 38/2025, the legal nature is best described as:",o:["A criminal prosecution","A class action by individual consumers","OJK's own institutional legal standing to sue on behalf of consumers","An arbitration at SIAC"],a:2,e:"POJK 38/2025: OJK 기관 자체의 legal standing(소송 당사자 자격). 소비자 class action과 구별."},
+{id:"084",tp:"EquityP",d:"Medium",q:"A Finance Company makes a single direct equity participation equal to 30% of its equity. Is this within limit?",o:["No, 30% exceeds the single-participation cap","Equity participation is prohibited for Finance Companies","Yes, there is no limit","Yes, single participation cap is 25% of equity → this breaches it"],a:0,e:"Equity Participation 단일 직접참여 한도 초과. 교재 한도 대비 30% 위반. Investment Financing과 성격 구별(지분 vs 채권)."},
+{id:"085",tp:"Lease",d:"Hard",q:"A customer sells its machine to the Finance Company and immediately leases it back to keep using it while raising cash. This is:",o:["Operating Lease","Channeling","Factoring","Sale and Leaseback (SLB)"],a:3,e:"자산 매각 후 재리스 = Sale and Leaseback. 자금조달 목적. Finance Lease 변형."},
+{id:"086",tp:"Lease",d:"Medium",q:"Which feature best identifies a Finance Lease (vs Operating Lease)?",o:["Short cancellable term","Lease transfers substantially all risks and rewards; bargain purchase option at end","Lessor bears residual/obsolescence risk","No amortization of the asset cost"],a:1,e:"Finance Lease = 위험·보상 실질 이전 + 염가매수선택권. Operating Lease는 lessor가 잔존위험 보유."},
+{id:"087",tp:"자금조달",d:"Medium",q:"For a private placement (non-public) bond, which requirement differs from a public offering?",o:["Higher coupon is mandatory","No prospectus/registration with OJK capital-market rules in the same way; limited investors","Must be guaranteed by the government","Cannot exceed Rp 1 billion"],a:1,e:"사모(private placement)는 공모와 달리 등록·투자자 수 제한 차이. 자금조달 구조 변별."},
+{id:"088",tp:"산업사",d:"Medium",q:"The 2018 Double Pledge Cases most directly led to which infrastructure response?",o:["Creation of OJK itself","COVID-19 loan restructuring","Introduction of the four core business areas","Strengthening of SLIK and the Asset (Fiduciary) Registry"],a:3,e:"2018 이중담보 사기 → SLIK·자산등록부 인프라 강화. 사건↔대응 매핑."},
+{id:"089",tp:"산업사",d:"Hard",q:"Which pairing of crisis-and-regulatory-response is INCORRECT?",o:["Asian Financial Crisis 1997-98 → creation of the four core areas in 1974","COVID-19 → acceleration of face-to-face-less financing","Double Pledge 2018 → SLIK/Asset Registry strengthening","COVID-19 2020 → loan restructuring relaxation (POJK 14/2020)"],a:0,e:"1974 SKB(4대영역 도입)는 1997-98 위기보다 앞섬 — 인과 역전 오류. 나머지는 정확. NOT 유형."},
+{id:"090",tp:"법적정의",d:"Hard",q:"An individual borrows to buy a personal car for commuting (not business). Under Indonesia's use-based classification, this is:",o:["Productive financing","Investment financing","Working capital financing","Consumer financing"],a:3,e:"인니는 사용목적 기준. 개인 통근용 차량 = Consumer. 영업용이면 Productive. 사용목적 함정(주체 아님)."},
+{id:"091",tp:"POJK",d:"Hard",q:"'Risk arising from a counterparty's failure to meet obligations' maps to which of the 8 risk types?",o:["Market Risk","Credit Risk","Strategic Risk","Operational Risk"],a:1,e:"상대방 채무불이행 = Credit Risk(신용위험). 8대 리스크 정의 매핑."},
+{id:"092",tp:"POJK",d:"Medium",q:"Fraud risk, under the 8 risk-type framework, is treated as:",o:["A standalone 9th risk type","Identical to Credit Risk","A parameter within Operational Risk","Not a risk under OJK rules"],a:2,e:"Fraud는 별도 9번째가 아니라 Operational Risk의 parameter. 함정 — 독립 유형 아님."},
+{id:"093",tp:"POJK",d:"Medium",q:"Which POJK pair is correctly matched to its subject?",o:["POJK 42/2024 = GCG; POJK 48/2024 = Risk Management","POJK 48/2024 = GCG; POJK 42/2024 = Risk Management","POJK 46/2024 = GCG; POJK 43/2025 = Risk Management","POJK 43/2025 = GCG; POJK 46/2024 = Risk Management"],a:1,e:"2024 4종 번호 매핑: 48=GCG, 42=Risk Management, 46=비대면, 43/2025=HR인증. 번호 교차 함정."},
+{id:"094",tp:"POJK",d:"Medium",q:"Which POJK defines Risk Management and the 8 risk types?",o:["POJK 48/2024","POJK 46/2024","POJK 42/2024","POJK 43/2025"],a:2,e:"Risk Management·8대 리스크 = POJK 42/2024. 2024 4종(48 GCG·42 RM·46 비대면·43HR→실제 43/2025) 번호 구별."},
+{id:"095",tp:"거버넌스",d:"Hard",q:"In Indonesia's two-tier board, the BOC discovers Directors pursuing a strategy beyond approved risk appetite. The BOC's proper role is to:",o:["Dissolve the Board of Directors unilaterally","Report directly to PPATK","Take over day-to-day management","Supervise and advise; require correction, not execute operations"],a:3,e:"이원적 이사회: BOC = 감독·자문(집행 아님). 경영권 직접 행사 불가. BOD 집행과 역할 분리."},
+{id:"096",tp:"거버넌스",d:"Medium",q:"Risk Appetite differs from Risk Tolerance in that appetite is:",o:["Always lower than tolerance","The aggregate level of risk the company is willing to take to pursue objectives; tolerance = acceptable variation around it","Set by OJK, not the board","The hard regulatory ceiling"],a:1,e:"Appetite = 목표 달성 위해 감수하려는 총 위험수준. Tolerance = 그 주변 허용 변동폭. Capacity(최대능력)와 3계층."},
+{id:"097",tp:"Roadmap",d:"Easy",q:"The KBBF acquisition in 2026 falls within which phase of the IKNB Roadmap 2024-2028?",o:["A phase that already ended in 2023","Outside any roadmap","Foundation/strengthening phase of the 2024-2028 roadmap","The 2014 fuel-subsidy phase"],a:2,e:"2026 = Roadmap 2024-2028 기간 내 강화 단계. KBBF 인수 타이밍 컨텍스트."},
+{id:"098",tp:"HealthLevel",d:"Medium",q:"In the KPMR (risk management quality) rating, which rating reflects the MOST effective risk management?",o:["Rating 5","Rating 4","Rating 1","Rating 3"],a:2,e:"KPMR Rating 1 = 가장 효과적인 위험관리. Health Level 척도와 동일하게 1=최상. 한국 직관 반대 함정."},
+{id:"099",tp:"비율",d:"Hard",q:"A Finance Company reports MSMD of 320%. Which interpretation is CORRECT?",o:["It is undercapitalized and faces Special Supervision","It breaches the 50% minimum","Core capital is 3.2x paid-in capital — strong capital position","MSMD above 100% is illegal"],a:2,e:"MSMD = Modal Sendiri/Modal Disetor(자기자본/납입자본). 320% = 자기자본이 납입자본 3.2배, 양호. 최소 50% 대비 충분. 산업평균 수준."},
+{id:"100",tp:"사업영역",d:"Medium",q:"Working Capital Financing is intended to cover short-term needs within a period of:",o:["No time limit","Up to 5 years","Up to 10 years","Up to 1 year"],a:3,e:"Working Capital Financing = 1년 이내 단기 운전자금. Investment Financing(중장기)과 구별."}
+];
+
+const KEY="A B C D".split(" ");
+let quiz=[], cur=0, answers=[], picked=false;
+const app=document.getElementById('app');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function shuffleOpts(q){
+  const idx=shuffle([0,1,2,3]);
+  return {...q, o: idx.map(i=>q.o[i]), a: idx.indexOf(q.a)};
+}
+function start(mode){
+  let pool=(mode==='all')?shuffle(BANK):shuffle(BANK).slice(0,30);
+  quiz=pool.map(shuffleOpts);
+  cur=0; answers=[]; render();
+}
+function home(){
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">100문항 풀 · 실전 영어 4지선다</p>
+      <div class="start-opts">
+        <button onclick="start('rand30')">랜덤 30문항 <span class="desc">실전 모사 — 전 범위에서 무작위 30개</span></button>
+        <button onclick="start('all')">전체 100문항 <span class="desc">산업·Health Level·Risk·사업영역·POJK 완주</span></button>
+      </div>
+    </div>`;
+}
+function render(){
+  const q=quiz[cur]; picked=false;
+  const dcls=q.d.toLowerCase();
+  app.innerHTML=`
+    <div class="meta"><span>문항 ${cur+1} / ${quiz.length}</span><span>QID W1-${q.id}</span></div>
+    <div class="bar"><i style="width:${(cur)/quiz.length*100}%"></i></div>
+    <div class="tags"><span class="tag topic">${q.tp}</span><span class="tag ${dcls}">${q.d}</span></div>
+    <div class="q">${q.q}</div>
+    <div class="opts" id="opts">
+      ${q.o.map((t,i)=>`<button class="opt" onclick="pick(${i})"><span class="k">${KEY[i]}</span><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="exp" id="exp"></div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" id="next" onclick="next()" disabled>다음 →</button>
+    </div>`;
+}
+function pick(i){
+  if(picked) return; picked=true;
+  const q=quiz[cur];
+  answers[cur]={id:q.id,correct:i===q.a,picked:i};
+  document.querySelectorAll('#opts .opt').forEach((b,idx)=>{
+    b.disabled=true;
+    if(idx===q.a) b.classList.add('correct');
+    else if(idx===i) b.classList.add('wrong');
+  });
+  const exp=document.getElementById('exp');
+  exp.innerHTML=`<b>정답: ${KEY[q.a]}</b> &nbsp;—&nbsp; ${q.e}`;
+  exp.classList.add('show');
+  document.getElementById('next').disabled=false;
+  if(cur===quiz.length-1) document.getElementById('next').textContent='결과 보기';
+}
+function next(){if(cur<quiz.length-1){cur++;render()}else result()}
+function result(){
+  const right=answers.filter(a=>a.correct).length;
+  const tot=quiz.length;
+  const pct=Math.round(right/tot*100);
+  const byTopic={};
+  answers.forEach((a,i)=>{const t=quiz[i].tp;byTopic[t]=byTopic[t]||{r:0,n:0};byTopic[t].n++;if(a.correct)byTopic[t].r++});
+  const wrongs=answers.map((a,i)=>({a,q:quiz[i]})).filter(x=>!x.a.correct);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">${tot}문항 중 ${right}개 정답</div>
+      <div class="breakdown">
+        ${Object.entries(byTopic).map(([t,v])=>`<div class="row"><span>${t}</span><b>${v.r} / ${v.n}</b></div>`).join('')}
+      </div>
+      ${wrongs.length?`<div class="wronglist"><b style="color:var(--red)">오답 ${wrongs.length}문항</b>
+        ${wrongs.map(x=>`<div class="w">W1-${x.q.id} · 정답 ${KEY[x.q.a]} — ${x.q.q.slice(0,70)}…</div>`).join('')}
+      </div>`:'<p style="color:var(--green);font-weight:700">전 문항 정답</p>'}
+      <div class="nav" style="justify-content:center;margin-top:24px"><button class="act" onclick="home()">다시 풀기</button></div>
+    </div>`;
+}
+home();
+</script>
+</body>
+</html>
