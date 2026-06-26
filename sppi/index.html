@@ -26,6 +26,15 @@
   .soon .links span{flex:1;min-width:130px;text-align:center;padding:11px;border-radius:8px;border:1px dashed var(--line);font-size:13px;color:var(--muted)}
   footer{text-align:center;font-size:12px;color:var(--muted);margin-top:30px;border-top:1px solid var(--line);padding-top:16px}
   .meta{font-size:11.5px;color:var(--muted);margin-top:8px}
+  .wrongchip{display:none;font-size:11px;font-weight:800;color:#fff;background:#a33a2e;border-radius:99px;padding:1px 8px;margin-left:8px;vertical-align:middle}
+  .wrongchip.on{display:inline-block}
+  .links a.note{color:#a33a2e;flex:0 0 auto;min-width:auto;padding:11px 14px;display:none}
+  .links a.note.on{display:inline-block}
+  .links a.note:hover{background:#fdf4f2;border-color:#a33a2e}
+  .summary{background:#fdf4f2;border:1px solid #e3bdb5;border-radius:12px;padding:16px 20px;margin-bottom:20px;display:none}
+  .summary.on{display:block}
+  .summary .stitle{font-size:14px;font-weight:800;color:#a33a2e}
+  .summary .sline{font-size:12.5px;color:#5d6075;margin-top:4px}
 </style>
 </head>
 <body>
@@ -36,47 +45,57 @@
     <div class="sub">주차별 모의문제·암기카드를 클릭 한 번으로 실행. 시험 2026/7/1.</div>
   </header>
 
+  <div class="summary" id="summary">
+    <div class="stitle" id="stitle"></div>
+    <div class="sline">각 카드의 <b>📕 오답노트</b>에서 틀린 문제·정답·해설을 모아보고, 퀴즈의 <b>오답만 다시 풀기</b>로 약점만 재시험할 수 있습니다.</div>
+  </div>
+
 
   <div class="wcard">
-    <div class="whead"><span class="wno">W1</span><span class="wtitle">산업 개관 + POJK Framework</span></div>
+    <div class="whead"><span class="wno">W1</span><span class="wtitle">산업 개관 + POJK Framework</span><span class="wrongchip" data-w="W1"></span></div>
     <div class="wdesc">Industry Overview · Health Level · 8 Risks · 사업영역 한도 · 핵심 POJK</div>
     <div class="links">
       <a class="quiz" href="./w1-quiz.html">모의문제 100문항</a>
       <a class="card" href="./w1-flashcards.html">암기카드 33장</a>
+      <a class="note" data-w="W1" href="./w1-quiz.html?note=1">📕 오답노트</a>
     </div>
   </div>
   <div class="wcard">
-    <div class="whead"><span class="wno">W2</span><span class="wtitle">Business Plan & Compliance</span></div>
+    <div class="whead"><span class="wno">W2</span><span class="wtitle">Business Plan & Compliance</span><span class="wrongchip" data-w="W2"></span></div>
     <div class="wdesc">Unit 1 Developing a Business Plan · Unit 2 Ensuring Compliance</div>
     <div class="links">
       <a class="quiz" href="./w2-quiz.html">모의문제 100문항</a>
       <a class="card" href="./w2-flashcards.html">암기카드 31장</a>
+      <a class="note" data-w="W2" href="./w2-quiz.html?note=1">📕 오답노트</a>
     </div>
   </div>
 
   <div class="wcard">
-    <div class="whead"><span class="wno">W3</span><span class="wtitle">Governance / Strategy / Risk ★</span></div>
+    <div class="whead"><span class="wno">W3</span><span class="wtitle">Governance / Strategy / Risk ★</span><span class="wrongchip" data-w="W3"></span></div>
     <div class="wdesc">Unit 3 — 최대 비중 · TARIF · ISO 31000 · 5×5 Matrix · Risk Limit · POJK 48/42 · 3 Lines · Risk Culture</div>
     <div class="links">
       <a class="quiz" href="./w3-quiz.html">모의문제 100문항</a>
       <a class="card" href="./w3-flashcards.html">암기카드 39장</a>
+      <a class="note" data-w="W3" href="./w3-quiz.html?note=1">📕 오답노트</a>
     </div>
   </div>
 
   <div class="wcard">
-    <div class="whead"><span class="wno">W4</span><span class="wtitle">Anti-Fraud + Internal Audit</span></div>
+    <div class="whead"><span class="wno">W4</span><span class="wtitle">Anti-Fraud + Internal Audit</span><span class="wrongchip" data-w="W4"></span></div>
     <div class="wdesc">Unit 4 Anti-Fraud(Fraud Triangle·4 Pillars·POJK 12·28/2024) · Unit 5 Internal Audit(RBA·RCA·Kirkpatrick·QAIP)</div>
     <div class="links">
       <a class="quiz" href="./w4-quiz.html">모의문제 100문항</a>
       <a class="card" href="./w4-flashcards.html">암기카드 41장</a>
+      <a class="note" data-w="W4" href="./w4-quiz.html?note=1">📕 오답노트</a>
     </div>
   </div>
 
   <div class="wcard" style="border-color:var(--gold);border-width:2px">
-    <div class="whead"><span class="wno" style="color:var(--red)">★ 종합</span><span class="wtitle">종합 모의고사 (W1~W4)</span></div>
+    <div class="whead"><span class="wno" style="color:var(--red)">★ 종합</span><span class="wtitle">종합 모의고사 (W1~W4)</span><span class="wrongchip" data-w="ALL"></span></div>
     <div class="wdesc">전 범위 400문항 풀에서 매회 40문항 랜덤 출제 · 실전 비중 가중(W3 거버넌스·리스크 최대) · 보기 셔플 · 주차별 점수 분석</div>
     <div class="links">
       <a class="quiz" href="./mock-exam.html" style="flex:1 1 100%;color:var(--red)">실전 모의고사 응시 (40문항)</a>
+      <a class="note" data-w="ALL" href="./mock-exam.html?note=1" style="flex:1 1 100%">📕 통합 오답노트 (W1~W4)</a>
     </div>
   </div>
 
@@ -85,5 +104,28 @@
     <span class="meta">출처: A to Z in Finance Company Business (Day 1) / Training Module Qualification Level 6·7 (Day 2)</span>
   </footer>
 </div>
+<script>
+(function(){
+  function getW(set){try{return JSON.parse(localStorage.getItem("sppi_wrong_"+set))||[]}catch(e){return[]}}
+  var sets=["W1","W2","W3","W4"], counts={}, total=0;
+  sets.forEach(function(s){counts[s]=getW(s).length; total+=counts[s];});
+  counts["ALL"]=total;
+  // 카드별 배지 + 오답노트 링크 노출
+  document.querySelectorAll(".wrongchip").forEach(function(el){
+    var w=el.getAttribute("data-w"), n=counts[w]||0;
+    if(n>0){el.textContent="오답 "+n; el.classList.add("on");}
+  });
+  document.querySelectorAll("a.note").forEach(function(el){
+    var w=el.getAttribute("data-w"), n=counts[w]||0;
+    if(n>0){el.classList.add("on");}
+  });
+  // 상단 요약
+  if(total>0){
+    var byset=sets.filter(function(s){return counts[s]>0}).map(function(s){return s+" "+counts[s]}).join(" · ");
+    document.getElementById("stitle").textContent="누적 오답 "+total+"문항  ("+byset+")";
+    document.getElementById("summary").classList.add("on");
+  }
+})();
+</script>
 </body>
 </html>

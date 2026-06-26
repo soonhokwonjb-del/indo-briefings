@@ -51,6 +51,17 @@
   .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
   .start-opts button:hover{border-color:var(--gold)}
   .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  .start-opts button.wrongbtn{border-color:#e3bdb5;background:#fdf4f2}
+  .start-opts button.wrongbtn:hover{border-color:var(--red)}
+  .wrongbadge{display:inline-block;min-width:20px;text-align:center;background:var(--red);color:#fff;font-size:12px;font-weight:700;border-radius:99px;padding:1px 7px;margin-left:6px}
+  .notecard{text-align:left;border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:12px;background:#fff}
+  .notecard .qid{font-size:11px;letter-spacing:.08em;color:var(--gold);font-weight:700}
+  .notecard .nq{font-size:15px;font-weight:600;margin:6px 0 10px}
+  .notecard .no{font-size:14px;padding:6px 10px;border-radius:6px;margin-bottom:5px;border:1px solid var(--line)}
+  .notecard .no.ok{background:#e9f3ed;border-color:var(--green);font-weight:600}
+  .notecard .ne{font-size:13px;color:#5d6075;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+  .notecard .del{font-size:12px;color:var(--red);background:none;border:none;cursor:pointer;font-family:inherit;margin-top:8px;padding:0}
+  .noteclear{font-size:13px;color:#5d6075;background:none;border:1px solid var(--line);border-radius:6px;padding:7px 14px;cursor:pointer;font-family:inherit;margin-top:6px}
   footer{text-align:center;font-size:12px;color:#9a9788;margin-top:30px}
 </style>
 </head>
@@ -171,10 +182,22 @@ const BANK = [
 ];
 
 const KEY="A B C D".split(" ");
+const WKEY="sppi_wrong_W3";
+function getWrong(){try{return JSON.parse(localStorage.getItem(WKEY))||[]}catch(e){return[]}}
+function setWrong(a){try{localStorage.setItem(WKEY,JSON.stringify([...new Set(a)]))}catch(e){}}
+function addWrong(id){const w=getWrong();if(!w.includes(id)){w.push(id);setWrong(w)}}
+function rmWrong(id){setWrong(getWrong().filter(x=>x!==id))}
+function byId(id){return BANK.find(q=>q.id===id)}
 let quiz=[], cur=0, answers=[], picked=false;
 const app=document.getElementById('app');
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function start(mode){
+  if(mode==='wrong'){
+    const wp=shuffle(getWrong().map(byId).filter(Boolean));
+    if(!wp.length){home();return}
+    quiz=wp;
+    cur=0;answers=[];render();return;
+  }
   if(mode==='all') quiz=shuffle(BANK);
   else quiz=shuffle(BANK).slice(0,30);
   cur=0; answers=[]; render();
@@ -187,7 +210,29 @@ function home(){
       <div class="start-opts">
         <button onclick="start('rand30')">랜덤 30문항 <span class="desc">실전 모사 — 전 범위에서 무작위 30개</span></button>
         <button onclick="start('all')">전체 100문항 <span class="desc">Unit 3 거버넌스·전략·리스크관리 전 범위 완주</span></button>
+        <button class="wrongbtn" onclick="start('wrong')" ${getWrong().length?'':'disabled style="opacity:.4;cursor:default"'}>오답만 다시 풀기<span class="wrongbadge">${getWrong().length}</span><span class="desc">누적 오답만 모아서 재시험 — 맞히면 목록에서 제거</span></button>
+        <button class="wrongbtn" onclick="notebook()" ${getWrong().length?'':'disabled style="opacity:.4;cursor:default"'}>📕 오답노트 보기<span class="desc">틀린 문제 · 정답 · 해설 한눈에</span></button>
       </div>
+    </div>`;
+}
+function notebook(){
+  const cards=getWrong().map(byId).filter(Boolean);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">오답노트</div>
+      <div class="scoreline" style="margin:6px 0 16px">누적 오답 ${cards.length}문항</div>
+      <div style="text-align:left">
+        ${cards.length?cards.map(q=>`
+          <div class="notecard">
+            <div class="qid">W3-${q.id} · ${q.tp}</div>
+            <div class="nq">${q.q}</div>
+            ${q.o.map((t,i)=>`<div class="no ${i===q.a?'ok':''}">${KEY[i]}. ${t}</div>`).join('')}
+            <div class="ne"><b>정답 ${KEY[q.a]}</b> — ${q.e}</div>
+            <button class="del" onclick="rmWrong('${q.id}');notebook()">✕ 이 문제 오답 목록에서 제거</button>
+          </div>`).join(''):'<p style="color:var(--green);font-weight:700">오답 없음</p>'}
+      </div>
+      ${cards.length?`<button class="noteclear" onclick="if(confirm('오답노트를 전부 비웁니다. 계속?')){setWrong([]);notebook()}">전체 비우기</button>`:''}
+      <div class="nav" style="justify-content:center;margin-top:20px"><button class="act" onclick="home()">← 처음으로</button></div>
     </div>`;
 }
 function render(){
@@ -210,7 +255,9 @@ function render(){
 function pick(i){
   if(picked) return; picked=true;
   const q=quiz[cur];
-  answers[cur]={id:q.id,correct:i===q.a,picked:i};
+  const __c=i===q.a;
+  answers[cur]={id:q.id,correct:__c,picked:i};
+  if(__c) rmWrong(q.id); else addWrong(q.id);
   document.querySelectorAll('#opts .opt').forEach((b,idx)=>{
     b.disabled=true;
     if(idx===q.a) b.classList.add('correct');
@@ -241,10 +288,14 @@ function result(){
       ${wrongs.length?`<div class="wronglist"><b style="color:var(--red)">오답 ${wrongs.length}문항</b>
         ${wrongs.map(x=>`<div class="w">W3-${x.q.id} · 정답 ${KEY[x.q.a]} — ${x.q.q.slice(0,70)}…</div>`).join('')}
       </div>`:'<p style="color:var(--green);font-weight:700">전 문항 정답</p>'}
-      <div class="nav" style="justify-content:center;margin-top:24px"><button class="act" onclick="home()">다시 풀기</button></div>
+      <div class="nav" style="justify-content:center;margin-top:24px;gap:10px;flex-wrap:wrap">
+        <button class="act" onclick="home()">다시 풀기</button>
+        ${getWrong().length?`<button class="act ghost" onclick="notebook()">📕 오답노트 (${getWrong().length})</button>`:''}
+      </div>
     </div>`;
 }
-home();
+// 허브에서 ?note=1 진입 시 오답노트 바로 열기
+if(new URLSearchParams(location.search).get('note')==='1'){notebook()}else{home()}
 </script>
 </body>
 </html>

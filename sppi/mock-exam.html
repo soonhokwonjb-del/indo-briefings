@@ -53,6 +53,17 @@
   .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
   .start-opts button:hover{border-color:var(--gold)}
   .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  .start-opts button.wrongbtn{border-color:#e3bdb5;background:#fdf4f2}
+  .start-opts button.wrongbtn:hover{border-color:var(--red)}
+  .wrongbadge{display:inline-block;min-width:20px;text-align:center;background:var(--red);color:#fff;font-size:12px;font-weight:700;border-radius:99px;padding:1px 7px;margin-left:6px}
+  .notecard{text-align:left;border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:12px;background:#fff}
+  .notecard .qid{font-size:11px;letter-spacing:.08em;color:var(--gold);font-weight:700}
+  .notecard .nq{font-size:15px;font-weight:600;margin:6px 0 10px}
+  .notecard .no{font-size:14px;padding:6px 10px;border-radius:6px;margin-bottom:5px;border:1px solid var(--line)}
+  .notecard .no.ok{background:#e9f3ed;border-color:var(--green);font-weight:600}
+  .notecard .ne{font-size:13px;color:#5d6075;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+  .notecard .del{font-size:12px;color:var(--red);background:none;border:none;cursor:pointer;font-family:inherit;margin-top:8px;padding:0}
+  .noteclear{font-size:13px;color:#5d6075;background:none;border:1px solid var(--line);border-radius:6px;padding:7px 14px;cursor:pointer;font-family:inherit;margin-top:6px}
   .mix{display:flex;gap:6px;justify-content:center;margin:10px 0 4px;flex-wrap:wrap}
   .mix span{font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700}
   footer{text-align:center;font-size:12px;color:#9a9788;margin-top:30px}
@@ -474,6 +485,14 @@ const BANK = [
 {uid:"W4-100",set:"W4",tp:"POJK",d:"Hard",q:"An officer cites \\\"POJK 12\\\" as the anti-fraud basis. To avoid the common numbering trap, which full citation is correct for anti-fraud?",o:["POJK 12/POJK.01/2017","POJK 12/2024","POJK 34/2018","POJK 28/2024"],a:1,e:"Anti-fraud = POJK 12/2024. 12/POJK.01/2017은 AML(별개). 연도·번호 정밀 구별 — 최다 함정."}
 ];
 const KEY="A B C D".split(" ");
+function wkey(set){return "sppi_wrong_"+set}
+function getW(set){try{return JSON.parse(localStorage.getItem(wkey(set)))||[]}catch(e){return[]}}
+function setW(set,a){try{localStorage.setItem(wkey(set),JSON.stringify([...new Set(a)]))}catch(e){}}
+function addWrongUid(uid){const [set,id]=uid.split("-");const w=getW(set);if(!w.includes(id)){w.push(id);setW(set,w)}}
+function rmWrongUid(uid){const [set,id]=uid.split("-");setW(set,getW(set).filter(x=>x!==id))}
+function allWrongUids(){let r=[];for(const set of ["W1","W2","W3","W4"]){r=r.concat(getW(set).map(id=>set+"-"+id))}return r}
+function byUid(uid){return BANK.find(q=>q.uid===uid)}
+function clearAllWrong(){for(const set of ["W1","W2","W3","W4"])setW(set,[])}
 // 실전 비중 가중: W3(거버넌스·리스크) 최대, W4·W1·W2 순
 const WEIGHTS={W1:8, W2:8, W3:14, W4:10}; // 합 40
 let quiz=[], cur=0, answers=[], picked=false;
@@ -492,7 +511,12 @@ function buildExam(){
   // 전체 순서도 섞고 보기도 셔플
   return shuffle(picked).map(shuffleOpts);
 }
-function start(){
+function start(mode){
+  if(mode==='wrong'){
+    const wp=shuffle(allWrongUids().map(byUid).filter(Boolean));
+    if(!wp.length){home();return}
+    quiz=wp.map(shuffleOpts);cur=0;answers=[];render();return;
+  }
   quiz=buildExam();
   cur=0; answers=[]; render();
 }
@@ -510,7 +534,29 @@ function home(){
       <p style="font-size:12px;color:#9a9788;margin:8px 0 16px">실전 비중 가중(거버넌스·리스크 최대) · 매회 새 문항 · 보기 셔플</p>
       <div class="start-opts">
         <button onclick="start()">모의고사 시작 (40문항) <span class="desc">실전과 동일하게 한 회차 응시 → 종료 후 주차별 점수 분석</span></button>
+        <button class="wrongbtn" onclick="start('wrong')" ${allWrongUids().length?'':'disabled style="opacity:.4;cursor:default"'}>오답만 다시 풀기<span class="wrongbadge">${allWrongUids().length}</span><span class="desc">W1~W4 전 범위 누적 오답 통합 재시험 — 맞히면 제거</span></button>
+        <button class="wrongbtn" onclick="notebook()" ${allWrongUids().length?'':'disabled style="opacity:.4;cursor:default"'}>📕 오답노트 보기<span class="desc">틀린 문제 · 정답 · 해설 한눈에 (Set별)</span></button>
       </div>
+    </div>`;
+}
+function notebook(){
+  const cards=allWrongUids().map(byUid).filter(Boolean);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">오답노트 (통합)</div>
+      <div class="scoreline" style="margin:6px 0 16px">누적 오답 ${cards.length}문항 · W1~W4 통합</div>
+      <div style="text-align:left">
+        ${cards.length?cards.map(q=>`
+          <div class="notecard">
+            <div class="qid"><span class="setbadge set${q.set}">${q.set}</span> &nbsp;${q.uid} · ${q.tp}</div>
+            <div class="nq">${q.q}</div>
+            ${q.o.map((t,i)=>`<div class="no ${i===q.a?'ok':''}">${KEY[i]}. ${t}</div>`).join('')}
+            <div class="ne"><b>정답 ${KEY[q.a]}</b> — ${q.e}</div>
+            <button class="del" onclick="rmWrongUid('${q.uid}');notebook()">✕ 이 문제 오답 목록에서 제거</button>
+          </div>`).join(''):'<p style="color:var(--green);font-weight:700">오답 없음</p>'}
+      </div>
+      ${cards.length?`<button class="noteclear" onclick="if(confirm('W1~W4 통합 오답노트를 전부 비웁니다. 계속?')){clearAllWrong();notebook()}">전체 비우기</button>`:''}
+      <div class="nav" style="justify-content:center;margin-top:20px"><button class="act" onclick="home()">← 처음으로</button></div>
     </div>`;
 }
 function render(){
@@ -533,7 +579,9 @@ function render(){
 function pick(i){
   if(picked) return; picked=true;
   const q=quiz[cur];
-  answers[cur]={uid:q.uid,set:q.set,correct:i===q.a,picked:i};
+  const __c=i===q.a;
+  answers[cur]={uid:q.uid,set:q.set,correct:__c,picked:i};
+  if(__c) rmWrongUid(q.uid); else addWrongUid(q.uid);
   document.querySelectorAll('#opts .opt').forEach((b,idx)=>{
     b.disabled=true;
     if(idx===q.a) b.classList.add('correct');
@@ -565,10 +613,14 @@ function result(){
       ${wrongs.length?`<div class="wronglist"><b style="color:var(--red)">오답 ${wrongs.length}문항</b>
         ${wrongs.map(x=>`<div class="w">${x.q.uid} · 정답 ${KEY[x.q.a]} — ${x.q.q.slice(0,68)}…</div>`).join('')}
       </div>`:'<p style="color:var(--green);font-weight:700">전 문항 정답</p>'}
-      <div class="nav" style="justify-content:center;margin-top:24px"><button class="act" onclick="start()">새 회차 응시</button></div>
+      <div class="nav" style="justify-content:center;margin-top:24px;gap:10px;flex-wrap:wrap">
+        <button class="act" onclick="start()">새 회차 응시</button>
+        ${allWrongUids().length?`<button class="act ghost" onclick="notebook()">📕 오답노트 (${allWrongUids().length})</button>`:''}
+      </div>
     </div>`;
 }
-home();
+// 허브에서 ?note=1 진입 시 오답노트 바로 열기
+if(new URLSearchParams(location.search).get('note')==='1'){notebook()}else{home()}
 </script>
 </body>
 </html>
