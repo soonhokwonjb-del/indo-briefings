@@ -99,16 +99,34 @@
     </div>
   </div>
 
+  <div class="wcard" style="border-color:var(--red);border-width:2px">
+    <div class="whead"><span class="wno" style="color:var(--red)">⚡ 집중</span><span class="wtitle">POJK 번호 암기</span><span class="wrongchip" data-w="POJK_NUM"></span></div>
+    <div class="wdesc">규정↔번호 매핑 집중 — 규정→번호 · 번호→규정 · 혼동방지 페어(12·28/2024, 43/2024 vs 48/2024, 34/2018 vs 49/2024, PADK 48/2025 vs POJK 48/2024 등)</div>
+    <div class="links">
+      <a class="quiz" href="./pojk-quiz.html">POJK 번호 50문항</a>
+      <a class="note" data-w="POJK_NUM" href="./pojk-quiz.html?note=1">📕 오답노트</a>
+    </div>
+  </div>
+
+  <div class="wcard" style="border-color:var(--red);border-width:2px">
+    <div class="whead"><span class="wno" style="color:var(--red)">⚡ 집중</span><span class="wtitle">규정 수치·비율 암기</span><span class="wrongchip" data-w="NUM_RATIO"></span></div>
+    <div class="wdesc">한도·비율·기한 집중 — BMPP(20/50%) · 자본(100B/200B/250B/1T) · 인센티브 17.5% · FMU/FD · 외국인 85%/50% · HR 2.5% · 기한(30Apr/15Feb/31Jan) · 산업통계</div>
+    <div class="links">
+      <a class="quiz" href="./numbers-quiz.html">수치·비율 50문항</a>
+      <a class="note" data-w="NUM_RATIO" href="./numbers-quiz.html?note=1">📕 오답노트</a>
+    </div>
+  </div>
+
   <footer>
     JB-Indo TF · KBBF 인수 대비 SPPI Level 7<br>
-    <span class="meta">출처: A to Z in Finance Company Business (Day 1) / Training Module Qualification Level 6·7 (Day 2)</span>
+    <span class="meta">출처: A to Z in Multifinance 2026 (Day 1, 6/26 update) / Training Module Q6·Q7 신규판(MAR 2026)</span>
   </footer>
 </div>
 <script>
 (function(){
   function getW(set){try{return JSON.parse(localStorage.getItem("sppi_wrong_"+set))||[]}catch(e){return[]}}
-  var sets=["W1","W2","W3","W4"], counts={}, total=0;
-  sets.forEach(function(s){counts[s]=getW(s).length; total+=counts[s];});
+  var sets=["W1","W2","W3","W4","POJK_NUM","NUM_RATIO"], counts={}, total=0;
+  sets.forEach(function(s){counts[s]=getW(s).length; if(["W1","W2","W3","W4"].indexOf(s)>=0) total+=counts[s];});
   counts["ALL"]=total;
   // 카드별 배지 + 오답노트 링크 노출
   document.querySelectorAll(".wrongchip").forEach(function(el){
