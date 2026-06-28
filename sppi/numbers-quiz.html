@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — 규정 수치·비율 암기 (별도 집중)</title>
+<style>
+  :root{--ink:#1a2238;--paper:#f7f5ef;--line:#d8d3c4;--gold:#b8893a;--gold-soft:#e8dcc0;--green:#2f6b4f;--red:#a33a2e;--blue:#2f5170;--shadow:0 1px 0 rgba(26,34,56,.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 80px}
+  .wrap{max-width:760px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:25px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px;box-shadow:var(--shadow)}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.topic{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.hard{background:#f6e9e6;border-color:#e3bdb5;color:var(--red)}
+  .tag.medium{background:#fbf2dd;border-color:#e6cf9a;color:var(--gold)}
+  .tag.easy{background:#e7f1ea;border-color:#aecdb9;color:var(--green)}
+  .q{font-size:17px;font-weight:600;margin-bottom:18px;letter-spacing:-.005em}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;font-size:15px;text-align:left;width:100%;font-family:inherit;color:var(--ink)}
+  .opt:hover{border-color:var(--gold)}
+  .opt .k{font-weight:800;color:var(--gold);flex-shrink:0;width:18px}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:#e9f3ed;border-color:var(--green)}
+  .opt.correct .k{color:var(--green)}
+  .opt.wrong{background:#f7e9e6;border-color:var(--red)}
+  .opt.wrong .k{color:var(--red)}
+  .exp{margin-top:16px;padding:15px;background:var(--paper);border-left:3px solid var(--gold);border-radius:4px;font-size:14px;display:none}
+  .exp.show{display:block}
+  .exp b{color:var(--green)}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:12px 26px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.35;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .result{text-align:center;padding:10px 0}
+  .score{font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:20px}
+  .breakdown{text-align:left;margin:18px 0;font-size:14px}
+  .breakdown .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .wronglist{text-align:left;margin-top:16px;font-size:13px;color:#5d6075}
+  .wronglist .w{padding:8px 0;border-bottom:1px solid var(--line)}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  .start-opts button.wrongbtn{border-color:#e3bdb5;background:#fdf4f2}
+  .start-opts button.wrongbtn:hover{border-color:var(--red)}
+  .wrongbadge{display:inline-block;min-width:20px;text-align:center;background:var(--red);color:#fff;font-size:12px;font-weight:700;border-radius:99px;padding:1px 7px;margin-left:6px}
+  .notecard{text-align:left;border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:12px;background:#fff}
+  .notecard .qid{font-size:11px;letter-spacing:.08em;color:var(--gold);font-weight:700}
+  .notecard .nq{font-size:15px;font-weight:600;margin:6px 0 10px}
+  .notecard .no{font-size:14px;padding:6px 10px;border-radius:6px;margin-bottom:5px;border:1px solid var(--line)}
+  .notecard .no.ok{background:#e9f3ed;border-color:var(--green);font-weight:600}
+  .notecard .ne{font-size:13px;color:#5d6075;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+  .notecard .del{font-size:12px;color:var(--red);background:none;border:none;cursor:pointer;font-family:inherit;margin-top:8px;padding:0}
+  .noteclear{font-size:13px;color:#5d6075;background:none;border:1px solid var(--line);border-radius:6px;padding:7px 14px;cursor:pointer;font-family:inherit;margin-top:6px}
+  footer{text-align:center;font-size:12px;color:#9a9788;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>규정 수치·비율 암기 — 한도·비율·기한</h1>
+    <div class="sub">BMPP · 자본 · 비율 · FMU/FD · 외국인 · 기한 · 거버넌스 임계치 · 산업통계 · 50문항 풀</div>
+  </header>
+  <div class="panel" id="app"></div>
+  <footer>출처: A to Z in Finance Company Business (Day 1)</footer>
+</div>
+
+<script>
+const BANK = [
+{id:"001",tp:"BMPP",d:"Hard",q:"BMPP: maximum financing to a single obligor with NO direct relationship is:",o:["20% of equity","25% of equity","10% of equity","50% of equity"],a:0,e:"BMPP single obligor (no direct relationship) max 20% of equity (POJK 46/2024)."},
+{id:"002",tp:"BMPP",d:"Hard",q:"BMPP: maximum financing to ONE GROUP of obligors (no direct relationship) is:",o:["20% of equity","50% of equity","25% of equity","10% of equity"],a:1,e:"BMPP one group of obligors max 50% of equity."},
+{id:"003",tp:"BMPP",d:"Hard",q:"BMPP: maximum financing to a party with a CONTROLLING relationship is:",o:["50% of equity","10% of equity","20% of equity","100% of equity"],a:0,e:"BMPP controlling-relationship party max 50% of equity."},
+{id:"004",tp:"BMPP",d:"Medium",q:"When a BMPP breach occurs (e.g., capital decrease, FX change), the action plan must be submitted within:",o:["1 month","2 weeks","6 months","3 months"],a:0,e:"On a BMPP breach the company must adjust and submit an action plan within 1 month."},
+{id:"005",tp:"자본",d:"Hard",q:"Minimum Core Capital for a finance company (POJK 35/2018, Art.87) is:",o:["IDR 100 billion","IDR 200 billion","IDR 250 billion","IDR 1 trillion"],a:0,e:"Minimum core capital is IDR 100 billion (POJK 35/2018 Art.87)."},
+{id:"006",tp:"자본",d:"Hard",q:"Minimum PAID-IN capital at establishment (POJK 46/2024) is:",o:["Rp 200 billion","Rp 1 trillion","Rp 250 billion","Rp 100 billion"],a:2,e:"Minimum paid-in capital at establishment is Rp 250 billion."},
+{id:"007",tp:"자본",d:"Hard",q:"Minimum Core Capital to Paid-in Capital ratio is:",o:["25%","50%","100%","10%"],a:1,e:"Core Capital to Paid-in Capital ratio must be at least 50%."},
+{id:"008",tp:"자본",d:"Hard",q:"Supplementary Capital (Tier 2) is counted at a maximum of what % of Core Capital?",o:["25% of Core Capital","10% of Core Capital","100% of Core Capital","50% of Core Capital"],a:2,e:"Tier 2 supplementary capital is capped at 100% of Core Capital (Tier 1)."},
+{id:"009",tp:"자본",d:"Hard",q:"Minimum core capital to conduct OTHER financing business activities is:",o:["Rp 100 billion","Rp 250 billion","Rp 1 trillion","Rp 200 billion"],a:3,e:"Other financing activities require core capital of at least Rp 200 billion (plus composite rating 2)."},
+{id:"010",tp:"자본",d:"Hard",q:"Minimum core capital required for INFRASTRUCTURE financing is:",o:["IDR 100 billion","IDR 200 billion","IDR 250 billion","IDR 1 trillion"],a:3,e:"Infrastructure financing requires core capital of at least IDR 1 trillion."},
+{id:"011",tp:"비율",d:"Hard",q:"Minimum Finance-to-Asset Ratio (FAR) is:",o:["85%","100%","10%","50%"],a:3,e:"FAR (financing receivables net to total assets) minimum 50%."},
+{id:"012",tp:"비율",d:"Hard",q:"Gearing ratio range for finance companies is:",o:["1 to 10 times","0 to 5 times","0 to 15 times","0 to 10 times"],a:3,e:"Gearing ratio: lowest 0x, highest 10x."},
+{id:"013",tp:"비율",d:"Hard",q:"Minimum ratio of Investment + Working Capital receivables to total receivables is:",o:["25%","50%","5%","10%"],a:3,e:"Investment+working capital financing must be at least 10% of total receivables (before allowance)."},
+{id:"014",tp:"비율",d:"Hard",q:"Maximum NPF Net for conducting FMU and FD activities is:",o:["10%","25%","5%","2.5%"],a:2,e:"Max NPF Net 5% is required to conduct Business Capital Facility (FMU) and Fund Facility (FD)."},
+{id:"015",tp:"비율",d:"Hard",q:"Minimum Capital Ratio (capital adjusted to assets adjusted) is:",o:["50%","10%","5%","25%"],a:1,e:"Capital ratio (adjusted capital to adjusted assets) minimum 10%."},
+{id:"016",tp:"비율",d:"Medium",q:"Minimum Financial Health Level required for most activities is:",o:["Composite Rank 1","Composite Rank 3","Composite Rank 2","Composite Rank 5"],a:2,e:"Minimum financial health is Composite Rank 2 for most activities."},
+{id:"017",tp:"FMU/FD",d:"Hard",q:"Maximum financing per Business Capital Facility (FMU) debtor is:",o:["Rp 1 billion","Rp 500 million","Rp 10 billion","Rp 100 million"],a:2,e:"FMU max Rp 10 billion per debtor."},
+{id:"018",tp:"FMU/FD",d:"Hard",q:"Maximum financing per Fund Facility (FD) debtor is:",o:["Rp 500 million","Rp 100 million","Rp 10 billion","Rp 1 billion"],a:0,e:"FD max Rp 500 million per debtor."},
+{id:"019",tp:"FMU/FD",d:"Hard",q:"Collateral-exempt FMU amount (for UMKM, with core/paid-in >100%) is up to:",o:["Rp 1 billion per debtor","Rp 100 million per debtor","Rp 500 million per debtor","Rp 10 billion per debtor"],a:1,e:"Collateral exemption applies up to Rp 100 million accumulated per debtor (UMKM, core/paid-in >100%)."},
+{id:"020",tp:"FMU/FD",d:"Hard",q:"Multipurpose financing receivables through Fund Facilities are capped at:",o:["50% of total receivables","10% of total receivables","5% of total receivables","25% of total financing receivables"],a:3,e:"Multipurpose financing via Fund Facilities is max 25% of total financing receivables."},
+{id:"021",tp:"인센티브",d:"Hard",q:"Maximum incentive to a third party per financing agreement is:",o:["17.5% of total income of each agreement","25% of total income","20% of equity","10% of total income"],a:0,e:"Third-party acquisition incentive max 17.5% of total income per financing agreement (POJK 46/2024)."},
+{id:"022",tp:"인센티브",d:"Medium",q:"For the 17.5% incentive cap, 'income' is defined as interest income before:",o:["Cost of Fund, insurance discount, admin & provision income","Tax only","Operating expenses","Net profit"],a:0,e:"'Income' = interest income before cost of fund, insurance discount, administration income and provision income."},
+{id:"023",tp:"외국인",d:"Hard",q:"Maximum foreign ownership of a finance company (direct or indirect) is:",o:["85% of paid-in capital","49% of paid-in capital","50% of paid-in capital","100% of paid-in capital"],a:0,e:"Foreign ownership max 85% of paid-in capital."},
+{id:"024",tp:"외국인",d:"Hard",q:"Maximum proportion of foreign Directors is:",o:["85%","25%","100%","50%"],a:3,e:"Max 50% foreign directors (and max 50% foreign commissioners)."},
+{id:"025",tp:"외국인",d:"Hard",q:"Maximum proportion of foreign Commissioners is:",o:["25%","50%","100%","85%"],a:1,e:"Max 50% foreign commissioners."},
+{id:"026",tp:"외국인",d:"Medium",q:"Foreign employees may be employed at minimum foreign-ownership threshold of:",o:["10% of shares","25% of shares","50% of shares","85% of shares"],a:1,e:"Companies with ≥25% foreign ownership (direct/indirect) may employ foreign staff."},
+{id:"027",tp:"외국인",d:"Medium",q:"Foreign employee employment period is max:",o:["5 years","3 years, extendable 1x for max 1 year","No limit","2 years"],a:1,e:"Foreign-employee term max 3 years, extendable once for max 1 year."},
+{id:"028",tp:"HR",d:"Hard",q:"HR education & training budget under POJK 43/2024 must be at least:",o:["5% of total assets","2.5% of net income","10% of equity","2.5% of personnel/employee expenses"],a:3,e:"HR training budget min 2.5% of personnel (employee) expenses — not net income."},
+{id:"029",tp:"지분참여",d:"Hard",q:"Maximum equity participation by a finance company is:",o:["10% of equity","50% of equity","100% of equity","20% of equity"],a:3,e:"Max equity participation 20% of finance-company equity (POJK 7/2022)."},
+{id:"030",tp:"지분참여",d:"Hard",q:"Total direct participation to entities within ONE group is capped at:",o:["5% of equity","20% of equity","10% of equity","50% of equity"],a:2,e:"Total direct participation within one group max 10% of equity."},
+{id:"031",tp:"기한",d:"Hard",q:"Sustainability report submission/publication deadline (POJK 51/2017) is:",o:["30 April of the following year","15 February","30 June","31 January"],a:0,e:"Sustainability report due to OJK and published on website by 30 April of the following year."},
+{id:"032",tp:"기한",d:"Hard",q:"GCG self-assessment report deadline to OJK (POJK 28/2020) is:",o:["15 February of the next year","31 January","30 April","31 December"],a:0,e:"GCG self-assessment (institutional soundness) due to OJK by 15 February of the next year."},
+{id:"033",tp:"기한",d:"Hard",q:"First Anti-Fraud Strategy implementation report (POJK 12/2024) was due:",o:["23 October 2024","31 January 2025","30 April 2025","15 February 2025"],a:1,e:"First AFS report due 31 January 2025; annual reports each 31 January thereafter."},
+{id:"034",tp:"기한",d:"Hard",q:"Fiduciary security must be registered no later than:",o:["2 weeks","3 months","1 month from the financing agreement date","6 months"],a:2,e:"Fiduciary security registration within 1 month of the financing agreement date."},
+{id:"035",tp:"기한",d:"Medium",q:"Consumer pause period (POJK 22/2023 Art.51) for long/complex products is at least:",o:["3 working days","2 working days","7 working days","1 working day"],a:1,e:"Pause period at least 2 working days after the consumer agrees to the agreement."},
+{id:"036",tp:"기한",d:"Medium",q:"Securities issuance through public offering must be reported no later than:",o:["1 month prior","6 months prior","3 months prior to the GMS approving the offering","12 months prior"],a:2,e:"Public-offering securities plan reported ≥3 months before the GMS approving it."},
+{id:"037",tp:"기한",d:"Medium",q:"Securities issuance NOT through public offering must be reported no later than:",o:["6 months prior to issuance","3 months prior","1 month prior","12 months prior"],a:0,e:"Non-public-offering securities plan reported ≥6 months before issuance."},
+{id:"038",tp:"기한",d:"Medium",q:"SIPELAKU users must conduct an internal audit of its use at least:",o:["once per quarter","once per year","once per month","never"],a:1,e:"SIPELAKU internal audit at least once per year (POJK 28/2024)."},
+{id:"039",tp:"기한",d:"Medium",q:"Sharia companies must report contract termination to OJK no later than:",o:["15 working days","30 working days","7 working days","1 month"],a:0,e:"Sharia contract termination must be reported to OJK within 15 working days."},
+{id:"040",tp:"거버넌스수치",d:"Hard",q:"A finance company with assets above Rp 250 billion must have minimum Directors:",o:["2 Directors","5 Directors","3 Directors (min 50% Indonesian)","1 Director"],a:2,e:"Assets >Rp250B: ≥3 Directors, min 50% Indonesian."},
+{id:"041",tp:"거버넌스수치",d:"Hard",q:"A finance company with assets above Rp 250 billion must have minimum Commissioners:",o:["3 Commissioners","2 Commissioners (incl. Independent)","1 Commissioner","4 Commissioners"],a:1,e:"Assets >Rp250B: ≥2 Commissioners including an Independent Commissioner."},
+{id:"042",tp:"거버넌스수치",d:"Medium",q:"Directors meetings must be held at minimum:",o:["Quarterly","Weekly","Once per year","Once per month (min 50% attendance)"],a:3,e:"Directors meet ≥1x/month with ≥50% attendance."},
+{id:"043",tp:"거버넌스수치",d:"Medium",q:"Board of Commissioners meetings must be held at minimum:",o:["Twice per year","Monthly","4 times per year (min 75% attendance)","Once per year"],a:2,e:"BOC meets ≥4x/year with ≥75% attendance."},
+{id:"044",tp:"거버넌스수치",d:"Medium",q:"A BOC member must not have been a Director in the same company within the past:",o:["6 years","2 years","1 month","6 months"],a:3,e:"BOC members must not have been a Director in the same company in the prior 6 months."},
+{id:"045",tp:"거버넌스수치",d:"Hard",q:"IT steering committee is required for NBFIs with total assets above:",o:["IDR 100 billion","IDR 500 billion","IDR 1 trillion","IDR 250 billion"],a:2,e:"IT steering committee required for assets > IDR 1 trillion (POJK 4/2021)."},
+{id:"046",tp:"거버넌스수치",d:"Hard",q:"Risk Management Committee/Work Unit is required for finance companies with assets above:",o:["Rp 1 trillion","Rp 250 billion","Rp 100 billion","Rp 500 billion"],a:1,e:"Assets >Rp250B require a Risk Management Committee and Work Unit; below, a Risk Management Function."},
+{id:"047",tp:"거버넌스수치",d:"Hard",q:"A finance company shareholder (legal entity) must have operated at least how long before investing?",o:["2 years","3 years","5 years","1 year"],a:0,e:"A controlling shareholder (legal entity) must have operated ≥2 years before investing."},
+{id:"048",tp:"산업통계",d:"Hard",q:"Per the new Day1 data (Apr 2026), the industry FAR ratio is:",o:["84.10%","89%","86.70%","85.48%"],a:2,e:"FAR Apr/26 = 86.70% (up from 86.01% Dec/25)."},
+{id:"049",tp:"산업통계",d:"Hard",q:"Per the new Day1 data (Apr 2026), the industry MSMD ratio is:",o:["320.23%","328.37%","272.10%","332.39%"],a:1,e:"MSMD Apr/26 = 328.37%."},
+{id:"050",tp:"산업통계",d:"Hard",q:"Per the new Day1 data (Apr 2026), NPF Gross is:",o:["3.53%","2.51%","2.43%","2.89%"],a:3,e:"NPF Gross Apr/26 = 2.89%."}
+
+];
+
+const KEY="A B C D".split(" ");
+const WKEY="sppi_wrong_NUM_RATIO";
+function getWrong(){try{return JSON.parse(localStorage.getItem(WKEY))||[]}catch(e){return[]}}
+function setWrong(a){try{localStorage.setItem(WKEY,JSON.stringify([...new Set(a)]))}catch(e){}}
+function addWrong(id){const w=getWrong();if(!w.includes(id)){w.push(id);setWrong(w)}}
+function rmWrong(id){setWrong(getWrong().filter(x=>x!==id))}
+function byId(id){return BANK.find(q=>q.id===id)}
+let quiz=[], cur=0, answers=[], picked=false;
+const app=document.getElementById('app');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function shuffleOpts(q){
+  const idx=shuffle([0,1,2,3]);
+  return {...q, o: idx.map(i=>q.o[i]), a: idx.indexOf(q.a)};
+}
+function start(mode){
+  let pool;
+  if(mode==='wrong'){
+    pool=shuffle(getWrong().map(byId).filter(Boolean));
+    if(!pool.length){home();return}
+  } else {
+    pool=(mode==='all')?shuffle(BANK):shuffle(BANK).slice(0,25);
+  }
+  quiz=pool.map(shuffleOpts);
+  cur=0; answers=[]; render();
+}
+function home(){
+  const wc=getWrong().length;
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">50문항 풀 · 실전 영어 4지선다</p>
+      <div class="start-opts">
+        <button onclick="start('rand25')">랜덤 25문항 <span class="desc">실전 모사 — 전 범위에서 무작위 25개</span></button>
+        <button onclick="start('all')">전체 50문항 <span class="desc">BMPP·자본·비율·FMU/FD·외국인·기한·통계 완주</span></button>
+        <button class="wrongbtn" onclick="start('wrong')" ${wc?'':'disabled style="opacity:.4;cursor:default"'}>오답만 다시 풀기<span class="wrongbadge">${wc}</span><span class="desc">누적 오답만 모아서 재시험 — 맞히면 목록에서 제거</span></button>
+        <button class="wrongbtn" onclick="notebook()" ${wc?'':'disabled style="opacity:.4;cursor:default"'}>📕 오답노트 보기<span class="desc">틀린 문제 · 정답 · 해설 한눈에</span></button>
+      </div>
+    </div>`;
+}
+function notebook(){
+  const ids=getWrong();
+  const cards=ids.map(byId).filter(Boolean);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">오답노트</div>
+      <div class="scoreline" style="margin:6px 0 16px">누적 오답 ${cards.length}문항</div>
+      <div style="text-align:left">
+        ${cards.length?cards.map(q=>`
+          <div class="notecard">
+            <div class="qid">NUM-${q.id} · ${q.tp}</div>
+            <div class="nq">${q.q}</div>
+            ${q.o.map((t,i)=>`<div class="no ${i===q.a?'ok':''}">${KEY[i]}. ${t}</div>`).join('')}
+            <div class="ne"><b>정답 ${KEY[q.a]}</b> — ${q.e}</div>
+            <button class="del" onclick="rmWrong('${q.id}');notebook()">✕ 이 문제 오답 목록에서 제거</button>
+          </div>`).join(''):'<p style="color:var(--green);font-weight:700">오답 없음</p>'}
+      </div>
+      ${cards.length?`<button class="noteclear" onclick="if(confirm('오답노트를 전부 비웁니다. 계속?')){setWrong([]);notebook()}">전체 비우기</button>`:''}
+      <div class="nav" style="justify-content:center;margin-top:20px"><button class="act" onclick="home()">← 처음으로</button></div>
+    </div>`;
+}
+function render(){
+  const q=quiz[cur]; picked=false;
+  const dcls=q.d.toLowerCase();
+  app.innerHTML=`
+    <div class="meta"><span>문항 ${cur+1} / ${quiz.length}</span><span>QID NUM-${q.id}</span></div>
+    <div class="bar"><i style="width:${(cur)/quiz.length*100}%"></i></div>
+    <div class="tags"><span class="tag topic">${q.tp}</span><span class="tag ${dcls}">${q.d}</span></div>
+    <div class="q">${q.q}</div>
+    <div class="opts" id="opts">
+      ${q.o.map((t,i)=>`<button class="opt" onclick="pick(${i})"><span class="k">${KEY[i]}</span><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="exp" id="exp"></div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" id="next" onclick="next()" disabled>다음 →</button>
+    </div>`;
+}
+function pick(i){
+  if(picked) return; picked=true;
+  const q=quiz[cur];
+  const correct=i===q.a;
+  answers[cur]={id:q.id,correct,picked:i};
+  if(correct) rmWrong(q.id); else addWrong(q.id);
+  document.querySelectorAll('#opts .opt').forEach((b,idx)=>{
+    b.disabled=true;
+    if(idx===q.a) b.classList.add('correct');
+    else if(idx===i) b.classList.add('wrong');
+  });
+  const exp=document.getElementById('exp');
+  exp.innerHTML=`<b>정답: ${KEY[q.a]}</b> &nbsp;—&nbsp; ${q.e}`;
+  exp.classList.add('show');
+  document.getElementById('next').disabled=false;
+  if(cur===quiz.length-1) document.getElementById('next').textContent='결과 보기';
+}
+function next(){if(cur<quiz.length-1){cur++;render()}else result()}
+function result(){
+  const right=answers.filter(a=>a.correct).length;
+  const tot=quiz.length;
+  const pct=Math.round(right/tot*100);
+  const byTopic={};
+  answers.forEach((a,i)=>{const t=quiz[i].tp;byTopic[t]=byTopic[t]||{r:0,n:0};byTopic[t].n++;if(a.correct)byTopic[t].r++});
+  const wrongs=answers.map((a,i)=>({a,q:quiz[i]})).filter(x=>!x.a.correct);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">${tot}문항 중 ${right}개 정답</div>
+      <div class="breakdown">
+        ${Object.entries(byTopic).map(([t,v])=>`<div class="row"><span>${t}</span><b>${v.r} / ${v.n}</b></div>`).join('')}
+      </div>
+      ${wrongs.length?`<div class="wronglist"><b style="color:var(--red)">오답 ${wrongs.length}문항</b>
+        ${wrongs.map(x=>`<div class="w">NUM-${x.q.id} · 정답 ${KEY[x.q.a]} — ${x.q.q.slice(0,70)}…</div>`).join('')}
+      </div>`:'<p style="color:var(--green);font-weight:700">전 문항 정답</p>'}
+      <div class="nav" style="justify-content:center;margin-top:24px;gap:10px;flex-wrap:wrap">
+        <button class="act" onclick="home()">다시 풀기</button>
+        ${getWrong().length?`<button class="act ghost" onclick="notebook()">📕 오답노트 (${getWrong().length})</button>`:''}
+      </div>
+    </div>`;
+}
+// 허브에서 ?note=1 진입 시 오답노트 바로 열기
+if(new URLSearchParams(location.search).get('note')==='1'){notebook()}else{home()}
+</script>
+</body>
+</html>
