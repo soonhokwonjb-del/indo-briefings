@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — W4 Quiz V2 (Anti-Fraud & Internal Audit)</title>
+<style>
+  :root{--ink:#1a2238;--paper:#f7f5ef;--line:#d8d3c4;--gold:#b8893a;--gold-soft:#e8dcc0;--green:#2f6b4f;--red:#a33a2e;--blue:#2f5170;--shadow:0 1px 0 rgba(26,34,56,.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 80px}
+  .wrap{max-width:760px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:25px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px;box-shadow:var(--shadow)}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.topic{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.hard{background:#f6e9e6;border-color:#e3bdb5;color:var(--red)}
+  .tag.medium{background:#fbf2dd;border-color:#e6cf9a;color:var(--gold)}
+  .tag.easy{background:#e7f1ea;border-color:#aecdb9;color:var(--green)}
+  .q{font-size:17px;font-weight:600;margin-bottom:18px;letter-spacing:-.005em}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;font-size:15px;text-align:left;width:100%;font-family:inherit;color:var(--ink)}
+  .opt:hover{border-color:var(--gold)}
+  .opt .k{font-weight:800;color:var(--gold);flex-shrink:0;width:18px}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:#e9f3ed;border-color:var(--green)}
+  .opt.correct .k{color:var(--green)}
+  .opt.wrong{background:#f7e9e6;border-color:var(--red)}
+  .opt.wrong .k{color:var(--red)}
+  .exp{margin-top:16px;padding:15px;background:var(--paper);border-left:3px solid var(--gold);border-radius:4px;font-size:14px;display:none}
+  .exp.show{display:block}
+  .exp b{color:var(--green)}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:12px 26px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.35;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .result{text-align:center;padding:10px 0}
+  .score{font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:20px}
+  .breakdown{text-align:left;margin:18px 0;font-size:14px}
+  .breakdown .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .wronglist{text-align:left;margin-top:16px;font-size:13px;color:#5d6075}
+  .wronglist .w{padding:8px 0;border-bottom:1px solid var(--line)}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  .start-opts button.wrongbtn{border-color:#e3bdb5;background:#fdf4f2}
+  .start-opts button.wrongbtn:hover{border-color:var(--red)}
+  .wrongbadge{display:inline-block;min-width:20px;text-align:center;background:var(--red);color:#fff;font-size:12px;font-weight:700;border-radius:99px;padding:1px 7px;margin-left:6px}
+  .notecard{text-align:left;border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:12px;background:#fff}
+  .notecard .qid{font-size:11px;letter-spacing:.08em;color:var(--gold);font-weight:700}
+  .notecard .nq{font-size:15px;font-weight:600;margin:6px 0 10px}
+  .notecard .no{font-size:14px;padding:6px 10px;border-radius:6px;margin-bottom:5px;border:1px solid var(--line)}
+  .notecard .no.ok{background:#e9f3ed;border-color:var(--green);font-weight:600}
+  .notecard .ne{font-size:13px;color:#5d6075;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+  .notecard .del{font-size:12px;color:var(--red);background:none;border:none;cursor:pointer;font-family:inherit;margin-top:8px;padding:0}
+  .noteclear{font-size:13px;color:#5d6075;background:none;border:1px solid var(--line);border-radius:6px;padding:7px 14px;cursor:pointer;font-family:inherit;margin-top:6px}
+  footer{text-align:center;font-size:12px;color:#9a9788;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>W4 모의문제 V2 — Anti-Fraud & Internal Audit</h1>
+    <div class="sub">Anti-Fraud(Unit 4) · Internal Audit(Unit 5) · POJK 12·28/2024 · 4 Pillars · RBA · RCA · QAIP · Kirkpatrick · 100문항 풀 · K6/K7 신규판(2026) 기반</div>
+  </header>
+  <div class="panel" id="app"></div>
+  <footer>출처: Training Module Qualification Level 6·7 (Day 2)</footer>
+</div>
+
+<script>
+const BANK = [
+{id:"001",tp:"POJK",d:"Hard",q:"The principal regulation governing the anti-fraud strategy for finance companies is:",o:["POJK 46/2024","POJK 12/2024","POJK 35/2018","POJK 43/2024"],a:1,e:"Anti-fraud strategy = POJK 12/2024. 함정: 46/2024(사업운영)·35/2018(시설)·43/2024(HR)는 별개."},
+{id:"002",tp:"POJK",d:"Hard",q:"SIPELAKU, referenced in the anti-fraud framework, is associated with which regulation?",o:["POJK 28/2024","POJK 12/2017","POJK 34/2018","POJK 19/2025"],a:0,e:"SIPELAKU = POJK 28/2024. 함정: 12/2017(AML)·34/2018(F&P)·19/2025(MSME)와 혼동."},
+{id:"003",tp:"POJK",d:"Hard",q:"SIPELAKU primarily functions as:",o:["A loan origination system","A system/registry related to reporting perpetrators/fraud actors in the financial sector","A marketing tool","A payroll system"],a:1,e:"SIPELAKU = 금융권 부정행위자 신고·등록 관련 시스템. 함정: 여신·마케팅·급여 시스템과 혼동."},
+{id:"004",tp:"POJK",d:"Hard",q:"Under the anti-fraud regulation, the 'Primary Party' prohibition (Art. 9(4)) refers to:",o:["A reward for whistleblowers","A restriction barring a party who committed fraud from key roles/positions","A new product type","A marketing rule"],a:1,e:"Primary Party 금지(Art.9(4)) = 부정행위자가 핵심 직위에 오르는 것 제한. 함정: 보상·상품·마케팅은 무관."},
+{id:"005",tp:"POJK",d:"Hard",q:"The anti-fraud regulation requires a correction/follow-up deadline of:",o:["5 working days","15 working days (Art. 18)","30 working days","60 calendar days"],a:1,e:"시정·후속 기한 = 15 working days(Art.18). 함정: 인접 일수 혼동."},
+{id:"006",tp:"POJK",d:"Medium",q:"The Implementation Report under the anti-fraud framework follows a structure of how many fields?",o:["5 fields","13 fields","20 fields","8 fields"],a:1,e:"Implementation Report = 13-field 구조. 함정: 인접 숫자 혼동."},
+{id:"007",tp:"POJK",d:"Hard",q:"The anti-fraud strategy philosophy emphasized in the textbook is:",o:["'Cure is better than prevention'","'Prevention is better than cure'","'Ignore minor fraud'","'Punishment only'"],a:1,e:"Anti-fraud 철학 = 'prevention is better than cure'(예방 우선). 함정: 역전·무시·처벌일변도는 오답."},
+{id:"008",tp:"POJK",d:"Hard",q:"Which institution issues and supervises the anti-fraud regulation (POJK 12/2024)?",o:["Bank Indonesia","OJK","The police alone","APPI"],a:1,e:"Anti-fraud POJK 발행·감독 = OJK. 함정: BI·경찰단독·협회는 오답."},
+{id:"009",tp:"POJK",d:"Medium",q:"A documented internal control system and an integrated anti-fraud strategy are:",o:["Optional for finance companies","Required (mandatory) for finance companies","Only for banks","Only for sharia companies"],a:1,e:"문서화 내부통제 + 통합 anti-fraud 전략 = finance company 의무. 함정: 선택·은행한정·샤리아한정은 오답."},
+{id:"010",tp:"POJK",d:"Hard",q:"The compliance with the anti-fraud sanctions framework matrix is intended to:",o:["Reward fraudsters","Map violations to proportionate sanctions for consistent enforcement","Hide violations","Increase fraud"],a:1,e:"제재 매트릭스 = 위반-비례제재 매핑으로 일관 집행. 함정: 보상·은폐는 정반대."},
+{id:"011",tp:"4Pillars",d:"Hard",q:"The anti-fraud strategy is built on FOUR pillars. Which set is correct?",o:["Prevention, Detection, Investigation/Reporting & Sanction, Monitoring/Evaluation & Follow-up","Buy, Sell, Hold, Trade","Plan, Do, Check, Act","Hire, Train, Promote, Fire"],a:0,e:"Anti-fraud 4기둥: 예방·탐지·조사/보고·제재·모니터링/평가·후속. 함정: PDCA·매매용어와 혼동."},
+{id:"012",tp:"4Pillars",d:"Hard",q:"The FIRST pillar (Prevention/Deterrence) includes measures such as:",o:["Post-fraud lawsuits only","Anti-fraud awareness, KYC, dual control, and a strong control environment","Ignoring red flags","Paying ransoms"],a:1,e:"예방 기둥 = anti-fraud 인식·KYC·dual control·강한 통제환경. 함정: 사후소송·무시는 예방 아님."},
+{id:"013",tp:"4Pillars",d:"Hard",q:"The DETECTION pillar relies primarily on:",o:["Hoping fraud is reported voluntarily","Whistleblowing systems, surprise audits, data analytics, and red-flag monitoring","Marketing campaigns","Annual parties"],a:1,e:"탐지 기둥 = 내부고발·불시감사·데이터분석·red-flag 모니터링. 함정: 자발신고 기대·무관활동은 부실."},
+{id:"014",tp:"4Pillars",d:"Hard",q:"The INVESTIGATION & Reporting pillar requires that, upon suspected fraud, the company:",o:["Conceals it","Conducts a structured investigation and reports per regulatory requirements (incl. OJK where applicable)","Ignores it","Rewards the perpetrator"],a:1,e:"조사·보고 기둥 = 구조화 조사 + 규제 보고(필요시 OJK). 함정: 은폐·무시·보상은 위반."},
+{id:"015",tp:"4Pillars",d:"Hard",q:"The MONITORING & Evaluation pillar ensures that:",o:["Fraud cases are forgotten","Lessons learned drive control improvements and the strategy is continuously evaluated","No follow-up occurs","Only profits are tracked"],a:1,e:"모니터링·평가 기둥 = 교훈 → 통제개선 + 전략 지속평가. 함정: 망각·무후속은 정반대."},
+{id:"016",tp:"4Pillars",d:"Medium",q:"'Dual control' as a fraud prevention measure means:",o:["One person does everything","Two persons jointly perform/verify a sensitive task to reduce fraud risk","Doubling the workload pointlessly","Controlling two companies"],a:1,e:"Dual control = 민감업무를 2인 공동수행·검증 → 부정위험 감소. 함정: 단독·무의미 중복·동음이의 함정."},
+{id:"017",tp:"4Pillars",d:"Hard",q:"The 'four-eye principle' in the financing process supports which pillar?",o:["Monitoring only","Prevention (requiring a second review/approval to deter fraud)","Investigation","None"],a:1,e:"Four-eye = 예방 기둥(2차 검토·승인으로 부정 억제). 함정: 모니터링·조사로 오분류."},
+{id:"018",tp:"4Pillars",d:"Hard",q:"A red flag such as an employee refusing to take leave may indicate:",o:["Excellent dedication only","A possible fraud concealment risk warranting attention","Nothing relevant","A reward is due"],a:1,e:"휴가 거부 = 부정 은폐 가능성 red flag(탐지). 함정: '헌신'으로만 해석하면 탐지 실패."},
+{id:"019",tp:"4Pillars",d:"Hard",q:"KYC (Know Your Customer) in fraud prevention primarily reduces:",o:["IT costs","The risk of fraudulent/fictitious customers and identity-based fraud","Marketing spend","Office rent"],a:1,e:"KYC = 허위·가공 고객·신원기반 부정 위험 감소. 함정: IT·마케팅·임차 비용과 무관."},
+{id:"020",tp:"4Pillars",d:"Medium",q:"The anti-fraud strategy should be communicated to:",o:["Only the BOD","All employees, with role-appropriate training and awareness","Only the audit team","No one"],a:1,e:"Anti-fraud 전략 = 전 직원에 직무별 교육·인식. 함정: BOD·감사 한정은 부실."},
+{id:"021",tp:"RBA",d:"Hard",q:"A Risk-Based Approach (RBA) to fraud means:",o:["Treating all areas identically","Allocating anti-fraud resources proportionate to assessed fraud risk in each area","Ignoring high-risk areas","Random checks only"],a:1,e:"RBA = 영역별 평가된 부정위험에 비례해 자원 배분. 함정: 동일처리·고위험무시는 RBA 반대."},
+{id:"022",tp:"RBA",d:"Hard",q:"Under RBA, areas with HIGHER fraud risk (e.g., cash handling, lending approvals) should receive:",o:["Less scrutiny","More intensive controls and monitoring","No controls","Only annual review"],a:1,e:"고위험 영역(현금·여신승인) = 강화 통제·모니터링. 함정: 완화·무통제는 RBA 위배."},
+{id:"023",tp:"RBA",d:"Hard",q:"A fraud risk assessment should be:",o:["Done once and never updated","Periodic and updated as the business, processes, and threats change","Based on guesswork","Hidden from management"],a:1,e:"부정위험 평가 = 정기 + 사업·프로세스·위협 변화 시 갱신. 함정: 일회·추측·비공개는 부실."},
+{id:"024",tp:"RBA",d:"Medium",q:"The fraud triangle identifies three conditions enabling fraud:",o:["Cash, Credit, Capital","Pressure/Incentive, Opportunity, Rationalization","Plan, Do, Check","Buy, Sell, Hold"],a:1,e:"Fraud triangle = 압력/동기·기회·합리화. 함정: 재무용어·PDCA와 혼동."},
+{id:"025",tp:"RBA",d:"Hard",q:"Strong internal controls primarily attack which leg of the fraud triangle?",o:["Pressure","Opportunity (by removing the chance to commit and conceal fraud)","Rationalization","None"],a:1,e:"강한 내부통제 = 'Opportunity(기회)' 제거. 함정: 압력·합리화는 통제로 직접 제거 어려움."},
+{id:"026",tp:"RBA",d:"Hard",q:"A code of conduct and ethics training primarily addresses which leg of the fraud triangle?",o:["Opportunity","Rationalization (by reinforcing ethical norms)","Cash flow","Gearing"],a:1,e:"행동강령·윤리교육 = 'Rationalization(합리화)' 차단. 함정: 기회·재무지표와 혼동."},
+{id:"027",tp:"RBA",d:"Hard",q:"Data analytics in fraud detection enables:",o:["Slower detection","Identification of anomalies and patterns across large datasets that manual review would miss","Hiding fraud","Marketing only"],a:1,e:"데이터분석 = 대량데이터 이상·패턴 식별(수작업 한계 보완). 함정: 지연·은폐는 정반대."},
+{id:"028",tp:"RBA",d:"Hard",q:"A fraud that recurs in the same process despite prior controls indicates:",o:["Controls are perfect","Control design or operating effectiveness is deficient and needs strengthening","No action needed","The fraud is acceptable"],a:1,e:"동일 프로세스 부정 재발 = 통제 설계·운영 효과성 결함, 강화 필요. 함정: '완벽'·'무조치'는 오답."},
+{id:"029",tp:"RBA",d:"Medium",q:"Segregation of duties reduces fraud by:",o:["Concentrating power","Ensuring no single person controls all stages of a transaction","Removing oversight","Increasing opportunity"],a:1,e:"직무분리 = 단일인이 거래 전 단계 통제 못하게 → 부정기회 감소. 함정: 권한집중·기회증가는 반대."},
+{id:"030",tp:"RBA",d:"Hard",q:"The 'tone at the top' in anti-fraud means:",o:["Leaders tolerate small frauds","Leadership demonstrates zero tolerance and models ethical behavior","Only juniors must be honest","Fraud is a low priority"],a:1,e:"Anti-fraud tone at the top = 경영진의 무관용·윤리 모범. 함정: 관용·하급한정·저우선은 약화."},
+{id:"031",tp:"InternalAudit",d:"Hard",q:"In the Three Lines Model, Internal Audit functions as the:",o:["First Line","Second Line","Third Line (independent assurance)","Outside the model"],a:2,e:"내부감사 = 3선(독립 보증). 함정: 1선(영업)·2선(위험·준법)과 혼동 — 빈출."},
+{id:"032",tp:"InternalAudit",d:"Hard",q:"The PRIMARY purpose of internal audit is to:",o:["Manage day-to-day operations","Provide independent, objective assurance and consulting to add value and improve operations","Approve loans","Do the marketing"],a:1,e:"내부감사 목적 = 독립·객관 보증·컨설팅으로 가치부가·운영개선. 함정: 운영·여신·마케팅은 타 기능."},
+{id:"033",tp:"InternalAudit",d:"Hard",q:"Internal audit independence is best preserved when it reports functionally to:",o:["The CEO only","The Audit Committee / Board of Commissioners","The sales manager","The marketing head"],a:1,e:"내부감사 독립성 = 감사위원회·BOC에 기능보고. 함정: CEO단독·영업·마케팅 보고는 독립성 훼손."},
+{id:"034",tp:"InternalAudit",d:"Hard",q:"An internal auditor who previously designed the process being audited faces:",o:["No issue","A self-review threat to objectivity/independence","Improved efficiency","A reward"],a:1,e:"이전에 설계한 프로세스 감사 = self-review 위협(객관성·독립성). 함정: '무문제'·'효율'은 오답."},
+{id:"035",tp:"InternalAudit",d:"Medium",q:"The internal audit charter establishes:",o:["The marketing budget","The purpose, authority, scope, and responsibility of the internal audit function","Salaries","The dividend"],a:1,e:"내부감사 헌장 = 목적·권한·범위·책임. 함정: 예산·급여·배당은 타 문서."},
+{id:"036",tp:"InternalAudit",d:"Hard",q:"A risk-based internal audit plan prioritizes:",o:["The easiest areas","Auditing the highest-risk areas first to allocate resources effectively","Random areas","Only the smallest units"],a:1,e:"위험기반 감사계획 = 고위험 영역 우선 감사. 함정: 쉬운·무작위·소규모 우선은 비효율."},
+{id:"037",tp:"InternalAudit",d:"Hard",q:"Internal audit provides assurance over which of the following?",o:["Only financial statements","Governance, risk management, and internal control processes","Only marketing","Only IT"],a:1,e:"내부감사 보증 = 거버넌스·위험관리·내부통제 전반. 함정: 단일 영역 한정은 협소."},
+{id:"038",tp:"InternalAudit",d:"Medium",q:"The difference between internal audit and external audit is that internal audit:",o:["Only certifies financial statements for the public","Is an ongoing internal function focused on governance/risk/control improvement","Reports to shareholders only","Sets accounting standards"],a:1,e:"내부감사 = 거버넌스·위험·통제 개선 중심 상시 내부기능. 외부감사 = 재무제표 의견. 함정: 역할 혼동."},
+{id:"039",tp:"InternalAudit",d:"Hard",q:"Upon completing an audit, internal audit should:",o:["Keep findings secret","Report findings and recommendations and track management's corrective actions to completion","Implement the fixes itself (taking ownership)","Ignore management responses"],a:1,e:"감사 후 = 지적·권고 보고 + 시정 완료까지 추적(실행은 경영진). 함정: 비밀·직접실행(독립성 훼손)·무시는 오답."},
+{id:"040",tp:"InternalAudit",d:"Hard",q:"Internal audit's relationship with the anti-fraud strategy is that it:",o:["Owns and operates all anti-fraud controls","Independently evaluates the design and effectiveness of anti-fraud controls","Commits the fraud","Has no role"],a:1,e:"내부감사 = anti-fraud 통제의 설계·효과성을 독립 평가(3선). 함정: 통제 소유(1선)·무관은 오답."},
+{id:"041",tp:"QAIP",d:"Hard",q:"QAIP (Quality Assurance and Improvement Program) for internal audit requires:",o:["No evaluation ever","Both internal and external assessments of the audit function's quality","Only self-praise","Marketing reviews"],a:1,e:"QAIP = 감사기능 품질의 내부 + 외부 평가. 함정: 무평가·자화자찬·마케팅은 오답."},
+{id:"042",tp:"QAIP",d:"Hard",q:"An EXTERNAL quality assessment of internal audit should be conducted:",o:["Never","Periodically (e.g., at least once every five years) by a qualified independent assessor","Daily","By the audited unit"],a:1,e:"외부 품질평가 = 최소 5년마다 자격 있는 독립 평가자. 함정: 무·매일·피감부서는 오답."},
+{id:"043",tp:"QAIP",d:"Medium",q:"The purpose of QAIP is to:",o:["Punish auditors","Ensure internal audit conforms to standards and continuously improves",  "Increase audit fees","Eliminate audits"],a:1,e:"QAIP 목적 = 감사 표준 부합 + 지속개선 보장. 함정: 처벌·비용·폐지는 오답."},
+{id:"044",tp:"QAIP",d:"Hard",q:"Internal (ongoing) monitoring under QAIP includes:",o:["A one-time check","Continuous supervision of engagements and periodic self-assessments","No monitoring","Only external review"],a:1,e:"QAIP 내부 모니터링 = 업무 상시 감독 + 정기 자체평가. 함정: 일회·무·외부만은 부족."},
+{id:"045",tp:"QAIP",d:"Hard",q:"A QAIP finding that internal audit lacks independence would require:",o:["No action","Remediation of reporting lines/structure to restore independence","Disbanding the company","Ignoring it"],a:1,e:"독립성 결여 QAIP 지적 = 보고선·구조 시정으로 독립성 회복. 함정: 무조치·해산·무시는 오답."},
+{id:"046",tp:"Kirkpatrick",d:"Hard",q:"The Kirkpatrick model is used to evaluate the effectiveness of:",o:["Loan portfolios","Training programs (e.g., anti-fraud/compliance training)","Marketing campaigns","Dividends"],a:1,e:"Kirkpatrick = 교육프로그램(예: anti-fraud·준법 교육) 효과 평가. 함정: 여신·마케팅·배당은 무관."},
+{id:"047",tp:"Kirkpatrick",d:"Hard",q:"The four levels of the Kirkpatrick model are:",o:["Plan, Do, Check, Act","Reaction, Learning, Behavior, Results","Avoid, Transfer, Mitigate, Accept","Bronze, Silver, Gold, Platinum"],a:1,e:"Kirkpatrick 4단계: 반응·학습·행동·결과. 함정: PDCA·위험처리·등급과 혼동."},
+{id:"048",tp:"Kirkpatrick",d:"Hard",q:"Kirkpatrick Level 3 (Behavior) measures:",o:["Whether participants enjoyed the training","Whether participants APPLY what they learned on the job","The training budget","Trainer satisfaction"],a:1,e:"Level 3 Behavior = 학습내용을 실무에 적용하는지. 함정: Level1(반응=만족)과 혼동."},
+{id:"049",tp:"Kirkpatrick",d:"Hard",q:"Kirkpatrick Level 4 (Results) for anti-fraud training would assess:",o:["Snack quality","Tangible outcomes such as reduced fraud incidents or improved control compliance","Trainer's tone","Room temperature"],a:1,e:"Level 4 Results = 부정 발생 감소·통제준수 개선 등 실질 성과. 함정: 무관항목으로 오도."},
+{id:"050",tp:"Kirkpatrick",d:"Medium",q:"Kirkpatrick Level 1 (Reaction) measures:",o:["Long-term business results","Participants' immediate satisfaction and engagement with the training","On-the-job behavior change","Fraud reduction"],a:1,e:"Level 1 Reaction = 참가자 즉각 만족·몰입. 함정: Level3(행동)·Level4(결과)와 혼동."},
+{id:"051",tp:"평가",d:"Hard",q:"'Monitoring the Implementation of Anti-Fraud Strategies' (K.64PBY91.022.1) belongs to which perspective?",o:["Q7 (Implementing)","Q6 (Monitoring/Evaluating)","Neither","Q5"],a:1,e:"Monitoring = Q6 관점. Implementing(K.64PBY91.020.1) = Q7. 함정: Q6/Q7 swap — 동일 anti-fraud 주제라도 분기."},
+{id:"052",tp:"평가",d:"Hard",q:"'Implementing Anti-Fraud Strategies' (K.64PBY91.020.1) belongs to which perspective?",o:["Q6 Monitoring","Q7 Implementing","Q5","Both"],a:1,e:"Implementing = Q7. Monitoring = Q6. 함정: 짝 구분 핵심."},
+{id:"053",tp:"평가",d:"Hard",q:"From the Q6 perspective, monitoring anti-fraud strategy implementation assesses whether:",o:["Profits rose","The anti-fraud strategy is actually being implemented effectively across the four pillars","Marketing improved","The logo changed"],a:1,e:"Q6 anti-fraud 모니터링 = 4기둥 전반 실제 효과적 이행 여부. 함정: 이익·마케팅은 무관."},
+{id:"054",tp:"평가",d:"Hard",q:"'Monitoring the Follow-up Results of Internal Audit Findings' (K.64PBY91.026.1) is a Q7 unit; the complementary Q6 unit 'Monitoring the Compliance of Follow-up Actions on Internal Audit results' assesses:",o:["Marketing reach","Whether agreed corrective actions are implemented and compliant on time","Dividend payments","Office expansion"],a:1,e:"감사 후속 준수 모니터링(Q6) = 합의 시정조치 적시 이행·준수 여부. 함정: 무관항목으로 오도."},
+{id:"055",tp:"평가",d:"Hard",q:"When follow-up on internal audit findings reaches only 65% (vs 100% target), the rating is:",o:["Fully Comply","Less Comply (a shortfall requiring attention)","Excellent","Exempt"],a:1,e:"감사후속 65%(목표100%) = Less Comply. 함정: 'Fully'·'Excellent'은 오답 — textbook 사례 수치."},
+{id:"056",tp:"평가",d:"Medium",q:"Effective monitoring of anti-fraud implementation requires:",o:["A one-time check at year-end","Ongoing tracking with metrics, periodic reporting, and corrective action","No metrics","Concealment of issues"],a:1,e:"Anti-fraud 이행 모니터링 = 지표·정기보고·시정 동반 지속 추적. 함정: 일회·무지표·은폐는 부실."},
+{id:"057",tp:"평가",d:"Hard",q:"A monitoring finding that fraud incidents are RISING despite an existing strategy suggests:",o:["The strategy is perfect","The strategy's design or execution is deficient and needs strengthening","No concern","Reporting should stop"],a:1,e:"전략 존재에도 부정 증가 = 설계·실행 결함, 강화 필요. 함정: '완벽'·'무관심'은 오답."},
+{id:"058",tp:"평가",d:"Hard",q:"Validation of the anti-fraud/compliance report content is appropriately performed by:",o:["The reported unit itself","The internal audit unit or compliance function (independent validation)","Customers","Competitors"],a:1,e:"보고내용 검증 = 내부감사·준법기능의 독립 검증. 함정: 피보고부서 자체·외부는 부적절."},
+{id:"059",tp:"평가",d:"Hard",q:"The work units involved in anti-fraud follow-up typically include:",o:["Only marketing","Compliance, Risk Management, IT, HRD, Legal, Internal Audit","Only the CEO","Only external vendors"],a:1,e:"Anti-fraud 후속 관련부서 = 준법·위험관리·IT·HRD·법무·내부감사. 함정: 단일·외부 한정은 오답 — textbook 명시."},
+{id:"060",tp:"평가",d:"Medium",q:"Monitoring and evaluation data for compliance includes:",o:["Only profits","Number of internal violations detected, sanctions, and compliance risk trends","Only marketing spend","Only headcount"],a:1,e:"모니터링·평가 데이터 = 내부위반 건수·제재·준법위험 추세. 함정: 이익·마케팅·인원만은 불완전 — textbook."},
+{id:"061",tp:"4Aspects",d:"Hard",q:"Reliable data for anti-fraud monitoring should be obtained from:",o:["Rumors","Reliable systems: financial reporting systems, ERP, CRM, and internal reporting systems","Social media gossip","Competitor leaks"],a:1,e:"신뢰 데이터원 = 재무보고시스템·ERP·CRM·내부보고시스템. 함정: 소문·SNS·유출은 비신뢰 — textbook 명시."},
+{id:"062",tp:"4Aspects",d:"Hard",q:"The variables for prevention-focused control assessment include:",o:["Office decor","Operational SOPs, credit policies, governance, and reporting","Lunch menus","Parking spaces"],a:1,e:"예방 통제 변수 = 운영 SOP·여신정책·거버넌스·보고. 함정: 무관 외형요소 — textbook 변수 목록."},
+{id:"063",tp:"4Aspects",d:"Hard",q:"The variables for detection-focused control assessment include:",o:["Building height","Electronic reporting system, audit trail, credit scoring, and data security","Color scheme","Staff count only"],a:1,e:"탐지 통제 변수 = 전자보고시스템·audit trail·credit scoring·데이터보안. 함정: 무관 외형 — textbook."},
+{id:"064",tp:"4Aspects",d:"Medium",q:"An 'audit trail' supports fraud detection by:",o:["Hiding transactions","Providing a traceable, time-stamped record of activities for reconstruction and accountability","Deleting records","Slowing the system"],a:1,e:"Audit trail = 추적가능·타임스탬프 기록으로 재구성·답책. 함정: 은폐·삭제는 정반대."},
+{id:"065",tp:"4Aspects",d:"Hard",q:"Data security as an anti-fraud variable matters because:",o:["It is unrelated to fraud","Weak data security enables data manipulation, unauthorized access, and concealment of fraud","It only affects marketing","It reduces profits"],a:1,e:"데이터보안 = 취약 시 데이터조작·무단접근·부정은폐 가능. 함정: '무관'은 오답."},
+{id:"066",tp:"POJK",d:"Hard",q:"Which pairing is CORRECT?",o:["POJK 12/2024 = AML; POJK 28/2024 = HR","POJK 12/2024 = anti-fraud strategy; POJK 28/2024 = SIPELAKU","POJK 12/2024 = F&P; POJK 28/2024 = capital","POJK 12/2024 = consumer protection; POJK 28/2024 = leasing"],a:1,e:"정답: 12/2024=anti-fraud, 28/2024=SIPELAKU. 함정: 주제 교차배치 — 12/2017(AML)과 12/2024 혼동 주의."},
+{id:"067",tp:"POJK",d:"Hard",q:"The anti-fraud Implementation Report's 13-field structure is designed to:",o:["Add bureaucracy","Standardize comprehensive reporting of anti-fraud strategy implementation","Hide information","Replace audits"],a:1,e:"13-field 구조 = anti-fraud 이행의 포괄·표준 보고. 함정: 관료화·은폐·대체는 오답."},
+{id:"068",tp:"POJK",d:"Medium",q:"The 15-working-day correction deadline (Art. 18) applies to:",o:["Marketing approvals","Correcting/addressing identified deficiencies within the regulatory timeframe","Loan disbursement","Dividend payment"],a:1,e:"15영업일(Art.18) = 식별된 결함의 규정시한 내 시정. 함정: 마케팅·여신·배당은 무관."},
+{id:"069",tp:"POJK",d:"Hard",q:"The Primary Party prohibition (Art. 9(4)) ultimately protects:",o:["Fraudsters","The integrity of the financial institution by barring fraud actors from key positions","Competitors","Marketing budgets"],a:1,e:"Primary Party 금지 = 부정행위자 핵심직위 배제로 기관 무결성 보호. 함정: 가해자 보호는 정반대."},
+{id:"070",tp:"InternalAudit",d:"Hard",q:"The Three Lines Model places internal audit (3rd line) in a position to:",o:["Own operational risk","Provide independent assurance over the work of both the first and second lines","Replace the second line","Approve transactions"],a:1,e:"3선 내부감사 = 1·2선 작업에 독립 보증. 함정: 위험소유(1선)·2선대체·거래승인은 오답."},
+{id:"071",tp:"InternalAudit",d:"Hard",q:"BOC supervision of internal audit and anti-fraud is documented through a framework involving how many documents (per the referenced structure)?",o:["1 document","3 documents","7 documents","13 documents"],a:1,e:"BOC 감독 = 3-document framework. 함정: anti-fraud 13-field와 숫자 혼동 유도."},
+{id:"072",tp:"InternalAudit",d:"Hard",q:"Meeting minutes for anti-fraud/audit committees should be dispatched within:",o:["1 week","24-48 hours (per the referenced standard)","1 month","Never"],a:1,e:"회의록 발송 = 24-48시간 내. 함정: 인접 기간 혼동 — 메모리상 표준."},
+{id:"073",tp:"InternalAudit",d:"Medium",q:"The Communication sub-structure in the anti-fraud framework emphasizes:",o:["Secrecy","Timely, documented communication (e.g., meeting minutes) to ensure follow-up","No records","Verbal only"],a:1,e:"소통 구조 = 적시·문서화 소통(회의록 등)으로 후속 보장. 함정: 비밀·무기록·구두만은 부실."},
+{id:"074",tp:"RBA",d:"Hard",q:"A fraud risk register should:",o:["Be kept secret from the board","Document identified fraud risks, controls, owners, and residual risk for ongoing management","List only past frauds","Be unrelated to controls"],a:1,e:"부정위험 등록부 = 식별위험·통제·책임자·잔여위험 문서화로 지속관리. 함정: 비밀·과거만·무관통제는 오답."},
+{id:"075",tp:"RBA",d:"Hard",q:"The 'prevention is better than cure' philosophy implies resource emphasis on:",o:["Only post-fraud investigation","Proactive prevention and early detection over reactive response","Ignoring prevention","Punishment alone"],a:1,e:"예방우선 철학 = 사후대응보다 선제 예방·조기탐지에 자원. 함정: 사후·무시·처벌일변도는 철학 위배."},
+{id:"076",tp:"4Pillars",d:"Hard",q:"Which is the CORRECT order of the anti-fraud strategy pillars in a logical lifecycle?",o:["Detection → Prevention → Monitoring → Investigation","Prevention → Detection → Investigation/Reporting & Sanction → Monitoring/Evaluation","Monitoring → Sanction → Prevention","Investigation → Prevention"],a:1,e:"논리적 순서: 예방→탐지→조사/보고·제재→모니터링/평가. 함정: 순서 뒤섞기 — 빈출."},
+{id:"077",tp:"4Pillars",d:"Hard",q:"A whistleblowing system primarily contributes to which pillar, and what protects its effectiveness?",o:["Prevention; high fees","Detection; confidentiality and protection of whistleblowers from retaliation","Sanction; public disclosure of reporters","Monitoring; ignoring reports"],a:1,e:"내부고발 = 탐지 기둥; 기밀·보복방지가 실효성 보호. 함정: 신고자 공개·무시는 시스템 무력화."},
+{id:"078",tp:"4Pillars",d:"Hard",q:"After a fraud is investigated and confirmed, the Sanction sub-pillar requires:",o:["No consequences","Proportionate, consistent sanctions and, where required, reporting to OJK/authorities","Rewarding the perpetrator","Concealment"],a:1,e:"제재 = 비례·일관 제재 + 필요시 OJK·당국 보고. 함정: 무처벌·보상·은폐는 위반."},
+{id:"079",tp:"InternalAudit",d:"Hard",q:"Internal audit's objectivity requires auditors to:",o:["Have a financial interest in the audited area","Be free from bias and conflicts of interest in forming judgments","Report to the audited manager","Pre-approve the findings with the auditee"],a:1,e:"내부감사 객관성 = 편향·이해상충 배제. 함정: 이해관계·피감보고·사전합의는 객관성 훼손."},
+{id:"080",tp:"InternalAudit",d:"Hard",q:"A finding that internal audit has insufficient resources/competency to cover key risks indicates:",o:["Optimal staffing","A capability gap that undermines assurance and requires remediation","No issue","Excellent efficiency"],a:1,e:"감사 자원·역량 부족 = 보증 약화 capability gap, 시정 필요. 함정: '최적'·'무문제'는 오답."},
+{id:"081",tp:"평가",d:"Hard",q:"The distinction between 'Implementing' (Q7) and 'Monitoring' (Q6) anti-fraud strategies is that Q6:",o:["Builds the strategy from scratch","Evaluates whether the implemented strategy works effectively","Sells products","Replaces the strategy"],a:1,e:"Q6 = 이행된 전략의 효과적 작동 여부 평가. Q7 = 이행. 함정: Q6/Q7 역할 혼동 반복."},
+{id:"082",tp:"QAIP",d:"Hard",q:"If a QAIP external assessment finds non-conformance with standards, internal audit should:",o:["Hide the result","Develop and implement an action plan to address gaps and report progress to the BOC","Disband","Ignore standards"],a:1,e:"QAIP 비부합 지적 = 격차 해소 실행계획 수립·이행 + BOC 진척보고. 함정: 은폐·해산·무시는 오답."},
+{id:"083",tp:"Kirkpatrick",d:"Hard",q:"To demonstrate that anti-fraud training reduced actual fraud, which Kirkpatrick level is the evidence?",o:["Level 1 Reaction","Level 2 Learning","Level 3 Behavior","Level 4 Results"],a:3,e:"실제 부정 감소 입증 = Level 4 Results. 함정: Level1(만족)·Level3(행동변화)와 혼동."},
+{id:"084",tp:"Kirkpatrick",d:"Hard",q:"A training that scores high on Level 1 (Reaction) but shows no Level 3 (Behavior) change means:",o:["The training was fully effective","Participants liked it but did not apply it on the job — a transfer gap","No issue exists","Results are guaranteed"],a:1,e:"Level1 높으나 Level3 변화 없음 = 만족했으나 실무 미적용(전이 격차). 함정: '효과적'·'결과보장'은 오답."},
+{id:"085",tp:"4Aspects",d:"Hard",q:"Credit scoring as a detection-control variable helps prevent fraud by:",o:["Hiding bad applicants","Objectively flagging anomalous or high-risk applications for review","Approving all applications","Removing oversight"],a:1,e:"Credit scoring = 이상·고위험 신청을 객관 flag → 검토. 함정: 은폐·무조건승인은 정반대."},
+{id:"086",tp:"RBA",d:"Hard",q:"Collusion between employees is particularly dangerous because it can:",o:["Be ignored safely","Defeat segregation-of-duties controls, requiring additional detective controls","Improve efficiency","Never happen"],a:1,e:"직원 공모 = 직무분리 통제 무력화 → 추가 탐지통제 필요. 함정: 무시·효율·불가능은 오답."},
+{id:"087",tp:"InternalAudit",d:"Hard",q:"An internal audit recommendation should be:",o:["Vague and untrackable","Specific, actionable, and assigned an owner and timeline","Optional with no follow-up","Hidden from management"],a:1,e:"감사 권고 = 구체·실행가능 + 책임자·기한 지정. 함정: 모호·무후속·비공개는 부실."},
+{id:"088",tp:"POJK",d:"Hard",q:"The anti-fraud compliance matrix linking violations to sanctions supports which principle?",o:["Arbitrary punishment","Proportionality and consistency in enforcement","Impunity","Secrecy"],a:1,e:"제재 매트릭스 = 집행의 비례·일관성. 함정: 자의·면책·비밀은 정반대."},
+{id:"089",tp:"4Pillars",d:"Hard",q:"Anti-fraud awareness programs for staff primarily serve the:",o:["Investigation pillar","Prevention pillar (deterrence through awareness)","Sanction pillar","Reporting pillar"],a:1,e:"직원 인식 프로그램 = 예방 기둥(인식을 통한 억제). 함정: 조사·제재·보고로 오분류."},
+{id:"090",tp:"InternalAudit",d:"Hard",q:"Internal audit should coordinate with the second line (risk/compliance) to:",o:["Merge into one function","Avoid duplication and gaps while maintaining its independent assurance role","Take over compliance","Stop auditing compliance"],a:1,e:"3선-2선 조정 = 중복·공백 회피(독립 보증 유지). 함정: 병합·인수·감사중단은 모델 훼손."},
+{id:"091",tp:"평가",d:"Hard",q:"Monitoring anti-fraud effectiveness should use which combination of indicators?",o:["Only the number of frauds","Leading (preventive controls in place) AND lagging (incidents, losses) indicators","Only profits","Only marketing reach"],a:1,e:"Anti-fraud 효과 모니터링 = 선행(예방통제) + 후행(발생·손실) 지표 병행. 함정: 단일·무관 지표는 불완전."},
+{id:"092",tp:"RBA",d:"Hard",q:"A fraud risk assessment should consider both:",o:["Only external fraud","Internal fraud (by employees) AND external fraud (by customers/third parties)","Only past frauds","Only IT fraud"],a:1,e:"부정위험 평가 = 내부(직원) + 외부(고객·제3자) 부정 모두. 함정: 단일 출처 한정은 사각지대."},
+{id:"093",tp:"4Pillars",d:"Hard",q:"Which statement about the anti-fraud strategy is CORRECT?",o:["It is a one-time project","It is a continuous, integrated program with four pillars requiring ongoing monitoring and improvement","It is optional","It is solely the audit team's job"],a:1,e:"Anti-fraud 전략 = 4기둥 통합·지속 프로그램(상시 모니터링·개선). 함정: 일회·선택·감사단독은 오답."},
+{id:"094",tp:"InternalAudit",d:"Hard",q:"If management refuses to remediate a high-risk audit finding, internal audit should:",o:["Drop the finding","Escalate the unremediated risk to the Audit Committee/BOC for a risk-acceptance decision","Implement the fix itself","Conceal the disagreement"],a:1,e:"고위험 지적 시정 거부 = 미시정 위험을 감사위원회·BOC에 에스컬레이션(수용결정). 함정: 철회·직접실행·은폐는 부적절."},
+{id:"095",tp:"QAIP",d:"Hard",q:"The two components of QAIP are:",o:["Marketing and sales reviews","Internal assessments (ongoing + periodic self-assessment) and external assessments","Tax and legal audits","Only external review"],a:1,e:"QAIP 2구성 = 내부평가(상시+정기 자체) + 외부평가. 함정: 마케팅·세무·단일은 오답."},
+{id:"096",tp:"평가",d:"Hard",q:"Recommendations from OJK monitoring results and their resolution status are part of:",o:["Marketing data","Monitoring and evaluation data for compliance/anti-fraud","Dividend records","Employee birthdays"],a:1,e:"OJK 모니터링 권고·해결현황 = 준법·anti-fraud 모니터링·평가 데이터. 함정: 무관항목 — textbook 명시."},
+{id:"097",tp:"4Pillars",d:"Hard",q:"The detection pillar's effectiveness is BEST measured by:",o:["The number of brochures printed","Time-to-detect and the proportion of frauds caught by controls vs discovered by accident","Office size","Marketing reach"],a:1,e:"탐지 효과 = 탐지소요시간 + 통제에 의한 적발 비율(우연발견 대비). 함정: 무관항목으로 오도."},
+{id:"098",tp:"InternalAudit",d:"Hard",q:"Internal audit reporting BOTH to the CEO administratively and to the Audit Committee functionally is designed to:",o:["Reduce independence","Balance operational support (admin) with independence (functional reporting to governance)","Eliminate oversight","Increase fraud"],a:1,e:"행정=CEO, 기능=감사위원회 이중보고 = 운영지원과 독립성 균형. 함정: 독립성 감소·감독제거는 오답."},
+{id:"099",tp:"RBA",d:"Hard",q:"The ultimate goal of the anti-fraud strategy is to:",o:["Eliminate all employees","Protect the company's assets, integrity, and reputation by preventing, detecting, and responding to fraud","Maximize fraud detection only","Increase bureaucracy"],a:1,e:"Anti-fraud 목표 = 예방·탐지·대응으로 자산·무결성·평판 보호. 함정: 감원·탐지만·관료화는 목표 아님."},
+{id:"100",tp:"POJK",d:"Hard",q:"A candidate must integrate the W4 concepts. Which statement is CORRECT?",o:["POJK 12/2024 is AML and internal audit is the 1st line","POJK 12/2024 = anti-fraud (4 pillars: prevention/detection/investigation-sanction/monitoring); SIPELAKU = POJK 28/2024; correction deadline 15 working days; internal audit is the 3rd line","The fraud triangle is Plan-Do-Check and Kirkpatrick has 3 levels","Internal audit owns anti-fraud controls and reports to sales"],a:1,e:"정답: 12/2024=anti-fraud(4기둥), SIPELAKU=28/2024, 시정기한 15영업일, 내부감사=3선. 함정: AML 혼동·1선 오배치·fraud triangle/Kirkpatrick 오류·통제소유를 한 문항에 집약 — 빈출 종합."},
+];
+
+const KEY="A B C D".split(" ");
+const WKEY="sppi_wrong_W4_v2";
+function getWrong(){try{return JSON.parse(localStorage.getItem(WKEY))||[]}catch(e){return[]}}
+function setWrong(a){try{localStorage.setItem(WKEY,JSON.stringify([...new Set(a)]))}catch(e){}}
+function addWrong(id){const w=getWrong();if(!w.includes(id)){w.push(id);setWrong(w)}}
+function rmWrong(id){setWrong(getWrong().filter(x=>x!==id))}
+function byId(id){return BANK.find(q=>q.id===id)}
+let quiz=[], cur=0, answers=[], picked=false;
+const app=document.getElementById('app');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function shuffleOpts(q){
+  const idx=shuffle([0,1,2,3]);
+  return {...q, o: idx.map(i=>q.o[i]), a: idx.indexOf(q.a)};
+}
+function start(mode){
+  if(mode==='wrong'){
+    const wp=shuffle(getWrong().map(byId).filter(Boolean));
+    if(!wp.length){home();return}
+    quiz=wp.map(shuffleOpts);
+    cur=0;answers=[];render();return;
+  }
+  let pool=(mode==='all')?shuffle(BANK):shuffle(BANK).slice(0,30);
+  quiz=pool.map(shuffleOpts);
+  cur=0; answers=[]; render();
+}
+function home(){
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">100문항 풀 · 실전 영어 4지선다</p>
+      <div class="start-opts">
+        <button onclick="start('rand30')">랜덤 30문항 <span class="desc">실전 모사 — 전 범위에서 무작위 30개</span></button>
+        <button onclick="start('all')">전체 100문항 <span class="desc">Anti-Fraud·Internal Audit 전 범위 완주</span></button>
+        <button class="wrongbtn" onclick="start('wrong')" ${getWrong().length?'':'disabled style="opacity:.4;cursor:default"'}>오답만 다시 풀기<span class="wrongbadge">${getWrong().length}</span><span class="desc">누적 오답만 모아서 재시험 — 맞히면 목록에서 제거</span></button>
+        <button class="wrongbtn" onclick="notebook()" ${getWrong().length?'':'disabled style="opacity:.4;cursor:default"'}>📕 오답노트 보기<span class="desc">틀린 문제 · 정답 · 해설 한눈에</span></button>
+      </div>
+    </div>`;
+}
+function notebook(){
+  const cards=getWrong().map(byId).filter(Boolean);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">오답노트</div>
+      <div class="scoreline" style="margin:6px 0 16px">누적 오답 ${cards.length}문항</div>
+      <div style="text-align:left">
+        ${cards.length?cards.map(q=>`
+          <div class="notecard">
+            <div class="qid">W4-${q.id} · ${q.tp}</div>
+            <div class="nq">${q.q}</div>
+            ${q.o.map((t,i)=>`<div class="no ${i===q.a?'ok':''}">${KEY[i]}. ${t}</div>`).join('')}
+            <div class="ne"><b>정답 ${KEY[q.a]}</b> — ${q.e}</div>
+            <button class="del" onclick="rmWrong('${q.id}');notebook()">✕ 이 문제 오답 목록에서 제거</button>
+          </div>`).join(''):'<p style="color:var(--green);font-weight:700">오답 없음</p>'}
+      </div>
+      ${cards.length?`<button class="noteclear" onclick="if(confirm('오답노트를 전부 비웁니다. 계속?')){setWrong([]);notebook()}">전체 비우기</button>`:''}
+      <div class="nav" style="justify-content:center;margin-top:20px"><button class="act" onclick="home()">← 처음으로</button></div>
+    </div>`;
+}
+function render(){
+  const q=quiz[cur]; picked=false;
+  const dcls=q.d.toLowerCase();
+  app.innerHTML=`
+    <div class="meta"><span>문항 ${cur+1} / ${quiz.length}</span><span>QID W4-${q.id}</span></div>
+    <div class="bar"><i style="width:${(cur)/quiz.length*100}%"></i></div>
+    <div class="tags"><span class="tag topic">${q.tp}</span><span class="tag ${dcls}">${q.d}</span></div>
+    <div class="q">${q.q}</div>
+    <div class="opts" id="opts">
+      ${q.o.map((t,i)=>`<button class="opt" onclick="pick(${i})"><span class="k">${KEY[i]}</span><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="exp" id="exp"></div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" id="next" onclick="next()" disabled>다음 →</button>
+    </div>`;
+}
+function pick(i){
+  if(picked) return; picked=true;
+  const q=quiz[cur];
+  const __c=i===q.a;
+  answers[cur]={id:q.id,correct:__c,picked:i};
+  if(__c) rmWrong(q.id); else addWrong(q.id);
+  document.querySelectorAll('#opts .opt').forEach((b,idx)=>{
+    b.disabled=true;
+    if(idx===q.a) b.classList.add('correct');
+    else if(idx===i) b.classList.add('wrong');
+  });
+  const exp=document.getElementById('exp');
+  exp.innerHTML=`<b>정답: ${KEY[q.a]}</b> &nbsp;—&nbsp; ${q.e}`;
+  exp.classList.add('show');
+  document.getElementById('next').disabled=false;
+  if(cur===quiz.length-1) document.getElementById('next').textContent='결과 보기';
+}
+function next(){if(cur<quiz.length-1){cur++;render()}else result()}
+function result(){
+  const right=answers.filter(a=>a.correct).length;
+  const tot=quiz.length;
+  const pct=Math.round(right/tot*100);
+  const byTopic={};
+  answers.forEach((a,i)=>{const t=quiz[i].tp;byTopic[t]=byTopic[t]||{r:0,n:0};byTopic[t].n++;if(a.correct)byTopic[t].r++});
+  const wrongs=answers.map((a,i)=>({a,q:quiz[i]})).filter(x=>!x.a.correct);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">${tot}문항 중 ${right}개 정답</div>
+      <div class="breakdown">
+        ${Object.entries(byTopic).map(([t,v])=>`<div class="row"><span>${t}</span><b>${v.r} / ${v.n}</b></div>`).join('')}
+      </div>
+      ${wrongs.length?`<div class="wronglist"><b style="color:var(--red)">오답 ${wrongs.length}문항</b>
+        ${wrongs.map(x=>`<div class="w">W4-${x.q.id} · 정답 ${KEY[x.q.a]} — ${x.q.q.slice(0,70)}…</div>`).join('')}
+      </div>`:'<p style="color:var(--green);font-weight:700">전 문항 정답</p>'}
+      <div class="nav" style="justify-content:center;margin-top:24px;gap:10px;flex-wrap:wrap">
+        <button class="act" onclick="home()">다시 풀기</button>
+        ${getWrong().length?`<button class="act ghost" onclick="notebook()">📕 오답노트 (${getWrong().length})</button>`:''}
+      </div>
+    </div>`;
+}
+// 허브에서 ?note=1 진입 시 오답노트 바로 열기
+if(new URLSearchParams(location.search).get('note')==='1'){notebook()}else{home()}
+</script>
+</body>
+</html>

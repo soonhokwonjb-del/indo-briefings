@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPPI Level 7 — W1 Quiz V2 (Industry & POJK Framework)</title>
+<style>
+  :root{--ink:#1a2238;--paper:#f7f5ef;--line:#d8d3c4;--gold:#b8893a;--gold-soft:#e8dcc0;--green:#2f6b4f;--red:#a33a2e;--blue:#2f5170;--shadow:0 1px 0 rgba(26,34,56,.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 80px}
+  .wrap{max-width:760px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{font-size:25px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+  .sub{font-size:13px;color:#5d6075;margin-top:6px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px;box-shadow:var(--shadow)}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5d6075;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+  .bar{height:6px;background:var(--gold-soft);border-radius:99px;overflow:hidden;margin-bottom:18px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tag{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:#5d6075;font-weight:600}
+  .tag.topic{background:#eef2f6;border-color:#cdd9e4;color:var(--blue)}
+  .tag.hard{background:#f6e9e6;border-color:#e3bdb5;color:var(--red)}
+  .tag.medium{background:#fbf2dd;border-color:#e6cf9a;color:var(--gold)}
+  .tag.easy{background:#e7f1ea;border-color:#aecdb9;color:var(--green)}
+  .q{font-size:17px;font-weight:600;margin-bottom:18px;letter-spacing:-.005em}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;font-size:15px;text-align:left;width:100%;font-family:inherit;color:var(--ink)}
+  .opt:hover{border-color:var(--gold)}
+  .opt .k{font-weight:800;color:var(--gold);flex-shrink:0;width:18px}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:#e9f3ed;border-color:var(--green)}
+  .opt.correct .k{color:var(--green)}
+  .opt.wrong{background:#f7e9e6;border-color:var(--red)}
+  .opt.wrong .k{color:var(--red)}
+  .exp{margin-top:16px;padding:15px;background:var(--paper);border-left:3px solid var(--gold);border-radius:4px;font-size:14px;display:none}
+  .exp.show{display:block}
+  .exp b{color:var(--green)}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
+  button.act{background:var(--ink);color:#fff;border:none;padding:12px 26px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+  button.act:disabled{opacity:.35;cursor:default}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .result{text-align:center;padding:10px 0}
+  .score{font-size:54px;font-weight:800;color:var(--gold);letter-spacing:-.02em}
+  .scoreline{font-size:15px;color:#5d6075;margin-bottom:20px}
+  .breakdown{text-align:left;margin:18px 0;font-size:14px}
+  .breakdown .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .wronglist{text-align:left;margin-top:16px;font-size:13px;color:#5d6075}
+  .wronglist .w{padding:8px 0;border-bottom:1px solid var(--line)}
+  .start-opts{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .start-opts button{padding:14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);text-align:left;transition:border-color .15s}
+  .start-opts button:hover{border-color:var(--gold)}
+  .start-opts .desc{display:block;font-size:12px;color:#5d6075;font-weight:400;margin-top:3px}
+  .start-opts button.wrongbtn{border-color:#e3bdb5;background:#fdf4f2}
+  .start-opts button.wrongbtn:hover{border-color:var(--red)}
+  .wrongbadge{display:inline-block;min-width:20px;text-align:center;background:var(--red);color:#fff;font-size:12px;font-weight:700;border-radius:99px;padding:1px 7px;margin-left:6px}
+  .notecard{text-align:left;border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:12px;background:#fff}
+  .notecard .qid{font-size:11px;letter-spacing:.08em;color:var(--gold);font-weight:700}
+  .notecard .nq{font-size:15px;font-weight:600;margin:6px 0 10px}
+  .notecard .no{font-size:14px;padding:6px 10px;border-radius:6px;margin-bottom:5px;border:1px solid var(--line)}
+  .notecard .no.ok{background:#e9f3ed;border-color:var(--green);font-weight:600}
+  .notecard .ne{font-size:13px;color:#5d6075;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+  .notecard .del{font-size:12px;color:var(--red);background:none;border:none;cursor:pointer;font-family:inherit;margin-top:8px;padding:0}
+  .noteclear{font-size:13px;color:#5d6075;background:none;border:1px solid var(--line);border-radius:6px;padding:7px 14px;cursor:pointer;font-family:inherit;margin-top:6px}
+  footer{text-align:center;font-size:12px;color:#9a9788;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SPPI Level 7 · Financing Management</div>
+    <h1>W1 모의문제 V2 — Industry & POJK Framework</h1>
+    <div class="sub">산업 개관 · Health Level · 8 Risks · 사업영역 한도 · 핵심 POJK · 100문항 풀 · Day 1 교재 기반</div>
+  </header>
+  <div class="panel" id="app"></div>
+  <footer>출처: A to Z in Finance Company Business (Day 1)</footer>
+</div>
+
+<script>
+const BANK = [
+{id:"001",tp:"산업사",d:"Hard",q:"The Indonesian finance company industry operates under a layered legal hierarchy. Which sequence correctly orders these from highest to lowest legal authority?",o:["POJK → Law (UU) → SEOJK → KMK","Law (UU) → POJK → SEOJK","SEOJK → POJK → Law (UU)","KMK → POJK → Law (UU)"],a:1,e:"법령 위계: Law(UU/PP) > POJK > SEOJK. KMK(재무장관령)은 OJK 이관 전 구체제 규정. 함정: POJK가 최상위가 아님 — 상위법 위임 하에 OJK가 제정."},
+{id:"002",tp:"산업사",d:"Medium",q:"Before OJK was established, which institution supervised finance companies in Indonesia?",o:["Bank Indonesia","The Ministry of Finance (Kemenkeu)","Bapepam-LK","APPI"],a:1,e:"OJK 출범(2013) 이전 multifinance 감독은 재무부(Kemenkeu) 소관. KMK(재무장관령) 체제가 그 흔적. 함정: 은행은 BI였으나 finance company는 재무부였다."},
+{id:"003",tp:"산업사",d:"Hard",q:"The 'Double Pledge' fraud cases had a structural consequence beyond data infrastructure. Which regulatory response is MOST directly attributable to them?",o:["Introduction of the 10x gearing ratio cap","Strengthening of fiduciary registration and SLIK debtor verification","Reduction of minimum paid-in capital","Removal of the foreign ownership cap"],a:1,e:"Double Pledge(동일자산 중복담보) 사건 → fiduciary 등록 의무 강화 + SLIK 차주 검증 인프라 강화. 함정: gearing cap·자본 요건은 별개 prudential 조치로, 이 사건의 직접 결과 아님."},
+{id:"004",tp:"산업사",d:"Medium",q:"KMK 1169/1991 is historically significant because it:",o:["First permitted consumer financing as a standalone activity","Established the legal basis for leasing operations","Consolidated four financing activities under one license","Created the OJK"],a:1,e:"KMK 1169/1991 = leasing 법적 기반. 1974 SKB 3장관령이 leasing 최초 도입, 2000 KMK 448이 4종 통합. 함정: 4종 통합은 2000년."},
+{id:"005",tp:"통계",d:"Hard",q:"As of the latest industry figures, the number of conventional finance companies operating in Indonesia is closest to:",o:["88","144","203","250"],a:1,e:"144개사(최신 기준). 함정: 산업 통폐합으로 수가 감소 추세 — 과거 200개 이상에서 줄었다. 정확한 수치 암기 요구."},
+{id:"006",tp:"통계",d:"Hard",q:"The industry Financing Asset Ratio (FAR) sits in which band, and what does a HIGH FAR primarily indicate?",o:["~50%; high liquidity buffer","~86.70%; productive assets dominate the balance sheet","~95%; regulatory non-compliance","~30%; under-utilization of capital"],a:1,e:"FAR ≈ 86.70%. FAR = 생산적 자산(financing receivables)이 총자산에서 차지하는 비중 → 높을수록 본업 집중. 함정: 유동성 buffer와 무관."},
+{id:"007",tp:"통계",d:"Hard",q:"MSMD (Modal Sendiri/Modal Disetor) at the industry level is approximately 328.37%. The regulatory MINIMUM for the related Core Capital to Paid-in Capital ratio is:",o:["At least 100%","At least 50%","At least 150%","At least 328%"],a:1,e:"Core Capital/Paid-in Capital 최소 ≥50% (POJK 35/2018·46/2024 불변). 산업 평균 MSMD 328.37%는 평균치일 뿐 요건과 다름. 함정: 150% threshold는 존재하지 않음 — 과거 오류."},
+{id:"008",tp:"통계",d:"Medium",q:"Industry Gross NPF (Non-Performing Financing) is approximately:",o:["0.89%","2.89%","5.89%","8.89%"],a:1,e:"Gross NPF ≈ 2.89%. 함정: 5% 미만 = 건전. 5% 초과 시 감독 우려 수준."},
+{id:"009",tp:"통계",d:"Medium",q:"BOPO ratio measures operational efficiency. A BOPO trending UPWARD signals:",o:["Improving efficiency","Deteriorating efficiency (costs rising relative to operating income)","Higher profitability","Lower NPF"],a:1,e:"BOPO = Operating Expense/Operating Income. 상승 = 비효율 악화. 함정: 낮을수록 좋다 — 직관과 반대 방향."},
+{id:"010",tp:"규제프레임",d:"Hard",q:"POJK 46/2024 replaced POJK 35/2018 as the principal regulation on finance company business operations. Which of the following was NEWLY introduced by POJK 46/2024?",o:["The 10x maximum gearing ratio","Financing without face-to-face interaction (non-face-to-face)","The 50% core capital ratio","The fiduciary registration requirement"],a:1,e:"POJK 46/2024 신규: 비대면(non-face-to-face) financing 허용 + BMPP 명문화. 함정: gearing·core capital은 기존 POJK 35/2018부터 존재."},
+{id:"011",tp:"규제프레임",d:"Medium",q:"Which regulation governs MSME-focused financing provisions introduced in 2025?",o:["POJK 19/2025","POJK 43/2024","POJK 12/2017","POJK 34/2018"],a:0,e:"POJK 19/2025 = MSME 관련. 함정: 43/2024는 HR 인증, 34/2018은 F&P 재평가, 12/2017은 APU-PPT(AML)."},
+{id:"012",tp:"규제프레임",d:"Hard",q:"A candidate confuses POJK 12/POJK.01/2017 with Fit & Proper rules. POJK 12/2017 actually governs:",o:["Fit and Proper reassessment","AML/CFT (APU-PPT)","Minimum paid-in capital","Consumer protection"],a:1,e:"POJK 12/2017 = APU-PPT(AML/CFT). 23/2019로 개정, 8/2023으로 대체. F&P 재평가는 POJK 34/2018. 함정: 번호만 보고 F&P로 오인."},
+{id:"013",tp:"규제프레임",d:"Hard",q:"The HR competency certification obligation for finance companies is established under:",o:["POJK 43/2025","POJK 43/2024","POJK 35/2018","POJK 34/2018"],a:1,e:"POJK 43/2024 = HR 인증 의무. 함정: 43/2025는 존재하지 않는 규정 — 과거 다수 위치에서 오기록됨."},
+{id:"014",tp:"규제프레임",d:"Medium",q:"Under the HR development obligation, the minimum training budget is calculated as a percentage of:",o:["2.5% of net income","2.5% of Personnel/Employee Expenses","5% of total assets","2.5% of paid-in capital"],a:1,e:"인력교육 예산 = 인건비(Personnel/Employee Expenses)의 2.5%. 함정: 순이익(net income) 기준 아님 — 반복 오류 지점."},
+{id:"015",tp:"규제프레임",d:"Medium",q:"The Indonesian Finance Company Industry Roadmap covers which period?",o:["2020-2024","2024-2028","2023-2027","2025-2030"],a:1,e:"Roadmap 2024-2028. 함정: 인접 연도 혼동 유도."},
+{id:"016",tp:"사업영역",d:"Hard",q:"Which combination represents the FOUR core conventional financing activities a finance company may conduct?",o:["Leasing, Factoring, Credit Card, Consumer Financing","Leasing, Deposits, Insurance, Factoring","Banking, Leasing, Factoring, Underwriting","Consumer Financing, Deposit-taking, Leasing, Brokerage"],a:0,e:"4대 본업: Leasing·Factoring·Credit Card·Consumer Financing. 함정: deposit-taking(예금수취)·insurance·banking은 finance company 영역 아님 — 면허 위반."},
+{id:"017",tp:"사업영역",d:"Hard",q:"A finance company wishes to add 'working capital financing' and 'investment financing' facilities. These were enabled by:",o:["KMK 448/2000","POJK 35/2018","POJK 46/2024","POJK 19/2025"],a:1,e:"운전자본·투자 financing facility = POJK 35/2018 도입. 함정: 46/2024로 갱신되었으나 최초 도입은 35/2018."},
+{id:"018",tp:"사업영역",d:"Medium",q:"Sharia financing receivables in the industry have shown which trend relative to conventional?",o:["Declining steadily","Growing (double-digit growth observed)","Flat / stagnant","Banned since 2024"],a:1,e:"Sharia financing 두자릿수 성장세. 함정: 규제 금지·정체는 사실 아님."},
+{id:"019",tp:"사업영역",d:"Hard",q:"Which is NOT a permitted source of funding for a finance company?",o:["Issuance of bonds (obligasi)","Bank loans","Taking demand/savings deposits from the public","Issuance of sukuk (sharia)"],a:2,e:"공중 예금수취(deposit-taking)는 금지 — 은행 고유 업무. 함정: 채권·차입·sukuk은 모두 허용 자금원."},
+{id:"020",tp:"금융기법",d:"Hard",q:"In a finance lease (financial leasing), at the end of the lease term the lessee typically:",o:["Must return the asset with no option","Has an option to purchase the asset at a pre-agreed residual value","Automatically receives ownership for free","Pays a penalty equal to the asset value"],a:1,e:"Finance lease = 잔존가치(residual value) 매수선택권 부여 + 위험·보상 이전. 함정: operating lease가 반환형 — 둘 구분이 핵심."},
+{id:"021",tp:"금융기법",d:"Hard",q:"The key distinction between an OPERATING lease and a FINANCE lease lies primarily in:",o:["The currency used","The transfer of risks and rewards of ownership","The lessor's nationality","The length of the contract only"],a:1,e:"핵심 구분 = 소유에 따른 위험·보상의 이전 여부. finance=이전, operating=미이전. 함정: 계약 기간 '만'으로 구분하는 것은 부정확."},
+{id:"022",tp:"금융기법",d:"Medium",q:"In factoring (anjak piutang), the finance company:",o:["Lends against real estate collateral","Purchases or manages a client's account receivables","Issues credit cards to consumers","Leases heavy equipment"],a:1,e:"Factoring = 매출채권(receivables) 매입·관리. 함정: 부동산담보대출·리스와 혼동."},
+{id:"023",tp:"금융기법",d:"Hard",q:"Under 'channeling' arrangements, the credit risk is borne by:",o:["The finance company entirely","The channeling partner / source of funds (risk does not transfer to the finance company's book)","Shared 50/50 by regulation","The OJK"],a:1,e:"Channeling = 자금원(partner)이 신용위험 부담, finance company 장부에 위험 미이전. 함정: joint financing(공동금융)은 위험 분담 — 둘 구분 필수."},
+{id:"024",tp:"금융기법",d:"Hard",q:"In 'joint financing', how is risk typically structured compared to channeling?",o:["Identical to channeling","Risk and funding are SHARED between the finance company and partner per agreed proportion","No risk to either party","Entirely on the borrower"],a:1,e:"Joint financing = 약정 비율로 위험·자금 분담. channeling(위험 미이전)과 대조. 함정: 두 기법을 동일시."},
+{id:"025",tp:"비율",d:"Hard",q:"The maximum gearing ratio permitted for a finance company is:",o:["5 times","10 times","15 times","No limit"],a:1,e:"Gearing ratio 최대 10배. 최저 0배. 함정: 인접 배수 혼동 유도."},
+{id:"026",tp:"비율",d:"Hard",q:"Gearing ratio is most accurately described as the ratio of:",o:["Equity to total assets","Total borrowings (interest-bearing debt) to equity","Net income to revenue","Financing receivables to total assets"],a:1,e:"Gearing = 이자부 차입(borrowings)/자기자본(equity). 함정: FAR(receivables/assets)와 혼동."},
+{id:"027",tp:"비율",d:"Medium",q:"A finance company with a gearing ratio exceeding 10x would be:",o:["Operating efficiently","In breach of the prudential gearing provision","Eligible for a license upgrade","Exempt from BMPP"],a:1,e:"10배 초과 = 건전성 규정 위반. 함정: 고gearing을 효율로 오인."},
+{id:"028",tp:"리스크",d:"Hard",q:"BMPP (Maximum Financing Limit) under POJK 46/2024 sets the SINGLE obligor limit at:",o:["10% of equity","20% of equity","50% of equity","17.5% of equity"],a:1,e:"단일 차주(single obligor) 최대 20% of equity. group 50%, controlling-relationship 50% of equity. 함정: 17.5%는 acquisition cost cap — 다른 항목."},
+{id:"029",tp:"리스크",d:"Hard",q:"Under BMPP, the limit for ONE GROUP of obligors is:",o:["20%","50%","17.5%","100%"],a:1,e:"한 group of obligor = 최대 50%. single 20%와 구분. 함정: single과 group 수치 swap 유도."},
+{id:"030",tp:"리스크",d:"Hard",q:"The financing acquisition cost is capped at 17.5% of:",o:["Equity","The total income of each financing contract","Paid-in capital","Total assets"],a:1,e:"Acquisition cost = 계약별 총수입(total income of each contract)의 17.5%. 함정: equity 기준 BMPP와 혼동 — 기준 자체가 다름."},
+{id:"031",tp:"리스크",d:"Hard",q:"Which item is EXCLUDED from BMPP calculation under POJK 46/2024?",o:["Financing to a single private individual","Financing guaranteed/secured by certain government or specified instruments","Financing to a large corporate group","Consumer financing above Rp 1 billion"],a:1,e:"정부보증 등 특정 안전자산은 BMPP 산정에서 제외. 함정: 일반 차주 financing은 모두 포함."},
+{id:"032",tp:"리스크",d:"Medium",q:"The primary purpose of BMPP (Maximum Financing Limit) is to:",o:["Maximize the company's market share","Limit concentration risk to any single party or group","Increase the gearing ratio","Reduce paid-in capital requirements"],a:1,e:"BMPP 목적 = 단일 차주·group 집중위험(concentration risk) 제한. 함정: 시장점유·gearing과 무관."},
+{id:"033",tp:"리스크",d:"Hard",q:"A finance company applies risk mitigation by requiring 'provision of collateral from the receivable seller' in a factoring deal. This addresses primarily:",o:["Liquidity risk","Credit/default risk on the purchased receivables","Operational risk","Currency risk"],a:1,e:"매출채권 매도인의 담보 제공 = 매입채권 부도(credit) 위험 완화. 함정: 유동성·운영위험으로 오인."},
+{id:"034",tp:"리스크",d:"Hard",q:"In assessing the soundness of a finance company, which financial ratio set is typically reviewed by OJK?",o:["P/E ratio, dividend yield, beta","ROA, NPF, Gearing Ratio, A/R quality","CPI, GDP growth, exchange rate","Only the gearing ratio"],a:1,e:"OJK 건전성 평가 지표: ROA·NPF·Gearing·A/R 품질 등. 함정: 주식시장 지표(P/E·beta)는 무관."},
+{id:"035",tp:"리스크",d:"Medium",q:"A core capital to paid-in capital ratio BELOW 0% would indicate:",o:["A healthy capital position","Capital impairment / serious distress","Compliance with the 50% minimum","Excess capital"],a:1,e:"core/paid-in <0% = 자본잠식·중대 부실. 함정: 음수를 정상으로 오인. 0%~50% 구간도 미달."},
+{id:"036",tp:"GCG",d:"Hard",q:"GCG (Good Corporate Governance) for finance companies rests on five core principles. Which set is correct?",o:["Transparency, Accountability, Responsibility, Independency, Fairness","Profit, Growth, Scale, Speed, Risk","Liquidity, Solvency, Efficiency, Equity, Return","Compliance, Audit, Reporting, Control, Sanction"],a:0,e:"GCG 5원칙 = TARIF: Transparency·Accountability·Responsibility·Independency·Fairness. 함정: 재무지표·통제용어 묶음으로 위장."},
+{id:"037",tp:"GCG",d:"Hard",q:"The minimum paid-in capital required to establish a finance company is:",o:["Rp 100 billion","Rp 250 billion","Rp 50 billion","Rp 500 billion"],a:1,e:"최소 납입자본 = Rp 250 billion. 함정: 인접 금액 혼동."},
+{id:"038",tp:"GCG",d:"Hard",q:"Foreign ownership in a finance company is capped, directly or indirectly, at:",o:["49% of paid-in capital","85% of paid-in capital","100% (no cap)","50% of paid-in capital"],a:1,e:"외국인 지분 최대 85% of paid-in capital. 함정: 49%(타 업종 일반)·100%와 혼동."},
+{id:"039",tp:"GCG",d:"Hard",q:"The cap on foreign directors AND foreign commissioners (each) is:",o:["50% each","85% each","100% each","No limit"],a:0,e:"외국인 이사·감사 각각 최대 50%. 지분 cap(85%)과 다른 수치. 함정: 85%로 통일 오인."},
+{id:"040",tp:"GCG",d:"Medium",q:"A finance company's Board of Commissioners (BOC) function is best described as:",o:["Day-to-day operational management","Supervision and oversight of the Board of Directors","Sales and marketing leadership","External audit"],a:1,e:"BOC = 이사회(BOD) 감독·감시. 일상경영은 BOD. 함정: BOD/BOC 역할 swap."},
+{id:"041",tp:"GCG",d:"Hard",q:"Which statement about the relationship between paid-in capital and core capital is CORRECT?",o:["Core capital may be any amount regardless of paid-in capital","Core capital must be at least 50% of paid-in capital","Paid-in capital must be at least 50% of core capital","They must always be equal"],a:1,e:"Core capital ≥ 50% of paid-in capital. 함정: 비율 방향 역전(paid-in이 core의 50%) 유도."},
+{id:"042",tp:"GCG",d:"Medium",q:"GCG implementation in finance companies is primarily intended to:",o:["Guarantee profit","Protect stakeholders and ensure sustainable, sound operations","Eliminate all business risk","Replace OJK supervision"],a:1,e:"GCG 목적 = 이해관계자 보호·지속가능 건전경영. 함정: 이익보장·위험제거는 과장."},
+{id:"043",tp:"GCG",d:"Hard",q:"A finance company changes its provisions in response to 'change in provisions of laws and regulations'. This is an example of:",o:["Operational risk crystallizing","Compliance/regulatory risk management","Market risk","Reputational damage"],a:1,e:"법규 변경 대응 = 준법(compliance)·규제위험 관리. 함정: 운영·시장위험으로 오인."},
+{id:"044",tp:"GCG",d:"Medium",q:"Which body within the finance company is primarily responsible for ensuring fit and proper standards of management are maintained internally?",o:["The marketing department","The Board of Commissioners with the nomination/remuneration function","External vendors","The OJK alone"],a:1,e:"내부 F&P 유지 = BOC + 지명·보수 기능. 함정: OJK '단독'은 외부 승인이며, 내부 유지 책임과 별개."},
+{id:"045",tp:"GCG",d:"Hard",q:"Additional paid-in capital obtained NOT through a public offering of shares would be classified under which capital component consideration?",o:["Tier 2 supplementary only","A component relevant to core capital computation","Excluded entirely from capital","Gearing-eligible debt"],a:1,e:"비공모 추가 납입자본도 core capital 산정에 관련. 함정: 자본에서 전부 배제·부채로 오인."},
+{id:"046",tp:"소비자보호",d:"Hard",q:"Indonesian financial consumer protection is anchored by which umbrella regulation among the following?",o:["POJK 22/2023","POJK 46/2024","POJK 35/2018","POJK 12/2017"],a:0,e:"POJK 22/2023 = 소비자보호 핵심. 함정: 46/2024(사업운영)·35/2018(시설)·12/2017(AML)은 별개 영역."},
+{id:"047",tp:"소비자보호",d:"Hard",q:"Which is a CORE consumer protection principle that finance companies must observe?",o:["Maximize fees regardless of disclosure","Transparency, fair treatment, and effective complaint handling","Sell only to high-net-worth clients","Avoid all written contracts"],a:1,e:"소비자보호 원칙 = 투명성·공정대우·민원처리. 함정: 수수료 극대화·계약 회피는 위반."},
+{id:"048",tp:"소비자보호",d:"Medium",q:"A consumer complaint mechanism failure most directly creates which risk for the finance company?",o:["Currency risk","Reputational and legal/compliance risk","Liquidity risk only","Gearing breach"],a:1,e:"민원처리 실패 = 평판·법률·준법 위험. 함정: 환·유동성위험과 무관."},
+{id:"049",tp:"소비자보호",d:"Hard",q:"Which recent regulation is part of the consumer protection regulatory set referenced for finance companies?",o:["POJK 38/2025","POJK 19/2025","POJK 34/2018","POJK 8/2023"],a:0,e:"POJK 38/2025 = 소비자보호 set 포함. 함정: 19/2025(MSME)·34/2018(F&P)·8/2023(AML)은 다른 영역."},
+{id:"050",tp:"소비자보호",d:"Medium",q:"Personal data protection in financial consumer relations primarily requires the finance company to:",o:["Sell data to maximize revenue","Obtain consent and safeguard confidentiality of consumer data","Publish all client data","Ignore data after contract ends"],a:1,e:"개인정보 = 동의 획득 + 기밀 보호. 함정: 판매·공개는 명백한 위반."},
+{id:"051",tp:"Sharia",d:"Hard",q:"In Sharia financing, the prohibition of 'riba' refers to:",o:["Excessive risk-taking","Interest / usury","Speculation","Charity"],a:1,e:"Riba = 이자(usury) 금지. gharar(과도한 불확실성)·maysir(투기)는 별도 금지. 함정: gharar/maysir와 혼동."},
+{id:"052",tp:"Sharia",d:"Hard",q:"A Sharia finance contract based on cost-plus sale of an asset to the customer is known as:",o:["Ijarah","Murabahah","Musharakah","Wadiah"],a:1,e:"Murabahah = 원가가산(cost-plus) 매매. Ijarah=리스, Musharakah=동업출자. 함정: Ijarah(임대)와 혼동."},
+{id:"053",tp:"Sharia",d:"Hard",q:"The Sharia equivalent of a leasing arrangement is:",o:["Murabahah","Ijarah","Mudharabah","Qard"],a:1,e:"Ijarah = 샤리아 리스. 함정: Murabahah(매매)와 swap 유도."},
+{id:"054",tp:"Sharia",d:"Medium",q:"Sharia financing instruments must be reviewed and certified for compliance by:",o:["The external auditor","The Sharia Supervisory Board (DPS)","The marketing team","Bank Indonesia"],a:1,e:"DPS(Dewan Pengawas Syariah) = 샤리아 준수 감독·인증. 함정: 외부감사·BI 소관 아님."},
+{id:"055",tp:"Sharia",d:"Hard",q:"Issuance of 'sukuk' by a finance company is:",o:["Prohibited","A permitted sharia-compliant funding source","Equivalent to deposit-taking","Limited to banks only"],a:1,e:"Sukuk(샤리아 채권) = 허용 자금원. 함정: 예금수취와 혼동·은행 전용 오인."},
+{id:"056",tp:"Sharia",d:"Medium",q:"'Multipurpose Sharia' financing differs from conventional multipurpose financing chiefly by:",o:["Charging higher interest","Adhering to sharia principles (no riba, contract-based structures)","Being available only to corporations","Requiring no documentation"],a:1,e:"Multipurpose Sharia = 샤리아 원칙(무이자·계약기반) 준수. 함정: '고이자'는 riba 금지에 정면 위배."},
+{id:"057",tp:"OtherRegs",d:"Hard",q:"AML/CFT obligations (APU-PPT) for finance companies are CURRENTLY governed primarily by:",o:["POJK 12/2017 (unamended)","POJK 8/2023 (which replaced the 12/2017 line)","POJK 34/2018","POJK 46/2024"],a:1,e:"현행 APU-PPT = POJK 8/2023(12/2017→23/2019 개정→8/2023 대체). 함정: 12/2017을 현행으로 오인."},
+{id:"058",tp:"OtherRegs",d:"Hard",q:"The Fit & Proper REASSESSMENT of management is governed by:",o:["POJK 34/2018","POJK 12/2017","POJK 43/2024","POJK 19/2025"],a:0,e:"F&P 재평가 = POJK 34/2018. 초기 NBFI F&P는 별도 NBFI 규정. 함정: 12/2017(AML)·43/2024(HR)와 혼동."},
+{id:"059",tp:"OtherRegs",d:"Medium",q:"APU-PPT requires finance companies to apply a Risk-Based Approach (RBA). RBA means:",o:["Treating all customers identically","Allocating due-diligence intensity proportionate to assessed money-laundering risk","Ignoring low-value transactions","Outsourcing all KYC"],a:1,e:"RBA = 평가된 ML 위험에 비례해 실사 강도 배분. 함정: 모든 고객 동일 처리는 RBA의 반대 개념."},
+{id:"060",tp:"OtherRegs",d:"Hard",q:"Under APU-PPT, Customer Due Diligence (CDD) must be escalated to Enhanced Due Diligence (EDD) primarily for:",o:["All retail customers","Higher-risk customers such as PEPs (Politically Exposed Persons)","Only domestic customers","Customers under Rp 1 million"],a:1,e:"EDD = 고위험(PEP 등) 대상 강화실사. 함정: 전체·소액에 EDD 적용은 비효율·오해."},
+{id:"061",tp:"OtherRegs",d:"Medium",q:"SLIK (Sistem Layanan Informasi Keuangan) is used by finance companies primarily to:",o:["Process payroll","Check a prospective debtor's credit history","File tax returns","Register fiduciary collateral"],a:1,e:"SLIK = 차주 신용이력 조회 시스템(舊 BI Checking). 함정: 담보등록(fiducia)·세무와 혼동."},
+{id:"062",tp:"OtherRegs",d:"Hard",q:"Fiduciary registration (jaminan fidusia) gives the finance company:",o:["Ownership transfer of the debtor's company","A registered security interest enabling execution upon default","An equity stake","A tax exemption"],a:1,e:"Fiducia 등록 = 부도 시 집행 가능한 담보권. 함정: 소유권 이전·지분으로 오인."},
+{id:"063",tp:"OtherRegs",d:"Medium",q:"Which institution issues POJK regulations?",o:["Bank Indonesia","Otoritas Jasa Keuangan (OJK)","Ministry of Finance","APPI"],a:1,e:"POJK = OJK 규정. SEOJK도 OJK. 함정: BI(PBI)·재무부(KMK)와 발행기관 구분."},
+{id:"064",tp:"OtherRegs",d:"Medium",q:"APPI's role in the finance company industry is best described as:",o:["The financial regulator","The industry association representing finance companies","A state-owned lender","The deposit insurer"],a:1,e:"APPI = 업계 협회(SPPI 인증·세미나 주관). 함정: 규제기관(OJK)과 혼동."},
+{id:"065",tp:"기타조항",d:"Hard",q:"When a finance company's core capital to paid-in capital ratio falls between 0% and 50%, the company is:",o:["Fully compliant","Below the minimum threshold (50%) and subject to supervisory action","Exceeding requirements","Exempt from gearing limits"],a:1,e:"0~50% 구간 = 최소요건(50%) 미달 → 감독조치 대상. 함정: 양수라서 '준수'로 오인."},
+{id:"066",tp:"기타조항",d:"Medium",q:"A finance company must comply with the gearing ratio provision at the lowest of:",o:["1 time","0 (zero) times","5 times","Negative gearing"],a:1,e:"Gearing 최저 0배, 최고 10배. 함정: 최저 1배 오인."},
+{id:"067",tp:"기타조항",d:"Hard",q:"Which of the following income types is specifically referenced in computing the acquisition cost ceiling context?",o:["Only interest income","Administration income and Provision income (among contract income)","Dividend income only","Foreign exchange gains only"],a:1,e:"계약수입에 administration·provision income 포함 → acquisition cost 17.5% 산정 맥락. 함정: 이자수입만으로 한정 오인."},
+{id:"068",tp:"기타조항",d:"Medium",q:"A finance company seeking to issue securities (bonds) as a funding source must:",o:["Obtain depositor approval","Comply with the applicable securities/capital market provisions","Reduce its paid-in capital","Cancel its license"],a:1,e:"채권 발행 = 자본시장 관련 규정 준수. 함정: 예금자 승인은 finance company에 비해당(예금 없음)."},
+{id:"069",tp:"기타조항",d:"Hard",q:"If a finance company wants to conduct activities WITHOUT face-to-face interaction with customers, it must satisfy which precondition set newly enabled in 2024?",o:["Reduce gearing to zero","Meet the digital/non-face-to-face provisions under POJK 46/2024 including identity verification safeguards","Convert to a bank","Abandon fiduciary registration"],a:1,e:"비대면 영업 = POJK 46/2024의 비대면 요건(신원확인 안전장치 등) 충족. 함정: 은행 전환·gearing 0은 무관."},
+{id:"070",tp:"기타조항",d:"Medium",q:"Change in business activities of a finance company generally requires:",o:["No notification","Approval from / reporting to OJK as applicable","Approval from competitors","A public referendum"],a:1,e:"사업활동 변경 = OJK 승인·보고. 함정: 무신고·경쟁사 승인은 비현실."},
+{id:"071",tp:"통계",d:"Hard",q:"Total industry assets have shown which recent pattern according to the latest data?",o:["Explosive 50% annual growth","Roughly flat / marginal change (near 0% YoY at the latest reading)","Halved in one year","Continuous double-digit decline"],a:1,e:"총자산 최근 거의 보합(약 0% YoY). 함정: 급증·급감 극단 선택지로 오도."},
+{id:"072",tp:"통계",d:"Medium",q:"A FAR aggregate band of 89%-90% would typically be interpreted as:",o:["Severe under-utilization","Very high productive-asset concentration","Capital impairment","Regulatory breach by itself"],a:1,e:"FAR 89~90% = 생산자산 집중도 매우 높음. 함정: 그 자체로 위반은 아님 — 집중도 해석."},
+{id:"073",tp:"통계",d:"Hard",q:"Which interpretation of a rising MSMD (Modal Sendiri/Modal Disetor) ratio is MOST accurate?",o:["Capital base shrinking relative to paid-in capital","Core/own capital strengthening relative to paid-in capital","NPF deteriorating","Gearing breaching the cap"],a:1,e:"MSMD 상승 = 자기자본이 납입자본 대비 강화. 함정: NPF·gearing과 혼동, 방향 역전 유도."},
+{id:"074",tp:"산업사",d:"Hard",q:"The transition of finance company supervision to OJK was significant because it:",o:["Removed all prudential rules","Unified supervision of the financial services sector under one integrated authority","Banned foreign ownership","Eliminated the gearing ratio"],a:1,e:"OJK 이관 = 금융서비스 통합감독. 함정: 규제 제거·외인금지는 사실 아님."},
+{id:"075",tp:"산업사",d:"Medium",q:"SKB 3 Menteri (1974) is historically credited with:",o:["Creating consumer credit cards","Introducing leasing into Indonesia","Establishing the OJK","Setting the 10x gearing cap"],a:1,e:"1974 SKB 3장관령 = 인니 leasing 도입. 함정: 후대 제도(OJK·gearing)와 혼동."},
+{id:"076",tp:"금융기법",d:"Hard",q:"A 'sale and leaseback' transaction allows a company to:",o:["Avoid all taxes permanently","Sell an owned asset to the finance company and lease it back, freeing up capital","Take public deposits","Eliminate the asset from existence"],a:1,e:"Sale & leaseback = 보유자산 매각 후 재임차 → 자본 유동화. 함정: 탈세·예금수취와 무관."},
+{id:"077",tp:"금융기법",d:"Hard",q:"Consumer financing (pembiayaan konsumen) is distinguished from a bank loan primarily by:",o:["Taking deposits to fund it","Financing the purchase of specific consumer goods with installment repayment, by a finance company","Offering checking accounts","Issuing currency"],a:1,e:"Consumer financing = 특정 소비재 구매를 할부로 지원(finance company). 함정: 예금·당좌계좌는 은행 기능."},
+{id:"078",tp:"금융기법",d:"Medium",q:"In credit card business by a finance company, the principal income source is typically:",o:["Deposit spreads","Interest, fees, and merchant commissions","Government subsidies","Equity dividends"],a:1,e:"신용카드 수입 = 이자·수수료·가맹점 commission. 함정: 예금스프레드는 은행형 모델."},
+{id:"079",tp:"금융기법",d:"Hard",q:"When a finance company performs 'channeling' for a bank, the financing typically appears:",o:["On the finance company's balance sheet as its own asset","Off the finance company's balance sheet (risk/funding remain with the source)","As deposits","As equity"],a:1,e:"Channeling = finance company 장부 외(off-balance), 위험·자금은 자금원 보유. 함정: 자체 자산 계상은 joint financing/own-book."},
+{id:"080",tp:"리스크",d:"Hard",q:"Which risk is MOST directly mitigated by the BMPP single-obligor and group limits?",o:["Interest rate risk","Concentration (credit) risk","Foreign exchange risk","Operational risk"],a:1,e:"BMPP = 집중(신용) 위험 완화. 함정: 금리·환·운영위험은 다른 도구로 관리."},
+{id:"081",tp:"리스크",d:"Hard",q:"A finance company funding long-term leases with short-term borrowings is exposed primarily to:",o:["Liquidity / maturity-mismatch risk","Sharia non-compliance","Consumer protection breach","Gearing exemption"],a:0,e:"장기자산-단기부채 = 유동성·만기불일치 위험. 함정: 샤리아·소비자보호와 무관."},
+{id:"082",tp:"리스크",d:"Medium",q:"Provisioning (allowance for impairment) on financing receivables primarily reflects:",o:["Expected/incurred credit losses","Marketing budget","Tax payable","Dividend reserve"],a:0,e:"대손충당금 = 예상·발생 신용손실 반영. 함정: 마케팅·세금·배당과 무관."},
+{id:"083",tp:"리스크",d:"Hard",q:"Which is the correct hierarchy of BMPP limits from the controlling-relationship/group perspective?",o:["Single 20% < Group 50% = Controlling-related 50% of equity","Single 50% < Group 20%","All capped at 17.5%","No limits apply to groups"],a:0,e:"단일 20% < group 50% = 지배관계 당사자 50% of equity. 함정: single/group 수치 swap, 17.5%(acquisition) 혼입."},
+{id:"084",tp:"GCG",d:"Hard",q:"Independency (one of the GCG principles) in a finance company specifically requires:",o:["Total secrecy from regulators","Management acting free from undue influence or conflicts of interest","Refusing all external audits","Centralizing all power in the CEO"],a:1,e:"Independency = 부당영향·이해상충 배제. 함정: 비밀주의·권력집중은 GCG 위배."},
+{id:"085",tp:"GCG",d:"Hard",q:"Accountability under GCG primarily means:",o:["Maximizing leverage","Clear functions, responsibilities, and answerability of organs (BOD/BOC)","Avoiding documentation","Outsourcing governance"],a:1,e:"Accountability = 기관(BOD/BOC) 기능·책임·답책성 명확화. 함정: 레버리지·문서회피는 무관."},
+{id:"086",tp:"GCG",d:"Medium",q:"The Board of Directors (BOD) of a finance company is primarily responsible for:",o:["Supervising itself","Managing the company's day-to-day operations and strategy execution","Replacing the OJK","Auditing the BOC"],a:1,e:"BOD = 일상경영·전략실행. 감독은 BOC. 함정: BOD/BOC 역할 혼동 반복 출제."},
+{id:"087",tp:"GCG",d:"Hard",q:"A finance company with foreign shareholding of 90% would be:",o:["Compliant","In breach of the 85% foreign ownership cap","Eligible for tax breaks","Subject to higher gearing"],a:1,e:"외인 90% = 85% cap 위반. 함정: 인접 수치 차이 식별 요구."},
+{id:"088",tp:"GCG",d:"Medium",q:"Responsibility (GCG principle) primarily concerns:",o:["Compliance with laws, regulations, and sound corporate principles","Maximizing short-term profit only","Avoiding all risk","Concealing related-party transactions"],a:0,e:"Responsibility = 법규·건전경영원칙 준수. 함정: 단기이익·은폐는 위배."},
+{id:"089",tp:"소비자보호",d:"Hard",q:"A 'cooling-off' or transparency requirement in consumer protection ensures that:",o:["The company can change terms unilaterally anytime","Consumers receive clear information before binding commitment","Contracts are kept secret from consumers","Fees can be hidden"],a:1,e:"투명성 요건 = 구속 전 명확정보 제공. 함정: 일방변경·은폐는 정반대."},
+{id:"090",tp:"소비자보호",d:"Medium",q:"Which SEOJK/POJK area governs consumer complaint and dispute resolution mechanisms?",o:["The consumer protection regulatory set (e.g., POJK 22/2023 and related SEOJK)","POJK 46/2024 only","POJK 35/2018 only","KMK 448/2000"],a:0,e:"민원·분쟁해결 = 소비자보호 규정군(POJK 22/2023 등). 함정: 사업운영·시설 규정은 별개."},
+{id:"091",tp:"OtherRegs",d:"Hard",q:"The replacement chain for the AML/CFT (APU-PPT) regulation is correctly stated as:",o:["12/2017 → 23/2019 (amendment) → 8/2023 (replacement)","8/2023 → 12/2017 → 34/2018","34/2018 → 12/2017","46/2024 → 12/2017"],a:0,e:"APU-PPT 계보: 12/2017 → 23/2019 개정 → 8/2023 대체. 함정: 순서 역전·타 규정 혼입."},
+{id:"092",tp:"OtherRegs",d:"Hard",q:"A finance company's HR certification obligation (POJK 43/2024) most directly supports which industry goal?",o:["Reducing paid-in capital","Raising professional competency and standardized certification of personnel","Eliminating the BOC","Removing consumer protection"],a:1,e:"POJK 43/2024 = 인력 전문역량·표준 인증 제고(SPPI 등). 함정: 자본·기관 축소와 무관."},
+{id:"093",tp:"OtherRegs",d:"Medium",q:"PEP (Politically Exposed Person) screening under APU-PPT is required because PEPs present:",o:["No special risk","Higher corruption/money-laundering risk warranting enhanced scrutiny","Lower credit risk automatically","Tax exemptions"],a:1,e:"PEP = 부패·ML 고위험 → EDD. 함정: 위험 없음·자동 저위험은 오해."},
+{id:"094",tp:"규제프레임",d:"Hard",q:"Which pair correctly matches regulation to subject?",o:["POJK 46/2024 = business operations; POJK 43/2024 = HR certification","POJK 46/2024 = AML; POJK 43/2024 = consumer protection","POJK 46/2024 = F&P; POJK 43/2024 = gearing","POJK 46/2024 = MSME; POJK 43/2024 = capital"],a:0,e:"46/2024=사업운영, 43/2024=HR 인증. 함정: 주제 교차배치로 오답 유도."},
+{id:"095",tp:"규제프레임",d:"Medium",q:"POJK 19/2025 reflects the policy emphasis on:",o:["Reducing MSME access","Expanding/structuring MSME financing","Banning sharia products","Lowering consumer protection"],a:1,e:"POJK 19/2025 = MSME financing 확대·구조화. 함정: 축소·금지는 정책방향과 반대."},
+{id:"096",tp:"Vision",d:"Medium",q:"The overarching vision for the Indonesian finance company industry under the Roadmap emphasizes being:",o:["Smaller and less regulated","Resilient, competitive, and contributing to inclusive economic growth","Deposit-taking institutions","Free from supervision"],a:1,e:"Roadmap 비전 = 회복력·경쟁력·포용성장 기여. 함정: 예금기관화·무감독은 본질과 배치."},
+{id:"097",tp:"Roadmap",d:"Hard",q:"Which is a recognized PILLAR/theme area of the finance company industry roadmap?",o:["Eliminating all foreign capital","Strengthening resilience, governance, digitalization and consumer protection","Abolishing the OJK","Banning sharia finance"],a:1,e:"Roadmap 축 = 회복력·거버넌스·디지털화·소비자보호 강화. 함정: 폐지·금지형 선택지는 오답."},
+{id:"098",tp:"산업사",d:"Hard",q:"Why has the NUMBER of finance companies declined over recent years despite roughly stable total assets?",o:["Mass bankruptcies only","Industry consolidation, mergers, and license revocations of weak players","A ban on new licenses forever","Conversion of all to banks"],a:1,e:"사수 감소 = 통폐합·합병·부실사 면허취소 → 자산은 보합. 함정: '대량파산만'·'은행 전환'은 단순화 오류."},
+{id:"099",tp:"비율",d:"Hard",q:"A finance company reports gearing of 0 times. This means:",o:["It is in breach","It operates with no interest-bearing borrowings relative to equity (within the allowed floor)","It exceeds the cap","It has negative equity"],a:1,e:"Gearing 0배 = 이자부 차입 없음(허용 최저). 위반 아님. 함정: 0을 위반·음수자본으로 오인."},
+{id:"100",tp:"규제프레임",d:"Hard",q:"A candidate must NOT confuse the following. Which statement is CORRECT?",o:["The 2.5% HR training budget is based on net income","The 17.5% acquisition cost cap is based on equity","The 2.5% HR training budget is based on personnel expenses; the 17.5% acquisition cap is based on each contract's total income","Foreign ownership cap and foreign director cap are both 85%"],a:2,e:"정답: 2.5% HR예산=인건비 기준, 17.5% acquisition cap=계약별 총수입 기준. 함정: 순이익·equity 기준 오인, 외인 director cap은 50%(지분 85%와 다름) — 모든 빈출 함정을 한 문항에 집약."},
+];
+
+const KEY="A B C D".split(" ");
+const WKEY="sppi_wrong_W1_v2";
+function getWrong(){try{return JSON.parse(localStorage.getItem(WKEY))||[]}catch(e){return[]}}
+function setWrong(a){try{localStorage.setItem(WKEY,JSON.stringify([...new Set(a)]))}catch(e){}}
+function addWrong(id){const w=getWrong();if(!w.includes(id)){w.push(id);setWrong(w)}}
+function rmWrong(id){setWrong(getWrong().filter(x=>x!==id))}
+function byId(id){return BANK.find(q=>q.id===id)}
+let quiz=[], cur=0, answers=[], picked=false;
+const app=document.getElementById('app');
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function shuffleOpts(q){
+  const idx=shuffle([0,1,2,3]);
+  return {...q, o: idx.map(i=>q.o[i]), a: idx.indexOf(q.a)};
+}
+function start(mode){
+  let pool;
+  if(mode==='wrong'){
+    pool=shuffle(getWrong().map(byId).filter(Boolean));
+    if(!pool.length){home();return}
+  } else {
+    pool=(mode==='all')?shuffle(BANK):shuffle(BANK).slice(0,30);
+  }
+  quiz=pool.map(shuffleOpts);
+  cur=0; answers=[]; render();
+}
+function home(){
+  const wc=getWrong().length;
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow" style="margin-bottom:10px">시작하기</div>
+      <p style="font-size:14px;color:#5d6075;margin-bottom:6px">100문항 풀 · 실전 영어 4지선다</p>
+      <div class="start-opts">
+        <button onclick="start('rand30')">랜덤 30문항 <span class="desc">실전 모사 — 전 범위에서 무작위 30개</span></button>
+        <button onclick="start('all')">전체 100문항 <span class="desc">산업·Health Level·Risk·사업영역·POJK 완주</span></button>
+        <button class="wrongbtn" onclick="start('wrong')" ${wc?'':'disabled style="opacity:.4;cursor:default"'}>오답만 다시 풀기<span class="wrongbadge">${wc}</span><span class="desc">누적 오답만 모아서 재시험 — 맞히면 목록에서 제거</span></button>
+        <button class="wrongbtn" onclick="notebook()" ${wc?'':'disabled style="opacity:.4;cursor:default"'}>📕 오답노트 보기<span class="desc">틀린 문제 · 정답 · 해설 한눈에</span></button>
+      </div>
+    </div>`;
+}
+function notebook(){
+  const ids=getWrong();
+  const cards=ids.map(byId).filter(Boolean);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">오답노트</div>
+      <div class="scoreline" style="margin:6px 0 16px">누적 오답 ${cards.length}문항</div>
+      <div style="text-align:left">
+        ${cards.length?cards.map(q=>`
+          <div class="notecard">
+            <div class="qid">W1-${q.id} · ${q.tp}</div>
+            <div class="nq">${q.q}</div>
+            ${q.o.map((t,i)=>`<div class="no ${i===q.a?'ok':''}">${KEY[i]}. ${t}</div>`).join('')}
+            <div class="ne"><b>정답 ${KEY[q.a]}</b> — ${q.e}</div>
+            <button class="del" onclick="rmWrong('${q.id}');notebook()">✕ 이 문제 오답 목록에서 제거</button>
+          </div>`).join(''):'<p style="color:var(--green);font-weight:700">오답 없음</p>'}
+      </div>
+      ${cards.length?`<button class="noteclear" onclick="if(confirm('오답노트를 전부 비웁니다. 계속?')){setWrong([]);notebook()}">전체 비우기</button>`:''}
+      <div class="nav" style="justify-content:center;margin-top:20px"><button class="act" onclick="home()">← 처음으로</button></div>
+    </div>`;
+}
+function render(){
+  const q=quiz[cur]; picked=false;
+  const dcls=q.d.toLowerCase();
+  app.innerHTML=`
+    <div class="meta"><span>문항 ${cur+1} / ${quiz.length}</span><span>QID W1-${q.id}</span></div>
+    <div class="bar"><i style="width:${(cur)/quiz.length*100}%"></i></div>
+    <div class="tags"><span class="tag topic">${q.tp}</span><span class="tag ${dcls}">${q.d}</span></div>
+    <div class="q">${q.q}</div>
+    <div class="opts" id="opts">
+      ${q.o.map((t,i)=>`<button class="opt" onclick="pick(${i})"><span class="k">${KEY[i]}</span><span>${t}</span></button>`).join('')}
+    </div>
+    <div class="exp" id="exp"></div>
+    <div class="nav">
+      <button class="act ghost" onclick="home()">처음으로</button>
+      <button class="act" id="next" onclick="next()" disabled>다음 →</button>
+    </div>`;
+}
+function pick(i){
+  if(picked) return; picked=true;
+  const q=quiz[cur];
+  const correct=i===q.a;
+  answers[cur]={id:q.id,correct,picked:i};
+  if(correct) rmWrong(q.id); else addWrong(q.id);
+  document.querySelectorAll('#opts .opt').forEach((b,idx)=>{
+    b.disabled=true;
+    if(idx===q.a) b.classList.add('correct');
+    else if(idx===i) b.classList.add('wrong');
+  });
+  const exp=document.getElementById('exp');
+  exp.innerHTML=`<b>정답: ${KEY[q.a]}</b> &nbsp;—&nbsp; ${q.e}`;
+  exp.classList.add('show');
+  document.getElementById('next').disabled=false;
+  if(cur===quiz.length-1) document.getElementById('next').textContent='결과 보기';
+}
+function next(){if(cur<quiz.length-1){cur++;render()}else result()}
+function result(){
+  const right=answers.filter(a=>a.correct).length;
+  const tot=quiz.length;
+  const pct=Math.round(right/tot*100);
+  const byTopic={};
+  answers.forEach((a,i)=>{const t=quiz[i].tp;byTopic[t]=byTopic[t]||{r:0,n:0};byTopic[t].n++;if(a.correct)byTopic[t].r++});
+  const wrongs=answers.map((a,i)=>({a,q:quiz[i]})).filter(x=>!x.a.correct);
+  app.innerHTML=`
+    <div class="result">
+      <div class="eyebrow">결과</div>
+      <div class="score">${pct}%</div>
+      <div class="scoreline">${tot}문항 중 ${right}개 정답</div>
+      <div class="breakdown">
+        ${Object.entries(byTopic).map(([t,v])=>`<div class="row"><span>${t}</span><b>${v.r} / ${v.n}</b></div>`).join('')}
+      </div>
+      ${wrongs.length?`<div class="wronglist"><b style="color:var(--red)">오답 ${wrongs.length}문항</b>
+        ${wrongs.map(x=>`<div class="w">W1-${x.q.id} · 정답 ${KEY[x.q.a]} — ${x.q.q.slice(0,70)}…</div>`).join('')}
+      </div>`:'<p style="color:var(--green);font-weight:700">전 문항 정답</p>'}
+      <div class="nav" style="justify-content:center;margin-top:24px;gap:10px;flex-wrap:wrap">
+        <button class="act" onclick="home()">다시 풀기</button>
+        ${getWrong().length?`<button class="act ghost" onclick="notebook()">📕 오답노트 (${getWrong().length})</button>`:''}
+      </div>
+    </div>`;
+}
+// 허브에서 ?note=1 진입 시 오답노트 바로 열기
+if(new URLSearchParams(location.search).get('note')==='1'){notebook()}else{home()}
+</script>
+</body>
+</html>
