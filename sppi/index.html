@@ -105,6 +105,15 @@
     </div>
   </div>
 
+  <div class="wcard" style="border-color:var(--green);border-width:2px">
+    <div class="whead"><span class="wno" style="color:var(--green)">＋ 보강</span><span class="wtitle">교재 대조 신규 보강분 (W2~W4)</span><span class="wrongchip" data-w="GAP"></span></div>
+    <div class="wdesc">2026/6/29 교재 정밀 대조로 추가된 항목 전용 — 장기전략·Validity 3종·Compliance Report 8영역·NET RISK·내부통제 10개·Compliance Matrix·식별단계·소통 4단계 등 · 기존 W앱 미수록 100문항</div>
+    <div class="links">
+      <a class="quiz" href="./gap-quiz.html" style="flex:1 1 100%;border-color:var(--green);color:var(--green)">보강 모의문제 100문항 (전체 권장)</a>
+      <a class="note" data-w="GAP" href="./gap-quiz.html?note=1" style="flex:1 1 100%">📕 오답노트</a>
+    </div>
+  </div>
+
   <div class="wcard" style="border-color:var(--red);border-width:2px">
     <div class="whead"><span class="wno" style="color:var(--red)">⚡ 집중</span><span class="wtitle">POJK 번호 암기</span><span class="wrongchip" data-w="POJK_NUM"></span></div>
     <div class="wdesc">규정↔번호 매핑 집중 — 규정→번호 · 번호→규정 · 혼동방지 페어(12·28/2024, 43/2024 vs 48/2024, 34/2018 vs 49/2024, PADK 48/2025 vs POJK 48/2024 등)</div>
@@ -132,8 +141,8 @@
 (function(){
   function getW(set){try{return JSON.parse(localStorage.getItem("sppi_wrong_"+set))||[]}catch(e){return[]}}
   function getWv2(set){try{return JSON.parse(localStorage.getItem("sppi_wrong_"+set+"_v2"))||[]}catch(e){return[]}}
-  var sets=["W1","W2","W3","W4","POJK_NUM","NUM_RATIO"], counts={}, total=0;
-  sets.forEach(function(s){counts[s]=getW(s).length+getWv2(s).length; if(["W1","W2","W3","W4"].indexOf(s)>=0) total+=counts[s];});
+  var sets=["W1","W2","W3","W4","GAP","POJK_NUM","NUM_RATIO"], counts={}, total=0;
+  sets.forEach(function(s){counts[s]=getW(s).length+getWv2(s).length; if(["W1","W2","W3","W4","GAP"].indexOf(s)>=0) total+=counts[s];});
   counts["ALL"]=total;
   // 카드별 배지 + 오답노트 링크 노출
   document.querySelectorAll(".wrongchip").forEach(function(el){
