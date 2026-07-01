@@ -86,6 +86,16 @@
   .ans li{font-size:13px;color:#d3dde8;line-height:1.5}
   .ans li b,.ans .main em{color:#f0c9bd;font-style:normal;font-weight:800}
   .ans .kr{font-size:12px;color:#9db0c4;margin-top:2px}
+  .ans .use{font-size:12px;color:#f0c9bd;margin-top:2px;padding-top:8px;border-top:1px solid rgba(255,255,255,.12)}
+
+  /* 예상 꼬리질문 토글 */
+  .fu-wrap{margin:10px 0 4px;display:flex;flex-direction:column;gap:7px}
+  .fu{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+  .fu summary{list-style:none;cursor:pointer;padding:11px 14px;font-size:13px;font-weight:700;color:var(--ink);display:flex;gap:8px;align-items:flex-start;transition:.15s}
+  .fu summary::-webkit-details-marker{display:none}
+  .fu[open] summary{border-bottom:1px solid var(--line);background:#faf7f0}
+  .fu-q{background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:1px 7px;border-radius:6px;flex:0 0 auto;margin-top:1px}
+  .fu-a{padding:11px 14px 13px;font-size:12.5px;color:var(--ink-2);line-height:1.55}
   .tapcue{text-align:center;font-size:10.5px;letter-spacing:.05em;margin-top:6px;opacity:.65}
   .front .tapcue{color:var(--ink-2)} .back .tapcue{color:#8ea3b8}
 
@@ -132,13 +142,19 @@ const QUESTIONS = [
       "<b>이행 모니터링·후속조치</b> — 핵심 규제비율(FAR·NPF·Gearing·CAR) 월간 점검, 내부 경보선 접근 시 선제 대응"
     ],
     me:"한국 자산건전성 규제 대응·감독당국 liaison 경험 → maker-checker-approver를 OJK에 현지화.",
+    followups:[
+      {q:"컴플라이언스 대시보드가 뭔가?", a:"규제 준수 상태를 한 화면에서 실시간 파악하는 관제판 — 규제 인벤토리·핵심비율 vs 한도·보고기한·미이행 갭. CEO가 서류 더미가 아니라 신호등처럼 장악."},
+      {q:"규제 위반이 발견되면?", a:"갭의 잠재 영향부터 평가 → 후속조치 개념 수립 → 관련 부서 권고 → 이행 모니터링. 반복 방지 위해 내부정책·절차에 반영."},
+      {q:"준수를 어떻게 문화로 만드나?", a:"maker-checker-approver 승인체계 + 정기 컴플라이언스 교육 + 위반 시 근본원인 분석. 처벌이 아니라 프로세스로 내재화."}
+    ],
     cards:[
       {q:"5 core POJK regulations", qkr:"KBBF 5대 규제군", main:"46·48·42 / 22·8", items:[
         "<b>POJK 46/2024</b> — Financing Companies (development & strengthening)",
         "<b>POJK 48/2024</b> — Good Governance (GCG)",
         "<b>POJK 42/2024</b> — Risk Management",
         "<b>POJK 22/2023</b> — Consumer & Public Protection",
-        "<b>POJK 8/2023</b> — AML/CFT (APU-PPT)"], kr:"연도로 묶기: 2024 셋(46·48·42), 2023 둘(22·8)"}
+        "<b>POJK 8/2023</b> — AML/CFT (APU-PPT)"], kr:"연도로 묶기: 2024 셋(46·48·42), 2023 둘(22·8)",
+        use:"답변 시작 시 이 5개를 근거로 제시하면 규제 장악력이 즉시 전달됨."}
     ]
   },
   {
@@ -151,33 +167,50 @@ const QUESTIONS = [
       "<b>견고한 거버넌스·리스크 문화</b> — GCG(TARIF) 위에서 감사위·리스크위 실효화, 3선 방어, 문화는 인사·교육 연계로 내재화"
     ],
     me:"한국 전사 중기계획·CSS·EWS·RORWA·월간 빈티지 분석 운영 → KBBF 조기경보로 이전.",
+    followups:[
+      {q:"리스크 한도를 어떻게 정하나?", a:"Risk Appetite(받아들일 의향)를 전략에서 도출 → Risk Tolerance(최대 상한)로 구체화 → Risk Capacity(재무·운영 여력) 안에서. 예: NPF ≤5%, 차주당 자본 10% 한도."},
+      {q:"리스크 프로파일은 어떻게 측정하나?", a:"8대 리스크별 Inherent Risk(1–5) × KPMR(통제품질 1–5) → Net Risk. 전사 composite rating으로 종합, 월간 heat map으로 추적."},
+      {q:"리스크 문화를 어떻게 정착시키나?", a:"구호가 아니라 인사평가·교육·보상에 연계. 3선 방어의 각 선이 자기 책임을 알고, 리스크 이벤트 보고가 처벌이 아닌 개선으로 이어지게."}
+    ],
     cards:[
       {q:"Risk Management — 4 pillars", qkr:"리스크관리 실행 4요소", main:"Supervision · Policies · Process · Control", items:[
         "① <b>Active supervision</b> of BOD & BOC (감독·인사조직·여신)",
         "② <b>Policies & procedures</b> (strategy, risk appetite & tolerance)",
         "③ <b>Risk management process</b> — identify·measure·control·monitor + <b>MIS</b>",
-        "④ <b>Internal control system</b>"], kr:"암기: 감독→정책→프로세스→내부통제"},
+        "④ <b>Internal control system</b>"], kr:"암기: 감독→정책→프로세스→내부통제",
+        use:"POJK 42/2024의 핵심. 이 4개를 순서대로 말하면 리스크관리 답변의 뼈대가 완성."},
       {q:"8 risk types of a Finance Company", qkr:"금융회사 8대 리스크", main:"Strategic · Credit · Operational · Market · Liquidity · Compliance · Legal · Reputation", items:[
         "<b>SCOM</b> — Strategic · Credit · Operational · Market",
-        "<b>LCLR</b> — Liquidity · Compliance · Legal · Reputation"], kr:"두 덩어리 4+4로. (전신운시 / 유준법평)"},
+        "<b>LCLR</b> — Liquidity · Compliance · Legal · Reputation"], kr:"두 덩어리 4+4로. (전신운시 / 유준법평)",
+        use:"\"어떤 리스크를 관리하나?\" 질문에 8개를 막힘없이. Credit·Operational이 KBBF 최대 노출."},
       {q:"GCG principles", qkr:"지배구조 5원칙", main:"T · A · R · I · F", items:[
         "<b>T</b>ransparency 투명성",
         "<b>A</b>ccountability 책임성",
         "<b>R</b>esponsibility 책무성",
         "<b>I</b>ndependency 독립성",
-        "<b>F</b>airness 공정성"], kr:"발음 그대로 '타리프(TARIF)'"},
+        "<b>F</b>airness 공정성"], kr:"발음 그대로 '타리프(TARIF)'",
+        use:"거버넌스 답변의 토대. \"거버넌스가 무엇 위에 서는가?\"에 TARIF로 답."},
       {q:"Three Lines of Defense", qkr:"3선 방어체계", main:"Business · Risk · Audit", items:[
         "<b>1st line</b> — Business / operations (owns the risk)",
         "<b>2nd line</b> — Risk management & compliance (oversees)",
-        "<b>3rd line</b> — Internal audit (independent assurance)"], kr:"1선 영업 · 2선 리스크 · 3선 감사"},
+        "<b>3rd line</b> — Internal audit (independent assurance)"], kr:"1선 영업 · 2선 리스크 · 3선 감사",
+        use:"Q2·Q5 공통으로 등장. 내부감사(3선)의 독립성 근거로도 재사용."},
       {q:"Net Risk formula", qkr:"순리스크 산식", main:"Net Risk = Inherent Risk × KPMR", items:[
         "<b>Inherent Risk</b> — risk before controls (통제 전 고유리스크)",
         "<b>KPMR</b> — Quality of Risk Management Implementation (리스크통제 품질)",
-        "Result = <b>Net / Residual Risk</b> (통제 후 잔여리스크)"], kr:"고유리스크를 통제품질로 눌러 잔여리스크"},
+        "Result = <b>Net / Residual Risk</b> (통제 후 잔여리스크)"], kr:"고유리스크를 통제품질로 눌러 잔여리스크",
+        use:"\"리스크를 어떻게 정량화하나?\"에 이 산식으로. 통제가 왜 중요한지 논리적으로 연결."},
+      {q:"Risk Profile Rating", qkr:"리스크 프로파일 등급", main:"Composite 1–5 (Inherent × KPMR)", items:[
+        "각 리스크: <b>Inherent Rating</b> 1–5 & <b>KPMR</b> 1–5",
+        "종합 → <b>Composite Rating</b> 1–5 (전사 리스크 수준)",
+        "월간 <b>Risk Heat Map</b>으로 추적",
+        "Net Risk = Profile Risk → Profitability·Capital·GCG와 함께 종합평가"], kr:"개별 리스크 → composite로 집계 → heat map 추적",
+        use:"Net Risk 카드의 확장. 감독당국 리스크 기반 감독(RBS)과 연결되는 실무 지표."},
       {q:"Risk Appetite vs Risk Tolerance", qkr:"성향 vs 허용 구분", main:"Appetite = willing · Tolerance = maximum", items:[
         "<b>Risk Appetite</b> — level of risk a company is <b>willing to accept</b> for its objectives",
         "<b>Risk Tolerance</b> — the <b>maximum</b> risk acceptable in operations (e.g. NPF ≤ 5%)",
-        "Bounded by <b>Risk Capacity</b> (financial/operational limit)"], kr:"성향=받아들일 의향 / 허용=최대 상한선"}
+        "Bounded by <b>Risk Capacity</b> (financial/operational limit)"], kr:"성향=받아들일 의향 / 허용=최대 상한선",
+        use:"둘을 혼동하면 감점. Appetite는 전략적 의향, Tolerance는 운영상 한계선으로 명확히 구분."}
     ]
   },
   {
@@ -190,15 +223,29 @@ const QUESTIONS = [
       "<b>차년도 목표·전략</b> — KPI 설정, 선제 증자(FY26–28)로 성장, NPF 5% 이내 보수 관리, Gearing 건전 유지"
     ],
     me:"JB우리캐피탈 중고차금융: 4년, 100명+·10지점, 자산 IDR 23조·월 1.7조·점유율 28%·시장 1위.",
+    followups:[
+      {q:"KBBF의 비전·미션을 말해보라", a:"인수 후 경영 안정화와 지속가능한 성장의 양립 — 성장·수익성·건전성·자본이 균형을 이루는 금융회사. 미션은 Fleet 안정화 기반 위에 Retail을 선별 확대하는 것."},
+      {q:"거시 전망을 어떻게 반영하나?", a:"금리·환율·GDP·차량 및 중장비 수요를 PESTEL로, 산업 경쟁을 Porter로, 자사 위치를 SWOT으로 분석 → 타깃 세그먼트 전략에 반영."},
+      {q:"성장과 건전성을 어떻게 동시에?", a:"부채 레버리지 의존이 아닌 선제 증자(FY26–28)로 성장 재원 확보, NPF 5% 이내 보수 관리, Gearing 건전 유지. 한국서 급속 확대 후 부실 사례를 반면교사로."}
+    ],
     cards:[
       {q:"Business plan — 3-step flow", qkr:"사업계획 3단계", main:"Mission/Vision → Macro/Market → Objectives", items:[
         "① <b>Vision & Mission</b> — long-term aspiration + steps to get there",
         "② <b>Macroeconomic forecast & market trends</b> in target segment",
-        "③ <b>Next-year objectives & strategies</b> to hit the targets"], kr:"슬라이드 3개 bullet 순서 그대로"},
+        "③ <b>Next-year objectives & strategies</b> to hit the targets"], kr:"슬라이드 3개 bullet 순서 그대로",
+        use:"슬라이드 3의 요구 bullet과 1:1. 이 순서대로 답하면 채점 포인트를 모두 커버."},
       {q:"Market analysis frameworks", qkr:"시장 분석 도구", main:"PESTEL · SWOT · Porter's Five Forces", items:[
         "<b>PESTEL</b> — macro environment (Political·Economic·Social·Tech·Environmental·Legal)",
         "<b>SWOT</b> — internal S/W, external O/T",
-        "<b>Porter's Five Forces</b> — industry competition"], kr:"거시=PESTEL, 자사=SWOT, 산업=Porter"}
+        "<b>Porter's Five Forces</b> — industry competition"], kr:"거시=PESTEL, 자사=SWOT, 산업=Porter",
+        use:"\"어떻게 시장을 분석하나?\"에 세 도구를 역할별로 배치하면 체계성이 드러남."},
+      {q:"Business Plan mandatory contents", qkr:"사업계획(RBB) 필수 구성", main:"Vision·Mission → Assumptions → Objectives → Projections", items:[
+        "비전·미션 및 전략 (strategy)",
+        "거시·산업 <b>가정(assumptions)</b>",
+        "사업목표·KPI (business objectives)",
+        "재무전망 (financial projections) · 자본계획",
+        "실행 로드맵 (work plan)"], kr:"POJK 24/2019 RBB 뼈대 — 가정→목표→전망 순",
+        use:"\"사업계획에 무엇이 들어가나?\"에 RBB 필수요소로 답. 가정(assumptions)을 빠뜨리기 쉬움."}
     ]
   },
   {
@@ -211,20 +258,33 @@ const QUESTIONS = [
       "<b>4 pillars 실행 리드·순환</b> — KYE·Whistleblowing(예방), red flag 대시보드(적발), 독립 조사, 시정 추적 → 평가·지속개선. AML 병행 <span class='reg'>POJK 8/2023</span>"
     ],
     me:"여신·Collection에서 이상징후·부정신호 식별 경험 → Fleet(허위서류·담보 부풀리기), Retail(신원·소득 위조·딜러 결탁) 통제.",
+    followups:[
+      {q:"어떤 종류의 부정을 경계하나?", a:"3유형 — 부패(Corruption: 이해상충·뇌물), 자산유용(Asset Misappropriation: 현금·재고), 재무제표 조작(Financial Statement Fraud). KBBF는 Fleet 허위서류·담보 부풀리기, Retail 딜러 결탁이 주요 노출."},
+      {q:"부정을 어떻게 예방하나?", a:"KYE(채용 적정성·생활방식 모니터링), Whistleblowing 체계와 신고자 보호, Surprise Audit(불시감사), 부정 인식 교육. '예방이 치료보다 낫다' 철학의 실천."},
+      {q:"부정 발생 시 대응은?", a:"독립 조사 → 보고·제재 → 시정조치 모니터링 → 정책·교육·시스템 개선에 반영. 4번째 pillar(모니터링·평가·후속)가 재발을 막는 축."}
+    ],
     cards:[
       {q:"Anti-Fraud Strategy — 4 pillars", qkr:"부정방지 4기둥", main:"Prevention · Detection · Investigation · Monitoring", items:[
         "① <b>Prevention</b> 예방",
         "② <b>Detection</b> 적발",
         "③ <b>Investigation</b>, reporting & sanctions 조사·보고·제재",
-        "④ <b>Monitoring</b>, evaluation & follow-up 모니터링·평가·후속"], kr:"P·D·I·M. ④가 지속가능성의 축"},
+        "④ <b>Monitoring</b>, evaluation & follow-up 모니터링·평가·후속"], kr:"P·D·I·M. ④가 지속가능성의 축",
+        use:"슬라이드 4가 문구를 직접 노출 — 반드시 이 순서·표현 그대로."},
       {q:"Anti-Fraud philosophy", qkr:"부정방지 근본 철학", main:"\u201cPrevention is better than cure\u201d", items:[
         "예방 중심 접근 — 사후 적발보다 사전 예방 우선",
-        "4 pillars가 이 철학을 구조화한 것"], kr:"한 문장 그대로 인용 가능하게"},
+        "4 pillars가 이 철학을 구조화한 것"], kr:"한 문장 그대로 인용 가능하게",
+        use:"답변 앞머리에 이 문장을 인용하면 전략의 철학적 근거가 서고 인상이 강해짐."},
+      {q:"3 types of fraud", qkr:"부정 3대 유형", main:"Corruption · Asset Misappropriation · Financial Statement Fraud", items:[
+        "<b>Corruption</b> — 이해상충, 뇌물 (conflicts of interest, bribery)",
+        "<b>Asset Misappropriation</b> — 현금·재고 유용 (cash / inventory)",
+        "<b>Financial Statement Fraud</b> — 재무제표 조작"], kr:"ACFE 표준 3분류. 부패·유용·조작",
+        use:"\"어떤 부정을 경계하나?\"에 3유형으로 답 → KBBF 사례(허위서류·딜러 결탁)로 연결."},
       {q:"Know Your Employee (KYE)", qkr:"직원 신원관리 정책", main:"Recognize & monitor employee integrity", items:[
         "채용 적정성 (proper recruitment & qualification)",
         "생활방식 모니터링 (lifestyle monitoring)",
         "성향·관계·태도 관찰 + coaching",
-        "Whistleblowing 보호와 함께 예방 pillar의 핵심"], kr:"KYC(고객)와 짝 — KYE는 '직원' 대상"}
+        "Whistleblowing 보호 · <b>Surprise Audit</b>와 함께 예방 pillar의 핵심"], kr:"KYC(고객)와 짝 — KYE는 '직원' 대상",
+        use:"예방 pillar의 구체 수단. KYC와 대비시켜 \"고객뿐 아니라 직원도\"로 강조."}
     ]
   },
   {
@@ -237,17 +297,30 @@ const QUESTIONS = [
       "<b>감사품질 향상</b> — (a) 워킹페이퍼 개발 (b) 신규 OJK 규제 반영 (c) 감사인 역량강화 → QAIP 제도화, KPI 평가"
     ],
     me:"인수·통합 조직 안정화·내부통제 이식 경험 → 지적을 형식이 아닌 프로세스·문서·승인 개선에 활용. 고위험은 감사위 분기보고.",
+    followups:[
+      {q:"미이행 지적은 어떻게 관리하나?", a:"미이행 auditee와 원인·완료 예정시점을 보고받아, 각 지적에 책임부서·기한·완료증빙을 SMART로 부여. 고위험·기한초과는 경영진 보고 후 감사위 분기 보고."},
+      {q:"감사 품질은 어떻게 높이나?", a:"QAIP로 제도화 — Gap Analysis, Self-Assessment, External/Peer Review 3기법. 완료시간·IPPF 준수율·권고 이행률을 KPI로 추적."},
+      {q:"내부감사의 독립성은 어떻게 보장하나?", a:"3선 방어의 3선으로서 이사회·감사위에 직접 보고 라인 확보. IPPF 기준 준수, 영업·리스크 라인과 분리된 보증 기능."}
+    ],
     cards:[
       {q:"3 requirements for the BOD", qkr:"CEO가 요구할 3가지", main:"Monthly report · Non-compliance · Audit quality", items:[
         "① Internal Audit reports to BOD <b>monthly</b>",
         "② Report <b>non-compliant auditees</b> + cause & expected completion",
-        "③ Audit <b>quality initiatives</b>: working papers · new-OJK-aligned programs · auditor skills"], kr:"슬라이드 3 bullet 그대로"},
+        "③ Audit <b>quality initiatives</b>: working papers · new-OJK-aligned programs · auditor skills"], kr:"슬라이드 3 bullet 그대로",
+        use:"슬라이드 5가 요구한 3개 포인트와 1:1. 이대로 답하면 채점 커버."},
       {q:"SMART criteria", qkr:"시정조치 관리 기준", main:"S · M · A · R · T", items:[
         "<b>S</b>pecific 구체적",
         "<b>M</b>easurable 측정가능",
         "<b>A</b>chievable 달성가능",
         "<b>R</b>elevant 관련성",
-        "<b>T</b>ime-bound 기한 명확"], kr:"각 지적사항에 SMART로 시정계획 부여"}
+        "<b>T</b>ime-bound 기한 명확"], kr:"각 지적사항에 SMART로 시정계획 부여",
+        use:"\"어떻게 시정을 관리하나?\"에 SMART로. 기한(T)이 미이행 추적의 핵심."},
+      {q:"QAIP evaluation techniques", qkr:"감사품질 평가 3기법", main:"Gap Analysis · Self-Assessment · External/Peer Review", items:[
+        "<b>Gap Analysis</b> — 현행 vs 기준 차이 분석",
+        "<b>Self-Assessment</b> — QAIP 자가평가",
+        "<b>External / Peer Review</b> — 외부·동료 검토 (IIA·ACFE·ISACA 참조)",
+        "KPI: 완료시간 ≤30일 · IPPF 준수 100% · 권고 이행률 ≥90%"], kr:"내부(gap·self) + 외부(peer) 2축",
+        use:"\"감사 기능 자체는 어떻게 검증하나?\"에 QAIP 3기법으로 심화 답변."}
     ]
   }
 ];
@@ -274,7 +347,8 @@ function initDeck(root, data){
         <div class="cardtag">Answer</div>
         <div class="ans"><div class="main">${c.main}</div>
           <ol>${c.items.map(x=>`<li>${x}</li>`).join("")}</ol>
-          ${c.kr?`<div class="kr">💡 ${c.kr}</div>`:""}</div>
+          ${c.kr?`<div class="kr">💡 ${c.kr}</div>`:""}
+          ${c.use?`<div class="use">🎤 ${c.use}</div>`:""}</div>
         <div class="tapcue">탭하면 앞면</div>
       </div></div></div>
       <div class="nav"><button class="again">↻ 다시</button><button class="know">✓ 알아</button></div>`;
@@ -331,6 +405,8 @@ QUESTIONS.forEach((Q,qi)=>{
       <ul>${Q.steps.map(s=>`<li>${s}</li>`).join("")}</ul>
       <div class="me">💡 <b>본인 컨텍스트</b> — ${Q.me}</div>
     </div>
+    ${Q.followups?`<div class="fu-wrap">${Q.followups.map((f,i)=>`
+      <details class="fu"${i===0?" open":""}><summary><span class="fu-q">Q</span> ${f.q}</summary><div class="fu-a">${f.a}</div></details>`).join("")}</div>`:""}
     <div class="memlabel">외울 항목 <span class="cnt">${Q.cards.length}</span></div>
     <div class="deckbar">
       <div class="count">암기카드 <b class="pos">1</b> / ${Q.cards.length}</div>
