@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WP1 과제 대비 · Soonho Kwon</title>
+<style>
+  :root{
+    --ink:#0f1b2d; --ink-2:#3a5169; --paper:#f7f4ec; --card:#fff; --line:#ddd6c7;
+    --accent:#c0492e; --accent-soft:#f3e3de; --gold:#a67c2e; --ok:#2f6b4f;
+    --shadow:0 8px 24px rgba(15,27,45,.09); --shadow-lg:0 18px 44px rgba(15,27,45,.20);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--paper);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    line-height:1.5;overscroll-behavior:none}
+  body{max-width:560px;margin:0 auto;min-height:100vh;padding:0 0 40px;position:relative}
+
+  header{padding:20px 20px 10px}
+  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-top:3px}
+  h1 .sub{display:block;font-size:12px;font-weight:500;color:var(--ink-2);letter-spacing:0;margin-top:4px}
+
+  .qtabs{display:flex;gap:4px;padding:10px 20px;position:sticky;top:0;z-index:20;flex-wrap:wrap;
+    background:linear-gradient(var(--paper) 82%,rgba(247,244,236,0))}
+  .qtab{flex:1 1 15%;min-width:52px;border:1.5px solid var(--line);background:var(--card);border-radius:11px;
+    padding:8px 2px;cursor:pointer;transition:.16s;text-align:center}
+  .qtab .qn{font-size:14px;font-weight:800;color:var(--ink);line-height:1}
+  .qtab .ql{font-size:8.5px;font-weight:700;color:var(--ink-2);letter-spacing:.02em;margin-top:3px}
+  .qtab[aria-selected="true"]{border-color:var(--ink);background:var(--ink)}
+  .qtab[aria-selected="true"] .qn{color:#fff}
+  .qtab[aria-selected="true"] .ql{color:#e8b9ac}
+
+  .panel{padding:6px 20px 0;display:none}
+  .panel.on{display:block;animation:fade .22s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+  .qhead{background:var(--ink);color:#fff;border-radius:16px;padding:15px 16px;margin:8px 0 6px;box-shadow:var(--shadow-lg)}
+  .qhead .en{font-size:11px;letter-spacing:.04em;color:#e8b9ac;font-weight:700}
+  .qhead .kr{font-size:16px;font-weight:800;margin-top:4px;line-height:1.35}
+
+  .flow{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin:10px 0 6px;box-shadow:var(--shadow)}
+  .flow .tag{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800}
+  .flow ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:8px}
+  .flow li{font-size:13px;color:var(--ink-2);padding-left:18px;position:relative;line-height:1.5}
+  .flow li::before{content:"\203A";position:absolute;left:2px;top:-1px;color:var(--accent);font-weight:800;font-size:15px}
+  .flow li b{color:var(--ink)}
+  .flow .reg{display:inline-block;background:#eee7d7;color:var(--gold);font-weight:700;padding:1px 7px;border-radius:6px;font-size:11px}
+  .risk{background:#faf1ee;border:1px solid #e8cfc8;border-radius:12px;padding:11px 13px;margin:8px 0}
+  .risk .rt{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:5px}
+  .risk ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+  .risk li{font-size:12px;color:var(--ink-2);padding-left:14px;position:relative;line-height:1.45}
+  .risk li::before{content:"\26A0";position:absolute;left:0;top:0;font-size:9px}
+
+  .fu-wrap{margin:10px 0 4px;display:flex;flex-direction:column;gap:7px}
+  .fu{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+  .fu summary{list-style:none;cursor:pointer;padding:11px 14px;font-size:13px;font-weight:700;color:var(--ink);display:flex;gap:8px;align-items:flex-start;transition:.15s}
+  .fu summary::-webkit-details-marker{display:none}
+  .fu[open] summary{border-bottom:1px solid var(--line);background:#faf7f0}
+  .fu-q{background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:1px 7px;border-radius:6px;flex:0 0 auto;margin-top:1px}
+  .fu-a{padding:11px 14px 13px;font-size:12.5px;color:var(--ink-2);line-height:1.55}
+  .fu-a b{color:var(--ink)}
+
+  .memlabel{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800;margin:16px 2px 8px;display:flex;align-items:center;gap:7px}
+  .memlabel::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  /* CV background panel */
+  .cv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);margin:8px 0}
+  .cv h3{font-size:14px;font-weight:800;color:var(--ink);margin:14px 0 6px}
+  .cv h3:first-child{margin-top:0}
+  .cv p{font-size:13px;color:var(--ink-2);line-height:1.6;margin-bottom:6px}
+  .cv .num{background:var(--accent-soft);color:var(--accent);font-weight:800;padding:1px 6px;border-radius:5px}
+  .cv .warn{background:#fff6e8;border-left:3px solid var(--gold);padding:9px 11px;border-radius:8px;font-size:12px;color:var(--ink-2);margin-top:8px}
+  .cv .warn b{color:var(--gold)}
+
+  footer{text-align:center;font-size:11px;color:var(--ink-2);padding:18px 20px 0;opacity:.72;line-height:1.7}
+  footer b{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">SPPI Level 7 · Working Paper 1</div>
+  <h1>WP1 과제 대비<span class="sub">권순호 · Implementation & Control Work Plan · 배경 + 5 Units</span></h1>
+</header>
+
+<nav class="qtabs" id="qtabs"></nav>
+<div id="panels"></div>
+
+<footer>과제(WP1)에서 <b>왜 그렇게 썼는지</b> 물으면 답하는 자료. 각 Unit의 흐름 + ⚠️ 리스크·통제 논리 + 예상 꼬리질문.<br>슬라이드 5문항(K7 앱)과 1:1 대응하되, 여기선 <b>과제 고유 검증질문</b> 중심.</footer>
+
+<script>
+const TABS = [
+  {
+    id:"CV", label:"배경",
+    cv:true,
+    en:"Candidate Background — 지원자 배경 요약 (WP1 §1)",
+    kr:"본인 이력·경영관 검증질문 대비"
+  },
+  {
+    id:"U1", label:"사업계획",
+    en:"Unit 1 — Formulating the Business Plan (Implementation)",
+    kr:"사업계획 수립 — WP1에 무엇을·왜 그렇게 썼나",
+    tag:"WP1 기재 흐름",
+    steps:[
+      "<b>비전·미션 출발</b> → 경제·멀티파이낸스 산업 환경 분석 → 사업계획 수립",
+      "<b>2개 축</b> — Fleet 안정화(연매출 IDR 500억+ 우량 법인, 10–11% 금리) + Retail 확대(중고차·담보·EV 이륜 단계적)",
+      "<b>목표·KPI</b> — 성장·수익성·건전성·자본 정기 점검. NPF 5% 이내, Gearing 건전, <b>부채 아닌 선제 증자(FY26–28)</b>로 성장",
+      "<b>산출물(RBB)</b> — 연간 사업계획·재무전망·자본조달·증자 계획·단계별 로드맵"
+    ],
+    risks:[
+      "성장 편중(신용·시장·운영 리스크 미고려)",
+      "Retail 확대 신용 리스크 · Fleet 차주 산업집중(광업·중장비·물류)",
+      "금리·환율 조달비용 상승 · 자본 buffer 부족 성장",
+      "시장수요 과대평가·비현실적 수익목표"
+    ],
+    followups:[
+      {q:"왜 Fleet 안정·Retail 확대 2축인가?", a:"Fleet은 기존 우량 자산 — 인수 직후 <b>안정성 기반</b>. Retail은 성장 여지가 큰 인접 니치 — <b>선별 확장</b>. 지키면서 넓히는 구조."},
+      {q:"왜 부채 아닌 증자로 성장하나?", a:"부채 여력이 있어도 의존하지 않음. 인수 직후 자본기반을 두텁게 해 건전 성장. 사전 합의된 FY26–28 증자 계획에 따라 선제 확충."},
+      {q:"성장 목표가 비현실적이면?", a:"기획·재무·리스크·여신·컴플라이언스가 사업계획을 교차 검토. 건전성 지표가 내부 기준 벗어나면 신규 실행 선별 강화·포트폴리오 조정·증자 검토."},
+      {q:"한국 28% MS를 KBBF에 적용하나?", a:"아니다. 28%·1위는 <b>한국 JB우리캐피탈 중고차금융</b> 실적. KBBF는 인니 회사로 별개. 한국 성과는 니치 리더를 만든 <b>역량 증명</b>으로 제시하고, KBBF는 안정화→니치 확장→니치 리더 성장 경로."}
+    ]
+  },
+  {
+    id:"U2", label:"규제준수",
+    en:"Unit 2 — Ensuring Regulatory Compliance (Implementation)",
+    kr:"규제 준수 확보 — WP1 기재 검증",
+    tag:"WP1 기재 흐름",
+    steps:[
+      "<b>정보 수집·영향 분석</b> — 컴플라이언스 데이터 수집·유효성 확인, 감독당국 권고 반영. 신규·개정 규제 영향 분석→후속조치 권고",
+      "<b>거래 전 과정 통제</b> — 모든 거래를 OJK 건전성 규제·내부정책·승인권한·내부통제 절차로 검토",
+      "<b>핵심비율 월간 점검</b> — FAR·NPF·Gearing·CAR·인센티브 한도·차주별 한도 월 산출. 거래 전 법적구조·목적·상대방·승인 확인, 실행 후 사후 모니터링",
+      "<b>maker-checker-approver</b> — 한국 검증 기준을 OJK에 현지화"
+    ],
+    risks:[
+      "OJK 규제비율 위반 (NPF 5%·Gearing 10x·CAR 10% 한도)",
+      "신규·개정 규제 미반영 · 승인권한 미준수 · 법률검토 미흡",
+      "KYC·AML 부실 · 이해상충 · 문서 미비 · 보고 지연",
+      "→ 규제 제재·재무 손실·평판 훼손"
+    ],
+    followups:[
+      {q:"내부 경보선을 왜 규제 한도보다 높게 잡나?", a:"규제 한도(NPF 5%·Gearing 10x·CAR 10%)에 닿기 전 대응하려고. 내부 경보선 CAR 12%·Gearing 8x·NPF 4%에 접근하면 본사 보고·사전 대응. 위반 이전 선제 관리."},
+      {q:"maker-checker-approver가 뭔가?", a:"거래를 만드는 자(maker)·검증하는 자(checker)·승인하는 자(approver)를 분리하는 3중 승인체계. 단독 처리 방지로 오류·부정을 구조적으로 차단."},
+      {q:"한국 기준을 그대로 쓰나?", a:"아니다. 한국 감독환경에서 검증된 컴플라이언스 기준을 <b>인니 OJK 규제에 맞춰 현지화</b>. 한국≠인니 규제라 그대로 이식하지 않음."}
+    ]
+  },
+  {
+    id:"U3", label:"거버넌스",
+    en:"Unit 3 — Risk Governance, Strategy, Policies (Implementation)",
+    kr:"거버넌스·전략·리스크관리 정책 — WP1 기재 검증",
+    tag:"WP1 기재 흐름",
+    steps:[
+      "<b>전략→리스크전략</b> — 회사 전략 식별·리스크 커버리지 분석 후 리스크관리 전략 수립. Risk Appetite·Risk Limit 설정",
+      "<b>거버넌스 정의</b> — 구조·역할·책임·프로세스 정의, 리스크 문화·인프라 구축. KBBF 기존 감사위·리스크관리위 활용·실효화",
+      "<b>3선 방어 + 한국 체계 이전</b> — 1선 영업·2선 리스크·3선 감사 실질 작동. CSS·EWS·RORWA 자본배분·월간 빈티지 분석 이전",
+      "<b>자본정책도 거버넌스</b> — 선제 증자·자본 buffer 관리를 이사회 의사결정에 포함"
+    ],
+    risks:[
+      "의사결정 권한 불명확 · 직무분리 취약 · Appetite/한도 미설정",
+      "Fleet 산업·차주 집중 과도 · 자본 buffer 부족",
+      "리스크평가 미흡 · 이벤트 보고 지연 · 문화 미정착",
+      "조기경보 대응 미흡 → 거버넌스 약화"
+    ],
+    followups:[
+      {q:"리스크관리 4 pillars부터 이식하나?", a:"아니다. <b>4 pillars는 리스크관리가 작동하는 틀</b>이지 첫 단계가 아님. 순서는 전사 전략 연계 리스크전략·Appetite 수립 → 정책·한도 구조화 → 거버넌스·문화. 전략은 4 pillars의 ②(정책·절차)에 명시적으로 포함."},
+      {q:"빈티지 분석이 왜 필요한가?", a:"실행 후 이른 시점에 포트폴리오 이상을 조기 탐지하려고. 실행 시점별 코호트의 연체·부실 추이를 추적해 문제를 조기 발견. 한국서 운영한 조기경보를 KBBF에 이전."},
+      {q:"KBBF 위원회가 이미 있는데 뭘 바꾸나?", a:"체계는 있으나 <b>운영 실효성</b>을 높임. 위원회 정례 개최·실질 심의·한도 초과 사안 적시 보고·해소가 실제 작동하도록. 형식이 아닌 기능 중심."}
+    ]
+  },
+  {
+    id:"U4", label:"부정방지",
+    en:"Unit 4 — Anti-Fraud Strategy (Implementation)",
+    kr:"부정방지 전략 실행 — WP1 기재 검증",
+    tag:"WP1 기재 흐름",
+    steps:[
+      "<b>4 pillars 수립·전파</b> — 예방·적발·조사·모니터링 전사 전파",
+      "<b>예방·적발 수단</b> — KYE(채용 적정성·생활방식·코칭), Whistleblowing, 부정 위험지표·적발 대시보드",
+      "<b>KBBF 특유 부정 표적</b> — Fleet(허위 재무서류·담보 가치 부풀리기·미공시 특수관계인), Retail(신원·소득 위조·딜러 결탁)",
+      "<b>AML 병행</b> — KYC·거래목적/자금원천 검토·의심거래 모니터링"
+    ],
+    risks:[
+      "허위·조작 재무서류 · 부정확한 차량·중장비 담보평가",
+      "미공시 특수관계인 거래 · 딜러·차주 결탁",
+      "자금세탁 리스크 · 의심 자금흐름 · 내부자 위법",
+      "→ 재무손실·규제제재·법적분쟁·평판훼손"
+    ],
+    followups:[
+      {q:"KBBF에서 가장 경계하는 부정은?", a:"Fleet은 허위 재무서류·담보(차량·중장비) 가치 부풀리기·미공시 특수관계인 거래. Retail은 차주 신원·소득 위조·딜러 결탁. 세그먼트별 표적이 다름."},
+      {q:"KYE와 KYC 차이는?", a:"KYC는 <b>고객</b> 대상(신원·자금원천). KYE(Know Your Employee)는 <b>직원</b> 대상 — 채용 적정성·생활방식 모니터링·코칭. 부정 예방 pillar의 핵심."},
+      {q:"Retail 부정을 어떻게 구조적으로 막나?", a:"플랫폼 기반 자동 상환·데이터 점검으로 구조적 통제. 사람 개입을 줄여 딜러 결탁·위조 여지를 축소. 디지털 전환과 연결."}
+    ]
+  },
+  {
+    id:"U5", label:"내부감사",
+    en:"Unit 5 — Follow-up on Internal Audit Findings (Control)",
+    kr:"내부감사 지적사항 사후관리 — WP1 기재 검증",
+    tag:"WP1 기재 흐름 · 유일한 Control 단위",
+    steps:[
+      "<b>SMART·KPI 평가</b> — 후속조치를 SMART 기준·측정 가능 KPI로 분석·평가",
+      "<b>실질 활용</b> — 지적을 형식적 관찰로 취급 않고 프로세스·내부통제·문서품질·승인절차·리스크 모니터링 개선에 활용",
+      "<b>책임·독립성</b> — 지적별 책임부서·목표완료일·완료증빙 지정. 3선 방어상 내부감사=독립 보증",
+      "<b>QAIP</b> — 감사 기능 자체의 효과성 정기 평가"
+    ],
+    risks:[
+      "시정조치 지연 · 반복 지적 · 개선증빙 미흡",
+      "책임부서 주인의식 결여 · 정책개정 미완",
+      "감사권고 실제 운영 미반영 · 감사기능 품질 정체",
+      "→ 내부통제 약화 → 운영·컴플라이언스·평판 리스크"
+    ],
+    followups:[
+      {q:"Unit 5만 왜 Control인가?", a:"Unit 1–4는 실행(Implementation) — 사업계획·규제·거버넌스·부정방지를 <b>만들고 돌리는</b> 일. Unit 5는 통제(Control) — 그 실행이 제대로 됐는지 <b>검증·교정</b>하는 일. 감사 사후관리가 전체 체계의 마지막 통제 고리."},
+      {q:"반복 지적은 어떻게 다루나?", a:"근본원인(root cause)을 분석. 같은 지적이 반복되면 개별 시정이 아니라 프로세스·정책 자체의 결함. 근본원인 제거로 재발 차단."},
+      {q:"QAIP가 뭔가?", a:"감사기능 품질개선 프로그램(Quality Assurance & Improvement Program). 감사 <b>기능 자체</b>의 효율성·효과성·준수성을 KPI로 정기 평가. Gap Analysis·Self-Assessment·External/Peer Review 3기법."}
+    ]
+  }
+];
+
+const panels=document.getElementById("panels");
+const qtabs=document.getElementById("qtabs");
+
+TABS.forEach((T,ti)=>{
+  const t=document.createElement("button");
+  t.className="qtab"; t.setAttribute("role","tab"); t.setAttribute("aria-selected", ti===0?"true":"false");
+  t.innerHTML=`<div class="qn">${T.id}</div><div class="ql">${T.label}</div>`;
+  t.onclick=()=>{
+    qtabs.querySelectorAll(".qtab").forEach(x=>x.setAttribute("aria-selected","false"));
+    t.setAttribute("aria-selected","true");
+    panels.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));
+    document.getElementById("p-"+T.id).classList.add("on");
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+  qtabs.appendChild(t);
+
+  const p=document.createElement("section");
+  p.className="panel"+(ti===0?" on":""); p.id="p-"+T.id;
+
+  if(T.cv){
+    p.innerHTML=`
+      <div class="qhead"><div class="en">${T.en}</div><div class="kr">${T.kr}</div></div>
+      <div class="cv">
+        <h3>경력 골격</h3>
+        <p>한국 캐피탈(여신전문금융) <span class="num">19년</span> — 전략기획·사업운영·M&A/PMI·여신관리·조직운영. 경영 전 주기 경험.</p>
+        <h3>대표 성과 (한국 · JB우리캐피탈 중고차금융, 약 4년)</h3>
+        <p>조직 <span class="num">100명+</span>·전국 <span class="num">10개 지점</span>. 자산 <span class="num">IDR 23조</span>, 월 실행 <span class="num">IDR 1.7조</span>, MS <span class="num">28%</span> → 한국 중고차금융 시장 <span class="num">1위</span>.</p>
+        <div class="warn">⚠️ <b>주의</b> — 23조·1.7조·28%·1위는 모두 <b>한국 실적</b>. KBBF(인니) 지표 아님. 인터뷰에서 KBBF 현황으로 오인 발언 금지. 한국 성과는 "니치 리더를 만든 역량 증명"으로만 사용.</p>
+        <h3>인수·통합(PMI) 경험</h3>
+        <p>조직 재설계·채권관리·NPF 전략 담당, 인수 후 안정화·흑자전환 주도. 학습: 인수 직후 핵심은 거버넌스 정립·내부통제 이식·리스크관리 제도화·신뢰 기반 연결. → KBBF 인수 후 안정화와 직결.</p>
+        <h3>성장·건전성 균형</h3>
+        <p>성장은 건전성·수익성 규율과 함께 작동할 때만 지속 가능. 고객·채권 데이터 분석·Collection 전략·자산건전성 규제 대응·전사 Collection 시스템 구축 경험 → 인니 NPF 관리·사후 모니터링·포트폴리오 관리와 직결.</p>
+        <h3>디지털 역량</h3>
+        <p>사내 신규사업(스타트업) 조직 리드·디지털 서비스 기획·출범, 그룹 대형 IT 통합 주도, 모바일 금융 서비스 추진. → KBBF 모바일 신용평가·실행·E-Mobility 플랫폼 연계 뒷받침.</p>
+        <h3>현지 준비</h3>
+        <p><span class="num">2025/7~ 약 10개월</span> 자카르타 상주. OJK 프레임워크·멀티파이낸스 산업·현지 자금조달·비즈니스 문화 학습, KBBF 사업현황·포트폴리오 직접 점검. 외부 관찰이 아닌 현지 거주 기반 이해.</p>
+      </div>
+      <div class="memlabel">예상 꼬리질문</div>
+      <div class="fu-wrap">
+        <details class="fu" open><summary><span class="fu-q">Q</span> 28% 점유율이 KBBF 것인가?</summary><div class="fu-a">아니다. <b>한국 JB우리캐피탈 중고차금융</b> 실적. KBBF는 인니 회사로 별개 지표. 한국 성과는 니치 시장에서 1위를 만든 <b>역량·재현 가능성</b>의 근거로 제시.</div></details>
+        <details class="fu"><summary><span class="fu-q">Q</span> 19년 경력을 한 문장으로?</summary><div class="fu-a">한국 캐피탈 산업에서 전략기획·사업운영·M&A/PMI·여신관리·조직운영에 걸쳐 경영 전 주기를 책임진 금융회사 경영자.</div></details>
+        <details class="fu"><summary><span class="fu-q">Q</span> KBBF에 가장 직결되는 경험은?</summary><div class="fu-a">인수·통합(PMI) 경험 — 인수 직후 거버넌스 정립·내부통제 이식·리스크관리 제도화·신뢰 기반 연결. KBBF 인수 후 안정화 과제와 직접 연결.</div></details>
+        <details class="fu"><summary><span class="fu-q">Q</span> 왜 당신이 KBBF PD 적임자인가?</summary><div class="fu-a">① 니치 리더를 만든 성장 역량(한국 1위) ② 인수 후 안정화·흑자전환 PMI 경험 ③ 성장·건전성 균형 원칙 ④ 디지털 전환 실행력 ⑤ 10개월 현지 상주로 축적한 인니 시장·규제 이해.</div></details>
+      </div>`;
+  } else {
+    p.innerHTML=`
+      <div class="qhead"><div class="en">${T.en}</div><div class="kr">${T.kr}</div></div>
+      <div class="flow">
+        <div class="tag">${T.tag}</div>
+        <ul>${T.steps.map(s=>`<li>${s}</li>`).join("")}</ul>
+      </div>
+      <div class="risk">
+        <div class="rt">⚠️ Identified Risks (WP1 기재)</div>
+        <ul>${T.risks.map(r=>`<li>${r}</li>`).join("")}</ul>
+      </div>
+      <div class="memlabel">예상 꼬리질문</div>
+      <div class="fu-wrap">${T.followups.map((f,i)=>`
+        <details class="fu"${i===0?" open":""}><summary><span class="fu-q">Q</span> ${f.q}</summary><div class="fu-a">${f.a}</div></details>`).join("")}</div>`;
+  }
+  panels.appendChild(p);
+});
+</script>
+</body>
+</html>
