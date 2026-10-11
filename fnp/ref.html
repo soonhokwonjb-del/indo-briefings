@@ -58,6 +58,9 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 ul.ql{list-style:none;margin:0;padding:4px;overflow:auto;flex:1;min-height:0}
 ul.ql li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px;align-items:start;padding:5px 6px;border-radius:5px;cursor:pointer;font-size:13.5px;line-height:1.3;border:1px solid transparent}
 ul.ql li:hover{border-color:var(--line)}
+ul.ql li.ugrp{display:block;cursor:default;font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.04em;padding:8px 6px 2px;border:0}
+ul.ql li.ugrp:hover{border-color:transparent}
+.ucnt{font-size:11.5px;color:var(--muted);white-space:nowrap}
 ul.ql li.on{background:var(--sel);border-color:var(--accent)}
 ul.ql li .qt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .g{font-family:var(--mono);font-size:10.5px;font-weight:600;padding:0 4px;border-radius:3px;border:1.5px solid currentColor;white-space:nowrap}
@@ -207,7 +210,7 @@ table.th td.idn{color:var(--muted);font-size:13px}
       <div class="gf" id="gf">
         <button type="button" data-g="all" aria-pressed="true">전체</button>
         <button type="button" data-g="S" aria-pressed="false">S만</button>
-        <input id="q" type="search" placeholder="검색(선택)" aria-label="검색" autocomplete="off">
+        <input id="q" type="search" placeholder="검색: 답변·규정·서류 한 번에 (예: AML, 민원, 자본)" aria-label="검색" autocomplete="off"><span id="ucnt" class="ucnt"></span>
       </div>
     </div>
     <ul class="ql" id="ql"></ul>
@@ -675,6 +678,9 @@ function strip(s){return (s||'').replace(/<[^>]+>/g,'');}
 const hayQ = Q.map(x=>strip(x.id+' '+x.q+' '+(x.t||'')+' '+(x.w||'')+' '+(x.o||'')+' '+x.k.join(' ')+' '+(x.n||'')+' '+(x.c||'')).toLowerCase());
 const hayR = R.map(x=>(x.id+' '+x.n+' '+x.e+' '+x.one+' '+x.req.join(' ')+' '+x.kb.map(k=>k[1]).join(' ')+' '+x.say+' '+x.rel).toLowerCase());
 const hayD = DOCS.map(x=>strip(x.id+' '+x.t+' '+x.sub+' '+x.sum+' '+x.items.join(' ')+' '+(x.note||'')).toLowerCase());
+const SYN=[["자금세탁","aml","apu-ppt","ppatk","의심거래","cft"],["반부패","부정","fraud","anti-fraud","내부고발","whistle"],["소비자보호","소비자","민원","추심","riplay"],["개인정보","pdp","27/2022"],["건강도","health","tks","tkk","경영실태"],["지배구조","gcg","governance"],["심사","여신","credit","승인"],["수익성","bopo","roa","roe"],["자본","capital","gearing","증자"],["연체","npf","부실","충당금"],["감사회","boc","commissioner"],["이사회","bod","director"],["리스크","risk"],["준법","컴플라이언스","compliance","규정 준수"],["조직","조직도","보고선"],["인력","직원","교육","자격"],["사업계획","rbb","business plan"],["보고","taskboard","apolo","slik"]];
+function alts(t){ const g=SYN.filter(a=>a.some(x=>x.includes(t)||t.includes(x))); return g.length?[...new Set([t,...g.flat()])]:[t]; }
+function hasW(h,t){ return alts(t).some(a=>h.includes(a)); }
 function words(){return qInput.value.trim().toLowerCase().split(/\s+/).filter(Boolean);}
 function cur(){return tab==='A'?selA:tab==='R'?selR:selD;}
 function setCur(v){ if(tab==='A') selA=v; else if(tab==='R') selR=v; else selD=v; }
@@ -709,7 +715,34 @@ function itemsD(){
   return DOCS.map((x,i)=>({x,i})).filter(({x})=>x.d===secD);
 }
 
+/* ===== 통합 검색: 검색어가 있으면 답변·규정·제출 서류를 한 목록에 ===== */
+function rankBy(arr,titleOf,w){ return arr.map(o=>({o,s:w.every(t=>hasW(titleOf(o).toLowerCase(),t))?0:1})).sort((a,b)=>a.s-b.s).map(z=>z.o); }
+function itemsU(){
+  const w=words();
+  const a=rankBy(Q.map((x,i)=>({x,i})).filter(({x,i})=>w.every(t=>hasW(hayQ[i],t))&&(gF==='all'||x.g===gF)),o=>o.x.id+' '+o.x.q+' '+(o.x.t||''),w).map(o=>({t:'A',...o}));
+  const r=rankBy(R.map((x,i)=>({x,i})).filter(({i})=>w.every(t=>hasW(hayR[i],t))),o=>o.x.id+' '+o.x.n,w).map(o=>({t:'R',...o}));
+  const dd=DOCS.map((x,i)=>({x,i})).filter(({i})=>w.every(t=>hasW(hayD[i],t))).map(o=>({t:'D',...o}));
+  return {a,r,d:dd};
+}
+function uKey(t,i){return t+':'+i;}
+function drawListU(){
+  const {a,r,d:dd}=itemsU();
+  const grp=(lab,n)=>`<li class="ugrp">${lab} <b>${n}</b></li>`;
+  let html='';
+  if(a.length) html+=grp('답변',a.length)+a.map(({x,i})=>`<li data-u="A:${i}"><span class="g ${x.g}">${x.g}</span><span class="qt"><span class="idt">${x.id}</span>${x.q}</span></li>`).join('');
+  if(r.length) html+=grp('규정',r.length)+r.map(({x,i})=>`<li data-u="R:${i}"><span class="g ${x.s===3?'S':x.s===2?'A':'B'}">규정</span><span class="qt"><span class="idt">${x.id}</span>${x.n}</span></li>`).join('');
+  if(dd.length) html+=grp('제출 서류',dd.length)+dd.map(({x,i})=>`<li data-u="D:${i}"><span class="g S">${x.d}</span><span class="qt"><span class="idt">${x.id}</span>${x.t}</span></li>`).join('');
+  ql.innerHTML = html || '<li class="empty">맞는 항목이 없습니다</li>';
+  const all=[...a.map(o=>uKey('A',o.i)),...r.map(o=>uKey('R',o.i)),...dd.map(o=>uKey('D',o.i))];
+  if(all.length && !all.includes(uKey(tab,cur()))){ const first=all[0].split(':'); tab=first[0]; setCur(Number(first[1])); tabAria(); }
+  ql.querySelectorAll('li[data-u]').forEach(li=>li.addEventListener('click',()=>{ const [t,i]=li.dataset.u.split(':'); tab=t; setCur(Number(i)); tabAria(); mark(); drawDetail(); }));
+  const cnt=document.getElementById('ucnt'); if(cnt) cnt.textContent=`답변 ${a.length} · 규정 ${r.length} · 서류 ${dd.length}`;
+  mark();
+}
+function tabAria(){ ['A','R','D'].forEach(t=>document.getElementById('tab'+t).setAttribute('aria-pressed',String(tab===t))); const c=cur(); if(typeof c==='number'){ if(tab==='A'&&Q[c]) secA=Q[c].s; else if(tab==='R'&&R[c]) secR=R[c].g; else if(tab==='D'&&DOCS[c]) secD=DOCS[c].d; } drawChips(); }
 function drawList(){
+  const cnt=document.getElementById('ucnt'); if(cnt) cnt.textContent='';
+  if(words().length){ drawListU(); return; }
   let it, html;
   if(tab==='A'){
     it=itemsA();
@@ -731,6 +764,7 @@ function drawList(){
 }
 function mark(){
   const c=cur();
+  if(ql.querySelector('li[data-u]')){ const k=uKey(tab,c); ql.querySelectorAll('li[data-u]').forEach(li=>{ const on=li.dataset.u===k; li.classList.toggle('on',on); if(on) li.scrollIntoView({block:'nearest'}); }); return; }
   ql.querySelectorAll('li[data-i]').forEach(li=>{ const on = pv(li)===c; li.classList.toggle('on',on); if(on) li.scrollIntoView({block:'nearest'}); });
 }
 function relButtons(rel){
@@ -829,6 +863,8 @@ document.getElementById('gf').querySelectorAll('button').forEach(b=>b.addEventLi
 qInput.addEventListener('input',()=>{ drawList(); drawDetail(); });
 
 function move(d){
+  const ul=[...ql.querySelectorAll('li[data-u]')];
+  if(ul.length){ let idx=ul.findIndex(li=>li.dataset.u===uKey(tab,cur())); idx=Math.max(0,Math.min(ul.length-1,idx+d)); const [t,i]=ul[idx].dataset.u.split(':'); tab=t; setCur(Number(i)); tabAria(); mark(); drawDetail(); return; }
   const lis=[...ql.querySelectorAll('li[data-i]')]; if(!lis.length) return;
   let idx = lis.findIndex(li=>pv(li)===cur());
   idx = Math.max(0,Math.min(lis.length-1, idx+d));
