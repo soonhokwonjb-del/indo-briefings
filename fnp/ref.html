@@ -698,9 +698,11 @@ function drawChips(){
   document.getElementById('gf').querySelectorAll('button').forEach(b=>b.hidden = tab!=='A');
 }
 
+const GORD={S:0,A:1,B:2};
+function byGrade(arr){ return arr.map((o,k)=>({o,k})).sort((a,b)=>((GORD[a.o.x.g]??3)-(GORD[b.o.x.g]??3))||(a.k-b.k)).map(z=>z.o); }
 function itemsA(){
   const w=words();
-  return Q.map((x,i)=>({x,i})).filter(({x,i})=> w.length ? (w.every(t=>hayQ[i].includes(t)) && (gF==='all'||x.g===gF)) : (x.s===secA && (gF==='all'||x.g===gF)));
+  return byGrade(Q.map((x,i)=>({x,i})).filter(({x,i})=> w.length ? (w.every(t=>hayQ[i].includes(t)) && (gF==='all'||x.g===gF)) : (x.s===secA && (gF==='all'||x.g===gF))));
 }
 function itemsR(){
   const w=words();
@@ -716,7 +718,7 @@ function itemsD(){
 }
 
 /* ===== 통합 검색: 검색어가 있으면 답변·규정·제출 서류를 한 목록에 ===== */
-function rankBy(arr,titleOf,w){ return arr.map(o=>({o,s:w.every(t=>hasW(titleOf(o).toLowerCase(),t))?0:1})).sort((a,b)=>a.s-b.s).map(z=>z.o); }
+function rankBy(arr,titleOf,w){ return arr.map((o,k)=>({o,k,s:w.every(t=>hasW(titleOf(o).toLowerCase(),t))?0:1,g:o.x&&o.x.g in GORD?GORD[o.x.g]:(o.x&&o.x.s?3-o.x.s:3)})).sort((a,b)=>(a.s-b.s)||(a.g-b.g)||(a.k-b.k)).map(z=>z.o); }
 function itemsU(){
   const w=words();
   const a=rankBy(Q.map((x,i)=>({x,i})).filter(({x,i})=>w.every(t=>hasW(hayQ[i],t))&&(gF==='all'||x.g===gF)),o=>o.x.id+' '+o.x.q+' '+(o.x.t||''),w).map(o=>({t:'A',...o}));
