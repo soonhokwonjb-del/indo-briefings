@@ -129,6 +129,7 @@ details.ob.pold{margin:0 0 8px 0}
 .kw{display:flex;flex-wrap:wrap;gap:3px;padding:0 6px 6px;border-bottom:1px solid var(--line)}
 .kw button{font:inherit;font-size:11.5px;padding:1px 7px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);cursor:pointer}
 .kw button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.pdh{margin-top:16px;padding-top:10px;border-top:1px dashed var(--line)}
 .foot{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;margin-top:10px}
 .num{font-family:var(--mono);font-size:14.5px;font-variant-numeric:tabular-nums;border-left:3px solid var(--accent);padding:4px 10px;background:var(--bg);border-radius:0 5px 5px 0}
 .cau{background:var(--warn-soft);border-radius:5px;padding:6px 10px;font-size:15px}
@@ -892,10 +893,10 @@ function hubHTML(x){
   return `<div class="dh"><span class="g ${x.g}">${x.g}</span><span class="idt">${x.id}</span><h1>${x.q}</h1></div>
     <div class="why"><span class="lbl">포함된 기존 질문</span>${(x.old||[]).join(' · ')}</div>
     ${x.f?fullAns(x):''}
-    ${x.pold&&OIDX[x.pold]&&(OIDX[x.pold].k||[]).length?`<details class="ob pold" data-old="${x.pold}"><summary>이 질문의 기존 상세 보기 (${x.pold})</summary><div class="obody"></div></details>`:''}
     ${x.rel?`<div class="relh"><span class="lbl">${x.relLabel||'연결 주제'}</span>${x.rel.map(r=>{const t=Q.find(q=>q.id===r);return `<button type="button" class="rq" data-q="${r}"><b>${r}</b> ${t?t.q.replace(/<[^>]+>/g,'').slice(0,30):''}</button>`;}).join('')}</div>`:''}
     ${x.br.length?`<div class="brhead"><span class="lbl">세부 질문 · 질문이 이렇게 오면 눌러서 보기</span>${x.br.length>1?'<button type="button" id="brall" class="brall">모두 펼치기</button>':''}</div><div class="brs">${brs}</div>`:''}
     ${x.fu.length?`<div class="lbl" style="margin-top:12px">이어질 질문</div><div class="brs">${fus}</div>`:''}
+    ${x.pold&&OIDX[x.pold]&&(OIDX[x.pold].k||[]).length?`<div class="pdh"><span class="lbl">상세 · 기존 답변 (${x.pold})</span></div><ol class="k pdet">${OIDX[x.pold].k.map((k,i)=>`<li><div class="gist">${k.replace(/^([^:<]{1,30}):\s/,'<b class="kl">$1</b>')}</div>${OIDX[x.pold].sp&&OIDX[x.pold].sp[i]?`<div class="sp">${OIDX[x.pold].sp[i]}</div>`:''}</li>`).join('')}</ol>`:''}
     ${(x.n||x.c)?`<div class="foot">${x.n?`<div class="num">${x.n}</div>`:''}${x.c?`<div class="cau"><b>주의</b> ${x.c}</div>`:''}</div>`:''}`;
 }
 function fullAns(x){
