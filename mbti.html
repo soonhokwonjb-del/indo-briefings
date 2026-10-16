@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F2F4F6">
+<meta name="robots" content="noindex">
+<title>나는 어떻게 일하는 사람일까</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#F2F4F6;--paper:#FFFFFF;--ink:#14212B;--sub:#56636E;--muted:#8A96A0;--line:#DCE2E7;
+  --navy:#1D3557;--navy-soft:#E3E9F1;
+  --c-ei:#C98A00;--c-sn:#1F8A76;--c-tf:#4F52C9;--c-jp:#C93D62;
+  --t-ei:#FBF1D9;--t-sn:#DDF2EC;--t-tf:#E6E6FA;--t-jp:#FBE3EA;
+  --danger:#B42318;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0F1720;--paper:#17212B;--ink:#E8EDF1;--sub:#A7B3BD;--muted:#71808C;--line:#2A3846;
+  --navy:#8FB3E8;--navy-soft:#1E2E44;
+  --c-ei:#F0B93A;--c-sn:#4CC4A9;--c-tf:#9C9EF5;--c-jp:#F07999;
+  --t-ei:#3A2D0A;--t-sn:#0E3229;--t-tf:#25264E;--t-jp:#3F1724;--danger:#F97066}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:16px;line-height:1.6;-webkit-text-size-adjust:100%;word-break:keep-all}
+.wrap{max-width:520px;margin:0 auto;padding:28px 20px calc(32px + env(safe-area-inset-bottom))}
+.hide{display:none!important}
+button{font:inherit;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+
+/* start */
+.mark{display:flex;gap:6px;margin-bottom:28px}
+.mark i{width:28px;height:6px;border-radius:3px}
+h1{font-size:30px;line-height:1.3;font-weight:800;letter-spacing:-.02em;margin:0 0 14px}
+.lead{color:var(--sub);margin:0 0 22px}
+.facts{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 30px;padding:0;list-style:none}
+.facts li{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px;color:var(--sub)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.field input{width:100%;height:52px;padding:0 16px;font:inherit;font-size:17px;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;transition:border-color .15s}
+.field input:focus{outline:none;border-color:var(--navy)}
+.err{color:var(--danger);font-size:14px;min-height:22px;margin:2px 0 4px}
+.primary{display:block;width:100%;height:56px;border:0;border-radius:14px;background:var(--navy);color:#fff;font-size:17px;font-weight:700;cursor:pointer}
+@media (prefers-color-scheme:dark){.primary{color:#0F1720}}
+.fine{font-size:13px;color:var(--muted);margin-top:18px}
+
+/* question */
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;min-height:40px}
+.back{border:0;background:none;color:var(--sub);font-size:15px;padding:8px 0;cursor:pointer}
+.count{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.count b{color:var(--ink);font-weight:700}
+.segs{display:grid;grid-template-columns:repeat(32,1fr);gap:3px;margin-bottom:30px}
+.segs i{height:4px;border-radius:2px;background:var(--line);transition:background .2s}
+.segs i.done{background:var(--navy)}
+.segs i.now{background:var(--navy);opacity:.45}
+.stage{transition:opacity .18s,transform .18s}
+.stage.out{opacity:0;transform:translateX(-14px)}
+.scene{font-size:20px;line-height:1.55;font-weight:700;letter-spacing:-.01em;margin:0 0 24px;min-height:93px}
+.stmt{display:flex;gap:12px;align-items:flex-start;background:var(--navy-soft);border-radius:14px;padding:14px 16px;font-size:16px;font-weight:600;line-height:1.5}
+.stmt .k{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:13px;font-weight:800;background:var(--navy);color:var(--paper)}
+.choices{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.ch{display:flex;align-items:center;gap:14px;width:100%;min-height:48px;text-align:left;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;padding:8px 16px;font-size:15px;cursor:pointer;transition:border-color .15s,background .15s}
+.ch .mk{flex:none;width:24px;display:grid;place-items:center}
+.ch .mk::after{content:"";border-radius:50%;border:2px solid var(--muted)}
+.ch[data-v="1"] .mk::after,.ch[data-v="5"] .mk::after{width:20px;height:20px}
+.ch[data-v="2"] .mk::after,.ch[data-v="4"] .mk::after{width:15px;height:15px}
+.ch[data-v="3"] .mk::after{width:11px;height:11px}
+.ch:active{transform:scale(.99)}
+.ch.on{border-color:var(--navy);background:var(--navy-soft);font-weight:600}
+.ch.on .mk::after{border-color:var(--navy);background:var(--navy)}
+
+/* result */
+.who{font-size:15px;color:var(--sub);margin:4px 0 6px}
+.code{display:flex;gap:4px;margin:0 0 6px}
+.code span{font-size:64px;line-height:1;font-weight:900;letter-spacing:-.02em;opacity:0;transform:translateY(10px);animation:pop .45s cubic-bezier(.2,.8,.2,1) forwards}
+.code span:nth-child(2){animation-delay:.12s}.code span:nth-child(3){animation-delay:.24s}.code span:nth-child(4){animation-delay:.36s}
+@keyframes pop{to{opacity:1;transform:none}}
+.desc{font-size:17px;margin:14px 0 26px}
+.dims{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:6px 18px}
+.dim{padding:16px 0;border-bottom:1px solid var(--line)}
+.dim:last-child{border-bottom:0}
+.dim-h{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:8px}
+.dim-h .nm{color:var(--sub)}
+.dim-h .lv{font-size:12px;padding:2px 8px;border-radius:6px}
+.meter{display:flex;align-items:center;gap:10px;font-size:14px}
+.meter .l,.meter .r{width:62px;font-variant-numeric:tabular-nums;color:var(--sub)}
+.meter .r{text-align:right}
+.meter .l.win,.meter .r.win{color:var(--ink);font-weight:700}
+.track{flex:1;height:10px;border-radius:5px;background:var(--line);position:relative;overflow:hidden}
+.track i{position:absolute;top:0;bottom:0;border-radius:5px}
+.track::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--paper)}
+.status{display:flex;align-items:center;gap:8px;margin-top:18px;font-size:14px;color:var(--sub)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.status.ok i{background:var(--c-sn)}.status.bad i{background:var(--danger)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.code span{opacity:1;transform:none}}
+@media (max-width:360px){h1{font-size:26px}.scene{font-size:18px}.code span{font-size:54px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="s-start">
+  <div class="mark" aria-hidden="true"><i style="background:var(--c-ei)"></i><i style="background:var(--c-sn)"></i><i style="background:var(--c-tf)"></i><i style="background:var(--c-jp)"></i></div>
+  <h1>나는 어떻게<br>일하는 사람일까</h1>
+  <p class="lead">회사와 일상의 32가지 상황에서 나에게 더 가까운 쪽을 고르면, 나의 성격유형과 네 가지 성향의 기울기를 알려드립니다.</p>
+  <ul class="facts"><li>32문항</li><li>약 6분</li><li>정답 없음</li><li>인사평가와 무관</li></ul>
+  <div class="field"><label for="name">이름</label><input id="name" autocomplete="name" maxlength="40" enterkeyhint="next"></div>
+  <div class="field"><label for="dept">부서</label><input id="dept" maxlength="40" enterkeyhint="go"></div>
+  <div class="err" id="e-start" role="alert"></div>
+  <button class="primary" id="go">검사 시작하기</button>
+  <p class="fine">회사에서 해야 하는 행동보다, 평소 내가 편하게 느끼는 쪽을 골라 주세요.</p>
+</section>
+
+<section id="s-q" class="hide">
+  <div class="top"><button class="back" id="back">이전 문항</button><span class="count" id="count"><b>1</b> / 32</span></div>
+  <div class="segs" id="segs" aria-hidden="true"></div>
+  <div class="stage" id="stage">
+    <p class="scene" id="qt"></p>
+    <div class="stmt"><span class="k">A</span><span id="qa"></span></div>
+    <div class="choices" id="choices" role="radiogroup" aria-label="A와 B 중 나에게 더 가까운 정도"></div>
+    <div class="stmt"><span class="k">B</span><span id="qb"></span></div>
+  </div>
+</section>
+
+<section id="s-res" class="hide">
+  <p class="who" id="rname"></p>
+  <div class="code" id="rcode" aria-live="polite"></div>
+  <p class="desc" id="rdesc"></p>
+  <div class="dims" id="rdims"></div>
+  <div class="status" id="rsave"><i></i><span>결과를 저장하고 있습니다</span></div>
+  <p class="fine">이 검사는 Open Extended Jungian Type Scales 1.2(openpsychometrics.org, CC BY-NC-SA 4.0) 문항을 상황형으로 다시 쓴 것으로, 정식 MBTI 검사가 아닙니다. 50%에 가까운 성향은 다시 검사하면 바뀔 수 있습니다.</p>
+</section>
+
+</main>
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwV2xdcPddFUa1CnCC-4wyErnk0qY2O4Hu_XzJ6rYEsajD2Hk0MVuCz3ONPhtL9-m2esw/exec';
+
+const Q=[
+["월요일 아침, 이번 주에 처리할 업무가 보고서 작성, 거래처 회신, 회의 준비 등 7~8건 쌓여 있습니다.","메모나 앱에 목록을 만들어 하나씩 지워가며 처리한다","따로 적지 않고 머릿속으로 기억하며 처리한다"],
+["동료가 \"요즘 이 방법을 쓰면 업무 효율이 두 배가 된다더라\"며 새 방식을 소개합니다. 주변에 실제로 써본 사람은 아직 없습니다.","정말 효과가 있는지 근거나 사례부터 확인하고 싶다","그럴 수도 있겠다 싶어 일단 긍정적으로 받아들인다"],
+["바쁜 한 주를 보낸 뒤 맞은 주말, 아무 약속 없이 하루 종일 혼자 있게 됐습니다.","오후쯤 되면 심심해져서 누군가에게 연락하고 싶어진다","혼자 보내는 시간 덕분에 에너지가 다시 채워진다"],
+["새 부서에 온 지 몇 달이 지났습니다. 업무 절차가 다소 번거롭지만 지금까지 큰 문제 없이 운영돼 왔습니다.","문제없이 돌아가고 있으니 기존 방식을 따르는 게 맞다","더 나은 방법이 있을 것 같아 바꾸고 싶은 부분이 자꾸 눈에 들어온다"],
+["바쁜 한 주가 끝난 금요일 오후, 지금 내 책상(또는 방) 상태를 떠올려 보세요.","바빠도 서류와 물건이 제자리에 정리돼 있다","서류와 물건이 여기저기 쌓여 있지만 어디 있는지는 대충 안다"],
+["회의에서 감정을 배제하고 숫자와 논리로만 의견을 말하자, 동료가 \"너무 기계처럼 냉정하다\"고 합니다.","사람 냄새가 없다는 말로 들려 기분이 상한다","객관적으로 판단했다는 말로 들려 오히려 칭찬 같다"],
+["처음 만난 사람이 나를 하루 동안 지켜본 뒤 내 인상을 한마디로 표현한다면","에너지가 넘치고 활동적인 사람","차분하고 조용한 사람"],
+["사내 교육 평가를 앞두고 문제 형식을 직접 고를 수 있다면","정답이 분명한 객관식 문제","내 생각과 논리를 풀어 쓰는 서술형 문제"],
+["동료가 옆에서 내 업무 방식과 일상을 한 달간 지켜봤다면 어떻게 평가할 것 같나요?","즉흥적이고 다소 어수선하지만 결국 해낸다","순서와 체계가 잡혀 있고 정돈돼 있다"],
+["열심히 준비한 보고서를 두고 상사가 여러 사람 앞에서 날카롭게 지적했습니다.","그날 하루 종일 마음에 남고 쉽게 털어지지 않는다","지적은 지적일 뿐, 고칠 부분만 정리하고 넘어간다"],
+["다음 주까지 중요한 기획안을 완성해야 하고, 일하는 방식은 자유롭게 고를 수 있습니다.","동료들과 모여 아이디어를 주고받으며 함께 만든다","혼자 조용히 집중해서 초안을 만든다"],
+["출퇴근길이나 샤워할 때처럼 혼자 있을 때 주로 떠올리는 생각은","오늘 해야 할 일, 지금 처리 중인 현실적인 문제","앞으로 어떻게 될지, 새로 해보고 싶은 일과 가능성"],
+["석 달 뒤 가족 여행(또는 중요한 출장)이 잡혔습니다.","미리 일정, 숙소, 동선까지 계획을 세워 둔다","날짜가 다가오면 그때 상황을 보고 계획한다"],
+["연말에 동료들이 나에 대해 한마디씩 적어준다면, 더 듣고 싶은 말은","\"일 잘하고 믿을 수 있는 사람\"","\"따뜻하고 함께 있으면 좋은 사람\""],
+["30명 넘게 모인 회식이 밤늦게 끝났습니다.","즐거웠더라도 기운이 빠져서 빨리 혼자 쉬고 싶다","기분이 들떠서 2차를 가거나 더 이야기하고 싶다"],
+["새로운 부서나 모임에 처음 들어간 첫 달, 나의 모습은","분위기를 살피며 자연스럽게 녹아든다","내 생각과 스타일이 드러나 금방 눈에 띈다"],
+["새 업무 도구를 도입해야 하는데 후보가 세 가지입니다. 결정 시한은 넉넉합니다.","더 좋은 대안이 나올 수 있으니 결정을 최대한 열어둔다","비교가 끝나면 빨리 결정하고 확정 짓는다"],
+["회사에서 맡을 역할을 고를 수 있다면 더 끌리는 쪽은","고장 난 시스템이나 비효율적인 업무 절차를 고치는 역할","힘들어하는 직원을 돕고 다시 일어서게 하는 역할"],
+["점심시간에 동료 4~5명과 식사하며 이야기를 나눕니다.","주로 내가 이야기를 꺼내고 말하는 편이다","주로 다른 사람 이야기를 듣는 편이다"],
+["거래처와의 회의 결과를, 회의에 없던 상사에게 전달합니다.","누가 무슨 말을 했고 무엇이 정해졌는지 사실 순서대로 전한다","이 회의가 우리에게 어떤 의미인지, 상대의 의도가 무엇인지부터 전한다"],
+["마감이 2주 남은 보고서 작성 업무를 받았습니다.","받은 날 바로 착수해서 미리 끝내 둔다","다른 일을 먼저 하다가 마감이 가까워지면 집중해서 끝낸다"],
+["이직 제안 두 곳을 받았습니다. 조건은 A회사가 더 좋지만, 마음은 B회사에 더 끌립니다.","마음이 끌리는 쪽을 택한다","조건을 따져 더 합리적인 쪽을 택한다"],
+["오랜만에 아무 일정 없는 금요일 저녁입니다.","집에서 편하게 쉬는 게 가장 좋다","밖에 나가 사람을 만나거나 놀러 가고 싶다"],
+["상사가 새 프로젝트를 맡기며 설명을 시작합니다. 가장 먼저 듣고 싶은 것은","이 프로젝트를 왜 하는지, 전체 방향과 목표","구체적으로 무엇을, 언제까지, 어떤 방식으로 해야 하는지"],
+["다음 날 경영진 앞에서 10분간 보고를 해야 합니다.","핵심만 정해두고 현장 분위기를 보며 즉흥적으로 풀어간다","예상 질문까지 정리해 꼼꼼히 준비하고 연습한다"],
+["성실하던 직원이 가족 문제로 경황이 없어 사내 규정을 어겼습니다. 처리 방향을 정해야 합니다.","사정은 안타깝지만 규정대로 공정하게 처리해야 한다","사정을 충분히 고려해 너그럽게 처리해야 한다"],
+["넓은 주차장 반대편에 있는 동료를 불러야 하는데 휴대폰이 없습니다.","큰 소리로 부르는 게 어색해서 직접 걸어간다","자연스럽게 큰 소리로 이름을 부른다"],
+["처음 접하는 금융상품이나 제도를 이해해야 합니다.","구조와 원리부터 이해한 뒤 사례를 본다","실제 사례나 직접 해본 경험으로 감을 잡는다"],
+["다음 중 내 생활 방식에 더 가까운 것은","일이 우선이고, 쉬는 것은 일이 끝난 뒤의 문제다","일도 열심히 하지만 노는 것도 일만큼 확실히 챙긴다"],
+["면담 중에 직원이 갑자기 눈물을 보이며 힘든 사정을 이야기합니다.","어떻게 반응해야 할지 몰라 불편하고 빨리 본론으로 돌아가고 싶다","이야기를 충분히 들어주고 감정을 받아주는 게 먼저라고 생각한다"],
+["전 직원 행사에서 사회를 볼 사람이 필요합니다.","내가 하겠다고 나서거나, 맡게 되면 즐긴다","가능하면 다른 사람이 맡았으면 좋겠다"],
+["회사에서 갑자기 조직 개편이 발표됐습니다. 가장 먼저 궁금한 것은","누가 어디로 가고, 언제부터 무엇이 바뀌는지","왜 지금 이런 개편을 하는지, 배경과 의도"]];
+
+const D={
+ISTJ:"책임감이 강하고 정해진 절차와 사실을 중시합니다. 맡은 일을 꼼꼼하게 끝까지 처리합니다.",
+ISFJ:"주변 사람을 세심하게 챙기고 성실합니다. 안정적인 환경에서 맡은 역할을 묵묵히 해냅니다.",
+INFJ:"사람과 조직의 의미 있는 변화에 관심이 많습니다. 통찰력이 있고 원칙과 가치를 중요하게 여깁니다.",
+INTJ:"장기적인 전략과 구조를 설계하는 데 강합니다. 독립적으로 생각하고 높은 기준을 세웁니다.",
+ISTP:"문제가 생기면 원인을 분석하고 실용적인 해결책을 찾습니다. 상황 대응이 빠르고 침착합니다.",
+ISFP:"온화하고 유연하며 현재의 경험을 중시합니다. 다른 사람의 감정을 존중하고 조화를 추구합니다.",
+INFP:"자신이 중요하게 여기는 가치에 따라 움직입니다. 공감 능력이 높고 사람의 성장에 관심이 많습니다.",
+INTP:"논리와 원리를 깊이 파고드는 것을 좋아합니다. 새로운 아이디어를 분석하고 개선점을 찾는 데 강합니다.",
+ESTP:"행동력이 뛰어나고 현장 상황 판단이 빠릅니다. 실질적인 결과를 중시하고 위기 대응에 강합니다.",
+ESFP:"밝고 사교적이며 주변 분위기를 활기차게 만듭니다. 사람들과 함께 일할 때 에너지를 얻습니다.",
+ENFP:"아이디어가 풍부하고 사람들에게 열정을 전합니다. 새로운 가능성을 찾고 시도하는 것을 좋아합니다.",
+ENTP:"다양한 관점에서 문제를 바라보고 토론을 즐깁니다. 기존 방식에 도전하고 새로운 해법을 찾습니다.",
+ESTJ:"체계와 규칙을 바탕으로 조직을 효율적으로 운영합니다. 결정이 빠르고 실행력이 강합니다.",
+ESFJ:"협력과 화합을 중시하고 주변 사람들을 잘 챙깁니다. 팀 분위기를 안정적으로 이끕니다.",
+ENFJ:"사람들의 잠재력을 끌어내고 함께 목표를 향해 이끕니다. 소통과 동기부여에 강합니다.",
+ENTJ:"목표를 세우고 조직을 이끌어 결과를 만들어 냅니다. 전략적 판단과 추진력이 강합니다."};
+
+const $=id=>document.getElementById(id);
+const A=new Array(32).fill(0);
+let cur=0,user={},busy=false;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+$('segs').innerHTML='<i></i>'.repeat(32);
+const box=$('choices');
+const LB=['A에 매우 가깝다','A에 조금 가깝다','둘 다 비슷하다','B에 조금 가깝다','B에 매우 가깝다'];
+[1,2,3,4,5].forEach(v=>{const b=document.createElement('button');b.type='button';b.dataset.v=v;b.setAttribute('role','radio');b.className='ch';
+  b.innerHTML='<span class="mk"></span><span>'+LB[v-1]+'</span>';box.appendChild(b);});
+
+box.addEventListener('click',e=>{const b=e.target.closest('.ch');if(!b||busy)return;
+  A[cur]=+b.dataset.v;paint();busy=true;
+  setTimeout(()=>{if(cur<31)go(cur+1);else{busy=false;finish();}},RM?120:260);});
+
+function go(n){const st=$('stage');if(RM){cur=n;show();busy=false;return;}
+  st.classList.add('out');setTimeout(()=>{cur=n;show();st.classList.remove('out');busy=false;},180);}
+
+$('go').addEventListener('click',start);
+$('dept').addEventListener('keydown',e=>{if(e.key==='Enter')start();});
+$('name').addEventListener('keydown',e=>{if(e.key==='Enter')$('dept').focus();});
+['name','dept'].forEach(id=>$(id).addEventListener('input',()=>$('e-start').textContent=''));
+function start(){const n=$('name').value.trim(),d=$('dept').value.trim();
+  if(!n){$('e-start').textContent='이름을 입력해 주세요.';$('name').focus();return;}
+  if(!d){$('e-start').textContent='부서를 입력해 주세요.';$('dept').focus();return;}
+  user={name:n,dept:d};$('s-start').classList.add('hide');$('s-q').classList.remove('hide');show();}
+$('back').addEventListener('click',()=>{if(cur>0&&!busy){busy=true;go(cur-1);}});
+
+function paint(){const v=A[cur];
+  box.querySelectorAll('.ch').forEach(b=>{const on=+b.dataset.v===v;b.classList.toggle('on',on);b.setAttribute('aria-checked',on);});}
+function show(){const q=Q[cur];
+  $('count').innerHTML='<b>'+(cur+1)+'</b> / 32';
+  [...$('segs').children].forEach((s,i)=>{s.className=i<cur?'done':(i===cur?'now':'');});
+  $('qt').textContent=q[0];$('qa').textContent=q[1];$('qb').textContent=q[2];
+  $('back').style.visibility=cur?'visible':'hidden';paint();window.scrollTo(0,0);}
+
+function finish(){
+  const q=n=>A[n-1];
+  const IE=30-q(3)-q(7)-q(11)+q(15)-q(19)+q(23)+q(27)-q(31);
+  const SN=12+q(4)+q(8)+q(12)+q(16)+q(20)-q(24)-q(28)+q(32);
+  const FT=30-q(2)+q(6)+q(10)-q(14)-q(18)+q(22)-q(26)-q(30);
+  const JP=18+q(1)+q(5)-q(9)+q(13)-q(17)+q(21)-q(25)+q(29);
+  const t=(IE>24?'E':'I')+(SN>24?'N':'S')+(FT>24?'T':'F')+(JP>24?'P':'J');
+  const p=s=>Math.round((s-8)/32*100);
+  const cols=['ei','sn','tf','jp'];
+  $('s-q').classList.add('hide');$('s-res').classList.remove('hide');window.scrollTo(0,0);
+  $('rname').textContent=user.name+' 님의 성격유형';
+  $('rcode').innerHTML=t.split('').map((c,i)=>'<span style="color:var(--c-'+cols[i]+')">'+c+'</span>').join('');
+  $('rdesc').textContent=D[t];
+  const dims=[['에너지 방향','I 내향','E 외향',p(IE),'ei'],['정보 인식','S 감각','N 직관',p(SN),'sn'],['판단 기준','F 감정','T 사고',p(FT),'tf'],['생활 방식','J 판단','P 인식',p(JP),'jp']];
+  $('rdims').innerHTML=dims.map(d=>{const r=d[3],l=100-r,rw=r>l,m=Math.abs(r-50);
+    const lv=m<=10?'경계선':(m<25?'약간 뚜렷':'뚜렷');
+    const bar=rw?'left:50%;width:'+(r-50)+'%':'right:50%;width:'+(l-50)+'%';
+    return '<div class="dim"><div class="dim-h"><span class="nm">'+d[0]+'</span><span class="lv" style="background:var(--t-'+d[4]+');color:var(--c-'+d[4]+')">'+lv+'</span></div>'+
+      '<div class="meter"><span class="l'+(rw?'':' win')+'">'+d[1]+'<br>'+l+'%</span><div class="track"><i style="'+bar+';background:var(--c-'+d[4]+')"></i></div><span class="r'+(rw?' win':'')+'">'+d[2]+'<br>'+r+'%</span></div></div>';}).join('');
+  save();
+}
+
+async function save(){
+  const st=$('rsave'),msg=st.querySelector('span');
+  if(SCRIPT_URL.indexOf('PASTE_')===0){st.className='status bad';msg.textContent='저장 주소가 아직 설정되지 않았습니다';return;}
+  try{
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({name:user.name,dept:user.dept,answers:A})});
+    st.className='status ok';msg.textContent='결과가 저장되었습니다';
+  }catch(e){st.className='status bad';msg.textContent='저장하지 못했습니다. 인터넷 연결을 확인한 뒤 새로고침해 주세요';}
+}
+</script>
+</body>
+</html>
