@@ -144,7 +144,7 @@ details.ob>summary{cursor:pointer;font-size:12.5px;color:var(--muted)}
 .relh button.rq b{font-family:var(--mono);color:var(--accent);margin-right:3px}
 details.ob.pold{margin:0 0 8px 0}
 .open.full .lead{font-weight:700;font-size:18px;line-height:1.5}
-.open.full .rest{font-size:16.5px}
+.open.full .rest{font-size:16.5px;line-height:1.75}.rest .rp,.ba .rp{margin:0 0 10px}.rest .rp:last-child,.ba .rp:last-child{margin-bottom:0}.ph{font-weight:700}.open.full .lead{margin-bottom:6px}
 .kw{display:flex;flex-wrap:wrap;gap:3px;padding:0 6px 6px;border-bottom:1px solid var(--line)}
 .kw button.t1{font-weight:700;border-color:var(--accent);color:var(--accent)}
 .kw button.t3{opacity:.75}
@@ -990,6 +990,20 @@ function cuts(s,end){
   flush();
   return out.join(' '+CUT+' ')+(end?' '+CUT:'');
 }
+
+const PSTART=/^(원인은|첫째|둘째|셋째|넷째|다섯째|여섯째|마지막으로|다만|앞으로|3개월이|기간별로는|대응은|이 차이를|그래서 이렇게|그래서 네 가지|그래서 세 가지|그래서 수익 구조)/;
+const PHEAD=/^(첫째|둘째|셋째|넷째|다섯째|여섯째|마지막으로)/;
+function paras(s){
+  if(!s) return s||'';
+  const parts=s.split(/(?<=[다요까][.?!])\s+/); const ps=[]; let cur=[];
+  for(const p of parts){ const t=p.replace(/^<[^>]+>/,''); if(cur.length && PSTART.test(t)){ ps.push(cur); cur=[]; } cur.push(p); }
+  if(cur.length) ps.push(cur);
+  if(ps.length<2) return cuts(s);
+  return ps.map(sent=>{ let first=sent[0]; const t=first.replace(/^<[^>]+>/,''); let head='';
+    if(PHEAD.test(t)){ head=`<b class="ph">${first}</b>`; sent=sent.slice(1); }
+    const body=sent.length?cuts(sent.join(' ')):'';
+    return `<p class="rp">${head}${head&&body?' '+CUT+' ':''}${body}</p>`; }).join('');
+}
 let CUTON=true; try{ CUTON=localStorage.getItem('fnpCut')!=='0'; }catch(e){}
 function applyCutPref(){ document.body.classList.toggle('nocut',!CUTON); document.querySelectorAll('.cuttg').forEach(b=>b.textContent=CUTON?'통역 끊기 표시 끄기':'통역 끊기 표시 켜기'); }
 document.addEventListener('click',e=>{ const b=e.target.closest('.cuttg'); if(!b) return; CUTON=!CUTON; try{ localStorage.setItem('fnpCut',CUTON?'1':'0'); }catch(err){} applyCutPref(); });
@@ -997,8 +1011,8 @@ const CIRCB='①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮';
 function oldHTML(id){ const o=OIDX[id]; if(!o) return '';
   return `<div class="oq">${o.id} · ${o.q}</div><ol class="k">${(o.k||[]).map((k,i)=>`<li><div class="gist">${k.replace(/^([^:<]{1,30}):\s/,'<b class="kl">$1</b>')}</div>${o.sp&&o.sp[i]?`<div class="sp">${cuts(o.sp[i])}</div>`:''}</li>`).join('')}</ol>${(o.n||o.c)?`<div class="foot">${o.n?`<div class="num">${o.n}</div>`:''}${o.c?`<div class="cau"><b>주의</b> ${o.c}</div>`:''}</div>`:''}`; }
 function hubHTML(x){
-  const brs=x.br.map((b,i)=>`${b.grp&&(i===0||x.br[i-1].grp!==b.grp)?`<div class="brg">${b.grp}</div>`:''}<details class="brd" data-old="${b.old}"${x.brFirst?' open':''}><summary><span class="bn">${CIRCB[i]||i+1}</span><span class="bh">${b.h}</span><span class="oid">${b.old}</span></summary>${b.a?`<div class="ba">${cuts(b.a)}</div>`:''}${b.old?`<details class="ob" data-old="${b.old}"><summary>기존 상세 보기 (${b.old})</summary><div class="obody"></div></details>`:''}</details>`).join('');
-  const fus=x.fu.map(u=>`<details class="brd fu" data-old="${u.old||''}" open><summary><span class="bn">↪</span><span class="bh">${u.q}</span>${u.old?`<span class="oid">${u.old}</span>`:''}</summary><div class="ba">${cuts(u.a)}</div>${u.old?`<details class="ob" data-old="${u.old}"><summary>기존 상세 보기 (${u.old})</summary><div class="obody"></div></details>`:''}</details>`).join('');
+  const brs=x.br.map((b,i)=>`${b.grp&&(i===0||x.br[i-1].grp!==b.grp)?`<div class="brg">${b.grp}</div>`:''}<details class="brd" data-old="${b.old}"${x.brFirst?' open':''}><summary><span class="bn">${CIRCB[i]||i+1}</span><span class="bh">${b.h}</span><span class="oid">${b.old}</span></summary>${b.a?`<div class="ba">${paras(b.a)}</div>`:''}${b.old?`<details class="ob" data-old="${b.old}"><summary>기존 상세 보기 (${b.old})</summary><div class="obody"></div></details>`:''}</details>`).join('');
+  const fus=x.fu.map(u=>`<details class="brd fu" data-old="${u.old||''}" open><summary><span class="bn">↪</span><span class="bh">${u.q}</span>${u.old?`<span class="oid">${u.old}</span>`:''}</summary><div class="ba">${paras(u.a)}</div>${u.old?`<details class="ob" data-old="${u.old}"><summary>기존 상세 보기 (${u.old})</summary><div class="obody"></div></details>`:''}</details>`).join('');
   return `<div class="dh"><span class="g ${x.g}">${x.g}</span><span class="idt">${x.id}</span><h1>${x.q}</h1></div>${x.qalt?`<div class="qalt"><span class="lbl">이렇게 물을 수도 있음</span>${x.qalt}</div>`:''}
     ${(x.old||[]).length?`<div class="why"><span class="lbl">포함된 기존 질문</span>${x.old.join(' · ')}</div>`:''}
     ${x.f?fullAns(x):''}
@@ -1016,7 +1030,7 @@ function rkHTML(rk){
   return `<div class="rkh"><span class="lbl">규정과 KBBF 현황 구분 · 규정이 요구하는 것과 회사가 지금 하는 것</span></div><div class="qtbw"><table class="qtb rkt"><thead><tr><th>항목</th><th class="rr">규정상 (OJK가 요구)</th><th class="rc">KBBF 현재</th></tr></thead><tbody>${rk.map(r=>`<tr><th>${r.h}</th><td class="rr">${r.r}</td><td class="rc">${r.k.replace(/\(계획\)/g,'<b class="plan">계획</b>').replace(/\[확인 필요\]/g,'<span class="chk">[확인 필요]</span>')}</td></tr>`).join('')}</tbody></table></div>`;
 }
 function fullAns(x){
-  if(x.lead) return `<div class="open full"><span class="olbl">핵심 문장 · 먼저 말할 한 문장<button type="button" class="cuttg">${CUTON?'통역 끊기 표시 끄기':'통역 끊기 표시 켜기'}</button></span><div class="lead">${cuts(x.lead,true)}</div><span class="olbl" style="margin-top:8px">보강 설명</span><div class="rest">${cuts(x.rest)}</div></div>`;
+  if(x.lead) return `<div class="open full"><span class="olbl">핵심 문장 · 먼저 말할 한 문장<button type="button" class="cuttg">${CUTON?'통역 끊기 표시 끄기':'통역 끊기 표시 켜기'}</button></span><div class="lead">${cuts(x.lead,true)}</div><span class="olbl" style="margin-top:8px">보강 설명</span><div class="rest">${paras(x.rest)}</div></div>`;
   const f=x.f; let o1=''; if(/^[A-Za-z]/.test(f)){ const k=f.search(/[\uAC00-\uD7A3]/); o1=k>0?f.slice(0,k):''; } else { const m=f.match(/^[\s\S]*?[.?!](?=\s|$)/); o1=m?m[0]:''; }
   const h=o1?`<b class="fa1">${o1}</b>${f.slice(o1.length)}`:f;
   return `<div class="open full"><span class="olbl">핵심 답변 · 3~4문장 <small>(굵은 첫 문장이 첫 마디)</small><button type="button" class="cuttg">${CUTON?'통역 끊기 표시 끄기':'통역 끊기 표시 켜기'}</button></span>${o1?`<b class="fa1">${o1}</b> ${CUT}${cuts(f.slice(o1.length).trim())}`:cuts(f)}</div>`;
